@@ -61,8 +61,8 @@ public class RegistrationController {
 		return playerService.savePlayerInfo(playerRequetVO, imageData, docData);
 	}
 
-	@GetMapping("/getYourRegistrationStatus")
-	public RegistrationResponse registrationStatus(@RequestParam String searchParam) throws IOException {
+	@GetMapping("/getYourRegistrationStatus/{searchParam}")
+	public RegistrationResponse registrationStatus(@PathVariable String searchParam) throws IOException {
 		return playerService.getRegistrationStatus(searchParam);
 	}
 
@@ -167,4 +167,9 @@ public class RegistrationController {
 		return "All images realted to doc section has been downloaded!, please check your C/Users/yourName/kpl_doc_images folder";
 
 	}
+
+	// @GetMapping("/loginStatus")
+	// public String getRegitrationStatus(@RequestParam List<Long> registartionIDS) throws IOException {
+	// 	playerRepository.
+	// }
 }

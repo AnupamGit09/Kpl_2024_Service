@@ -15,6 +15,7 @@ import org.hibernate.annotations.Type;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 
  @Data
  @AllArgsConstructor
@@ -33,27 +34,35 @@ import lombok.NoArgsConstructor;
  @Column(name = "registration_id")
  private Long registrationId;
 
+ @NonNull
  @Column(name = "player_name")
  private String playerName;
 
+ @NonNull
  @Column(name = "player_address",length = 10000)
  private String playerAddress;
 
+ @NonNull
  @Column(name = "pin_code")
  private Long pinCode;
 
+ @NonNull
  @Column(name = "aadhar_no")
  private Long aadharNo;
 
+ @NonNull
  @Column(name = "ph_no")
  private Long phNo;
 
+ @NonNull
  @Column(name = "email_id")
  private String emailId;
 
+ @NonNull
  @Column(name = "generue")
  private String generue;
 
+ @NonNull
  @Lob
  @Type(type = "org.hibernate.type.BinaryType")
  private byte[] image;
@@ -61,9 +70,11 @@ import lombok.NoArgsConstructor;
  @Column(name = "registration_time")
  private LocalDateTime registrationTime;
 
+ @NonNull
  @Column(name = "player_location_category")
  private String playerLocation;
 
+ @NonNull
  @Lob
  @Type(type = "org.hibernate.type.BinaryType")
  private byte[] docImage;
