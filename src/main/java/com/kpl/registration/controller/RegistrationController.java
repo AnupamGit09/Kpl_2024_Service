@@ -31,7 +31,6 @@ import com.kpl.registration.service.PlayerService;
 
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 
-
 @RestController
 @RequestMapping("/kpl/registration/api")
 @CrossOrigin(origins = "*")
@@ -62,8 +61,9 @@ public class RegistrationController {
 	}
 
 	@GetMapping("/getYourRegistrationStatus")
-	public RegistrationResponse registrationStatus(@RequestParam String id,@RequestParam String password) throws IOException {
-		return playerService.getRegistrationStatus(id,password);
+	public RegistrationResponse registrationStatus(@RequestParam String id, @RequestParam String password)
+			throws IOException {
+		return playerService.getRegistrationStatus(id, password);
 	}
 
 	@GetMapping("generate/playerPdf/{generue}")
@@ -168,8 +168,38 @@ public class RegistrationController {
 
 	}
 
-	// @GetMapping("/loginStatus")
-	// public String getRegitrationStatus(@RequestParam List<Long> registartionIDS) throws IOException {
-	// 	playerRepository.
-	// }
+	@GetMapping("/resetPassword")
+	public String resetPassword(@RequestParam Long phNumber, @RequestParam Long pinCode, @RequestParam Long aadharNo,
+			@RequestParam String password) throws IOException {
+//		if (phNumber.toString().length()!=10) {
+//			return "Phone Number Must be 10 digit";
+//		}
+//		if (pinCode.toString().length()!=6) {
+//			return "Pin Code Must be 6 digit";
+//		}
+//		if (aadharNo.toString().length()!=12) {
+//			return "Aadhaar Number Must be 12 digit";
+//		}
+		var length=password.toString().length();
+		if (!(length>3 && length<9)) {
+			return "Password Must be between 4 to 8 character";
+		}
+		var phNo = playerRepository.findByPhNumber(phNumber);
+		var phNobyPIN = playerRepository.findByPinCode(pinCode);
+		var phNobyaadhar = playerRepository.findByAaddharNo(aadharNo);
+		if (phNo != null) {
+			if (phNo.equals(phNobyPIN)) {
+				if (phNo.equals(phNobyaadhar)) {
+					playerRepository.updatePassword(password, phNumber);
+					return "Success";
+				} else {
+					return "Incorrect Aadhaar Number";
+				}
+			} else {
+				return "Incorrect Pin Code";
+			}
+		} else {
+			return "Incorrect Phone Number";
+		}
+	}
 }

@@ -9,14 +9,6 @@
       background-color: #27c5ad;
     }
 
-    /* .container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 400vh;
-        } */
-
     .logo-container {
       margin-bottom: 1%;
       padding-left: 45%;
@@ -25,15 +17,11 @@
 
     .logo-container img {
       width: 15%;
-      /* Adjust the width as needed */
     }
 
     .form-container {
       width: 60%;
       padding-left: 18%;
-      /* background-color: #ffffff; */
-      /* border-radius: 5px; */
-      /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
     }
 
     h2 {
@@ -87,15 +75,19 @@
     }
 
     .error-popup {
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        padding: 20px;
-        /* background-color: #f8d7da; */
-        color: rgb(240, 8, 8);
-        border-radius: 5px;
-        /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); */
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      padding: 20px;
+      color: rgb(240, 8, 8);
+      border-radius: 5px;
+    }
+
+    .links>a {
+      padding-left: 18%;
+      margin: 0;
+      color: #0e3dd8;
     }
   </style>
 </head>
@@ -123,27 +115,33 @@
           <input type="submit" value="Login">
         </div>
       </form>
-      <!-- <p style="color: red;">${errorMessage}</p> Display error message -->
     </div>
   </div>
+  <div>
+    <!-- <form action="/createNewAccount" method="post"> -->
+    <div class="links">
+      <a href="https://www.google.com" target="_blank">Create New Regitration</a><a href="#"></a> <a
+        href="http://localhost:1999/forgetPassword" target="_blank">Forget Password ?</a>
     </div>
-    <% if (request.getAttribute("errorShown") == null) { %>
+    <% if (request.getAttribute("errorShown")==null) { %>
       <c:if test="${not empty errorMessage && 'POST' eq pageContext.request.method}">
-          <div class="error-popup">
-              <p><h2>${errorMessage}</h2></p>
-          </div>
-          <script>
-              // JavaScript code to hide the error message after 5 seconds
-              setTimeout(function() {
-                  var errorPopup = document.querySelector('.error-popup');
-                  if (errorPopup) {
-                      errorPopup.style.display = 'none';
-                  }
-              }, 5000);
-          </script>
-          <% request.setAttribute("errorShown", true); %>
+        <div class="error-popup">
+          <p>
+          <h2>${errorMessage}</h2>
+          </p>
+        </div>
+        <script>
+          // JavaScript code to hide the error message after 5 seconds
+          setTimeout(function () {
+            var errorPopup = document.querySelector('.error-popup');
+            if (errorPopup) {
+              errorPopup.style.display = 'none';
+            }
+          }, 5000);
+        </script>
+        <% request.setAttribute("errorShown", true); %>
       </c:if>
-  <% } %>
+      <% } %>
 </body>
 
 </html>

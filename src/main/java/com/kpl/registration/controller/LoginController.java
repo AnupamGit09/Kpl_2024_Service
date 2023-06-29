@@ -37,15 +37,13 @@ public class LoginController {
 
 		var response = registrationController.registrationStatus(id, password);
 		if (response.getRegistrationId() != null) {
-			
+
 			String dateString = response.getRegistrationTime().toString();
 			SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS");
 			Date date = inputFormat.parse(dateString);
 			SimpleDateFormat outputFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
 			String formattedDateTime = outputFormat.format(date);
 
-			
-			
 			model.addAttribute("id", response.getRegistrationId());
 			model.addAttribute("name", response.getPlayerName());
 			model.addAttribute("registerDate", formattedDateTime);
@@ -57,13 +55,29 @@ public class LoginController {
 		}
 	}
 
-	@GetMapping("/welcome")
-	public String showWelcomePage() {
-		return "welcome";
-	}
-
 	@GetMapping("/playerView")
 	public String playerView() {
 		return "playerView";
 	}
+
+	@GetMapping("/forgetPassword")
+	public String forgetPassword() {
+		return "forgetPassword";
+	}
+
+	@RequestMapping(value = "/resetPassword", method = RequestMethod.POST)
+	public String resetPassword(@RequestParam Long phNumber, @RequestParam Long pinCode, @RequestParam Long aadhaarNo,
+			@RequestParam String password, Model model) throws IOException, ParseException {
+
+		var response = registrationController.resetPassword(phNumber, pinCode, aadhaarNo, password);
+		if (response == "Success") {
+
+			model.addAttribute("errorMessage", "Password has been updated successfully");
+			return "login";
+		} else {
+			model.addAttribute("errorMessage", response);
+			return "forgetPassword";
+		}
+	}
+
 }
