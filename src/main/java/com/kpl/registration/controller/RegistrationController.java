@@ -61,9 +61,9 @@ public class RegistrationController {
 		return playerService.savePlayerInfo(playerRequetVO, imageData, docData);
 	}
 
-	@GetMapping("/getYourRegistrationStatus/{searchParam}")
-	public RegistrationResponse registrationStatus(@PathVariable String searchParam) throws IOException {
-		return playerService.getRegistrationStatus(searchParam);
+	@GetMapping("/getYourRegistrationStatus")
+	public RegistrationResponse registrationStatus(@RequestParam String id,@RequestParam String password) throws IOException {
+		return playerService.getRegistrationStatus(id,password);
 	}
 
 	@GetMapping("generate/playerPdf/{generue}")

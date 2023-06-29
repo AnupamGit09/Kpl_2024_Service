@@ -27,11 +27,12 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.text.pdf.draw.LineSeparator;
 import com.kpl.registration.dto.GenericVO;
-import  com.kpl.registration.dto.PlayerRequetVO;
-import  com.kpl.registration.dto.RegistrationResponse;
+import com.kpl.registration.dto.PlayerRequetVO;
+import com.kpl.registration.dto.RegistrationResponse;
 import com.kpl.registration.entity.PlayerInfo;
 import com.kpl.registration.repository.ImageRepo;
 import com.kpl.registration.repository.PlayerRepository;
+
 @Service
 public class PlayerServiceImpl implements PlayerService {
 	@Autowired
@@ -72,10 +73,16 @@ public class PlayerServiceImpl implements PlayerService {
 	}
 
 	@Override
-	public RegistrationResponse getRegistrationStatus(String searchParam) {
-		var playerExistance = playerRepository.findByMailOrPhNumber(searchParam);
+	public RegistrationResponse getRegistrationStatus(String id, String password) {
+		var playerExistance = playerRepository.findByMailOrPhNumberandpassword(id, password);
 		if (playerExistance != null) {
+			if (playerExistance.getPaymentValidation() != null) {
+				playerExistance.setPaymentValidation("Completed");
+			} else {
+				playerExistance.setPaymentValidation("Pending Stage");
+			}
 			return modelMapper.map(playerExistance, RegistrationResponse.class);
+
 		}
 		RegistrationResponse registrationResponse = new RegistrationResponse();
 		registrationResponse.setPlayerName("No Record Found");

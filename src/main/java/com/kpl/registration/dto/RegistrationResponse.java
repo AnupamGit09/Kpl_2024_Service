@@ -1,4 +1,4 @@
- package com.kpl.registration.dto;
+package com.kpl.registration.dto;
 
 import java.time.LocalDateTime;
 
@@ -9,10 +9,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
- @NoArgsConstructor
- @AllArgsConstructor
-  public class RegistrationResponse {
- 	 private String playerName;
- 	@JsonFormat(pattern = "dd.mm.yyyy hh:mm:ss")
- 	 private LocalDateTime registrationTime;
-  }
+@NoArgsConstructor
+@AllArgsConstructor
+public class RegistrationResponse {
+	private Long registrationId;
+	private String playerName;
+	@JsonFormat(pattern = "dd.mm.yyyy hh:mm:ss")
+	private LocalDateTime registrationTime;
+	 private String paymentValidation;
+}

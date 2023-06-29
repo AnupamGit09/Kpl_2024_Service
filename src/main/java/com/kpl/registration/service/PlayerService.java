@@ -13,7 +13,7 @@ public interface PlayerService{
 	GenericVO savePlayerInfo(PlayerRequetVO playerRequetVO, byte[] imageData, byte[] docData)
 			throws IOException ;
 
-	RegistrationResponse getRegistrationStatus(String searchParam);
+	RegistrationResponse getRegistrationStatus(String searchParam, String password);
 
 	void generatePdfByClassification(HttpServletResponse response, String generue) throws DocumentException, IOException;
 

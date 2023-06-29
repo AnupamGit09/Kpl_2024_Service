@@ -21,10 +21,10 @@ RegistrationController registrationController;
 	public String home(Model model) {
 		return "home";
 	}
-	@RequestMapping("/login/{searchParam}")
-	public String login(@PathVariable String searchParam,Model model) throws IOException {
-		RegistrationResponse registrationResponse=registrationController.registrationStatus(searchParam);
-		 model.addAttribute("message", registrationResponse.getPlayerName());
-		return "login";
-	}
+//	@RequestMapping("/login")
+//	public String login(Model model) throws IOException {
+////		RegistrationResponse registrationResponse=registrationController.registrationStatus(searchParam);
+//		 model.addAttribute("message","test message");
+//		return "login";
+//	}
 }

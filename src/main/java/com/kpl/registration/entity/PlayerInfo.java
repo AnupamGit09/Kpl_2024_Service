@@ -1,5 +1,6 @@
  package com.kpl.registration.entity;
  import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import javax.persistence.Column;
@@ -78,5 +79,16 @@ import lombok.NonNull;
  @Lob
  @Type(type = "org.hibernate.type.BinaryType")
  private byte[] docImage;
+ 
+ @NonNull
+ @Column(name = "date_of_birth")
+ private LocalDate dateOfBirth;
+ 
+ @Column(name = "payment_validation")
+ private String paymentValidation;
+
+ @NonNull
+ @Column(name = "password")
+ private String password;
 
  }

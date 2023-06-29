@@ -1,211 +1,149 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Animated Login From</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <title>Login Page</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
     body {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      letter-spacing: 1px;
-      background-color: #0c1022;
+      font-family: Arial, sans-serif;
+      background-color: #27c5ad;
     }
 
-    .login_form_container {
-      position: relative;
-      width: 400px;
-      height: 470px;
-      max-width: 400px;
-      max-height: 470px;
-      background: #040717;
-      border-radius: 50px 5px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-      margin-top: 70px;
+    /* .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 400vh;
+        } */
+
+    .logo-container {
+      margin-bottom: 1%;
+      padding-left: 45%;
+      padding-top: 2%;
     }
 
-    .login_form_container::before {
-
-      position: absolute;
-      width: 170%;
-      height: 170%;
-      content: '';
-      background-image: conic-gradient(transparent, transparent, transparent, #2badc4);
-      animation: rotate_border 6s linear infinite;
-
+    .logo-container img {
+      width: 15%;
+      /* Adjust the width as needed */
     }
 
-    .login_form_container::after {
-
-      position: absolute;
-      width: 170%;
-      height: 170%;
-      content: '';
-      background-image: conic-gradient(transparent, transparent, transparent, #e5ff00);
-      animation: rotate_border 6s linear infinite;
-      animation-delay: -3s;
-    }
-
-    @keyframes rotate_border {
-      0% {
-        transform: rotate(0deg);
-      }
-
-      100% {
-        transform: rotate(360deg);
-      }
-    }
-
-    .login_form {
-      position: absolute;
-      content: '';
-      background-color: #0c1022;
-      border-radius: 50px 5px;
-      inset: 5px;
-      padding: 50px 40px;
-      z-index: 10;
-      color: #00ccff;
-
+    .form-container {
+      width: 60%;
+      padding-left: 18%;
+      /* background-color: #ffffff; */
+      /* border-radius: 5px; */
+      /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
     }
 
     h2 {
-      font-size: 40px;
-      font-weight: 600;
-      text-align: center;
+      margin-top: 0;
+      margin-bottom: 20px;
     }
 
-    .input_group {
-      margin-top: 40px;
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: start;
+    .form-group {
+      margin-bottom: 20px;
     }
 
-    .input_text {
-      width: 95%;
-      height: 30px;
-      background: transparent;
-      border: none;
-      outline: none;
-      border-bottom: 1px solid #00ccff;
-      font-size: 20px;
-      padding-left: 10px;
-      color: #00ccff;
-
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      color: #555555;
     }
 
-    ::placeholder {
-      font-size: 15px;
-      color: #00ccff52;
-      letter-spacing: 1px;
-
-    }
-
-    .fa {
-      font-size: 20px;
-
-    }
-
-    #login_button {
-      position: relative;
-      width: 300px;
-      height: 40px;
-      transition: 1s;
-      margin-top: 70px;
-
-
-    }
-
-    #login_button a {
-      position: absolute;
+    .form-group input {
       width: 100%;
-      height: 100%;
-      text-decoration: none;
-      z-index: 10;
+      padding: 2%;
+      border: 1px solid #dddddd;
+      border-radius: 5px;
+    }
+
+    .form-group input[type="submit"] {
+      background-color: #007bff;
+      color: #ffffff;
       cursor: pointer;
-      font-size: 22px;
-      letter-spacing: 2px;
-      border: 1px solid #00ccff;
-      border-radius: 50px;
-      background-color: #0c1022;
+    }
+
+    .button-container {
       display: flex;
       justify-content: center;
-      align-items: center;
+      padding-left: 24%;
+      padding-right: 18%;
+      padding-top: 3%;
+      flex-direction: row;
+      align-content: flex-start;
+      align-items: baseline;
     }
 
-    .fotter {
-      margin-top: 30px;
-      display: flex;
-      justify-content: space-between;
 
-    }
-
-    .fotter a {
+    .button-container a {
       text-decoration: none;
-      cursor: pointer;
-      font-size: 18px;
+      color: #88ff00;
     }
 
-    .glowIcon {
-      text-shadow: 0 0 10px #00ccff;
+    #heading {
+      padding-left: 25%;
+      padding-top: 4%;
+    }
 
+    .error-popup {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        padding: 20px;
+        /* background-color: #f8d7da; */
+        color: rgb(240, 8, 8);
+        border-radius: 5px;
+        /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); */
     }
   </style>
 </head>
 
 <body>
-  <div class="login_form_container">
-    <div class="login_form">
+  <div id="heading">
+    <h1>Kashipur Premier League (season 5)</h1>
+  </div>
+  <div class="container">
+    <div class="logo-container">
+      <img src="${pageContext.request.contextPath}/images/transparent_logo.png" alt="KPL Logo">
+    </div>
+    <div class="form-container">
       <h2>Login</h2>
       <form action="/login" method="post">
-      <div class="input_group">
-        <i class="fa fa-user"></i>
-        <input type="text" placeholder="Ph Number or Email" required />
-      </div>
-      <div class="input_group">
-        <i class="fa fa-unlock-alt"></i>
-        <input type="password" placeholder="Password" required />
-      <!-- </div> -->
-      <!-- <div class="button_group" id="login_button"> -->
-        <!-- <a>Submit</a> -->
-        <input type="submit" value="Login">
-      </div>
-    </form>
-    <%-- Display message if present --%>
-    <% if (message != null) { %>
-        <script>
-            alert('<%= message %>');
-        </script>
-    <% } %>
-      <div class="fotter">
-        <a>Forgot Password ?</a>
-        <a>SingUp</a>
-      </div>
+        <div class="form-group">
+          <label for="username"><strong>Phone No/Email:</strong></label>
+          <input type="text" id="username" name="username" placeholder="Enter Your Phone Number or Mail ID" required>
+        </div>
+        <div class="form-group">
+          <label for="password"><strong>Password:</strong></label>
+          <input type="password" id="password" name="password" placeholder="Enter your Password" required>
+        </div>
+        <div class="form-group button-container">
+          <input type="submit" value="Login">
+        </div>
+      </form>
+      <!-- <p style="color: red;">${errorMessage}</p> Display error message -->
     </div>
   </div>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-  <script src="login.js"></script>
+    </div>
+    <% if (request.getAttribute("errorShown") == null) { %>
+      <c:if test="${not empty errorMessage && 'POST' eq pageContext.request.method}">
+          <div class="error-popup">
+              <p><h2>${errorMessage}</h2></p>
+          </div>
+          <script>
+              // JavaScript code to hide the error message after 5 seconds
+              setTimeout(function() {
+                  var errorPopup = document.querySelector('.error-popup');
+                  if (errorPopup) {
+                      errorPopup.style.display = 'none';
+                  }
+              }, 5000);
+          </script>
+          <% request.setAttribute("errorShown", true); %>
+      </c:if>
+  <% } %>
 </body>
 
 </html>
