@@ -195,7 +195,7 @@
                 .container_body {
                     max-width: 600px;
                     margin: 0 auto;
-                    padding:5%;
+                    padding: 5%;
                     background-color: #27c5ad;
                 }
 
@@ -269,6 +269,11 @@
                     <label>Payment Status:</label>
                     <span>${status}</span>
                 </div>
+            </div>
+            <div style="padding: 3%;color: #0011f3;">
+               <h3> *If your payment is in the pending stage, don't worry; wait for 24 hours after successful compilation of
+                the payment. For further queries, please contact development or the KPL core team for further
+                clarification.</h3>
             </div>
         </body>
 
