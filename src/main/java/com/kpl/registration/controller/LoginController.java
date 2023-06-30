@@ -146,12 +146,12 @@ public class LoginController {
 		System.out.println(docImage.getSize());
 		
 		if (docImage.getSize() > 1 * 512 * 1024) {
-			model.addAttribute("errorMessage", "Please Compress your Aadhar Image less than 1 MB");
+			model.addAttribute("errorMessage", "Please Compress your Aadhar Image less than 512 KB");
 			return "signUp";
 		}
 
 		if (playerPhoto.getSize() > 1 * 512 * 1024) {
-			model.addAttribute("errorMessage", "Please Compress your photo less than 1 MB");
+			model.addAttribute("errorMessage", "Please Compress your photo less than 512 KB");
 			return "signUp";
 		}
 
