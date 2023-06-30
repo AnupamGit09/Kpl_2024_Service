@@ -405,7 +405,7 @@
   <div class="login-header">
     <h2>Check Your Registration Status</h2>
   </div>
-  <form action="https://kpl-test-v01-production.up.railway.app//login" method="post">
+  <form action="https://kpl-test-v01-production.up.railway.app/login" method="post">
     <div class="input-box">
       <input type="text" class="input-field" id="username" name="username"
         placeholder="Enter your Phone Number or email ID" autocomplete="off" required>
