@@ -41,15 +41,9 @@ public class LoginController {
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String login(@RequestParam("username") String id, @RequestParam("password") String password, Model model)
 			throws IOException, ParseException {
-		if (playerRepository.findByMailOrPhNumber(id) == null) {
-			try {
-				Integer.parseInt(id);
-			} catch (Exception ep) {
-				model.addAttribute("errorMessage", "Invalid Email ID");
+		if (playerRepository.findByMailOrPhNumber(id) == null) {			
+				model.addAttribute("errorMessage", "Invalid Email ID or Phone Number");
 				return "login";
-			}
-			model.addAttribute("errorMessage", "Invalid Phone Number");
-			return "login";
 		}
 		var response = registrationController.registrationStatus(id, password);
 		if (response.getRegistrationId() != null) {
