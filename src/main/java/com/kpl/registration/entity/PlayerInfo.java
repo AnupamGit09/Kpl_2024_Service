@@ -1,6 +1,7 @@
 package com.kpl.registration.entity;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 
 import javax.persistence.Column;
@@ -73,7 +74,7 @@ import lombok.NonNull;
  private byte[] image;
 
  @Column(name = "registration_time")
- private ZonedDateTime registrationTime;
+ private LocalDateTime registrationTime;
 
  @NonNull
  @Column(name = "player_location_category")

@@ -64,10 +64,8 @@ public class PlayerServiceImpl implements PlayerService {
 		playerInfo.setPlayerAddress(playerRequetVO.getPlayerAddress());
 		playerInfo.setPlayerFirstName(playerRequetVO.getPlayerFirstName());
 		playerInfo.setPlayerLastName(playerRequetVO.getPlayerLastName());
-		 ZoneId indianZone = ZoneId.of("Asia/Kolkata");
-	        ZonedDateTime indianDateTime = ZonedDateTime.of(LocalDateTime.now(), indianZone);
-	        
-		playerInfo.setRegistrationTime(indianDateTime);
+		
+		playerInfo.setRegistrationTime(LocalDateTime.now());
 		playerInfo.setGenerue(playerRequetVO.getGenerue());
 		playerInfo.setDateOfBirth(playerRequetVO.getDob());
 		playerInfo.setPassword(playerRequetVO.getPassword());
