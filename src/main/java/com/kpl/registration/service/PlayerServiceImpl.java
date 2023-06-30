@@ -26,10 +26,13 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.text.pdf.draw.LineSeparator;
+import com.kpl.registration.dto.AdminReqVO;
 import com.kpl.registration.dto.GenericVO;
 import com.kpl.registration.dto.PlayerRequetVO;
 import com.kpl.registration.dto.RegistrationResponse;
+import com.kpl.registration.entity.AdminInfo;
 import com.kpl.registration.entity.PlayerInfo;
+import com.kpl.registration.repository.AdminRepo;
 import com.kpl.registration.repository.ImageRepo;
 import com.kpl.registration.repository.PlayerRepository;
 
@@ -41,7 +44,8 @@ public class PlayerServiceImpl implements PlayerService {
 	PlayerRepository playerRepository;
 	@Autowired
 	ImageRepo imageRepo;
-
+	@Autowired
+	AdminRepo adminRepo;
 	@Override
 	public GenericVO savePlayerInfo(PlayerRequetVO playerRequetVO, byte[] imageData, byte[] docData)
 			throws IOException {
@@ -622,5 +626,14 @@ public class PlayerServiceImpl implements PlayerService {
 		}
 		document.add(ptable);
 		document.close();
+	}
+
+	@Override
+	public AdminInfo saveAdminDetails(AdminReqVO adminReqVO) {
+		// TODO Auto-generated method stub
+		AdminInfo adminInfo=new AdminInfo();
+		adminInfo.setId(adminReqVO.getId());
+		adminInfo.setPassword(adminReqVO.getPassword());
+		return adminRepo.save(adminInfo);
 	}
 }

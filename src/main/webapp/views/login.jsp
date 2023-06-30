@@ -372,7 +372,7 @@
 <header>
   <div class="wrapper">
     <div class="logo">
-      <a href="https://www.google.com"><img src="${pageContext.request.contextPath}/images/transparent_logo.png"
+      <a href="https://kpl-test-v01-production.up.railway.app/home"><img src="${pageContext.request.contextPath}/images/transparent_logo.png"
           alt="KPL logo"></a>
     </div>
     <div>
@@ -382,12 +382,12 @@
       <div class="close-nav"><button></button></div>
       <nav>
         <ul>
-          <li><a href="https://www.google.com">Home</a></li>
+          <li><a href="https://kpl-test-v01-production.up.railway.app/home">Home</a></li>
         </ul>
       </nav>
     </div>
     <div class="menu-bar">
-      <a href="http://www.google.com"><h2> <span>Home</span></h2></a>   
+      <a href="https://kpl-test-v01-production.up.railway.app/home"><h2> <span>Home</span></h2></a>   
     </div>
   </div>
 </header>
@@ -426,7 +426,7 @@
     <div class="forgot">
 
       <section>
-        <a href="http://192.168.0.172:1999/forgetPassword" target="_blank">Forgot password</a>
+        <a href="https://kpl-test-v01-production.up.railway.app/forgetPassword" target="_blank">Forgot password</a>
       </section>
     </div>
     <div class="input-submit">
@@ -435,7 +435,7 @@
     </div>
   </form>
   <div class="sign-up-link">
-    <p>Don't have account? <a href="http://192.168.0.172:1999/signUpHomePage" target="_blank">Sign Up</a></p>
+    <p>Don't have account? <a href="https://kpl-test-v01-production.up.railway.app/signUpHomePage" target="_blank">Sign Up</a></p>
   </div>
 </div>
 <% if (request.getAttribute("errorShown")==null) { %>

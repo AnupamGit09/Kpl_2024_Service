@@ -1,20 +1,16 @@
 package com.kpl.registration.controller;
 
-import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -147,12 +143,14 @@ public class LoginController {
 			return "signUp";
 		}
 
-		if (docImage.getSize() > 1 * 1024 * 1024) {
+		System.out.println(docImage.getSize());
+		
+		if (docImage.getSize() > 1 * 512 * 1024) {
 			model.addAttribute("errorMessage", "Please Compress your Aadhar Image less than 1 MB");
 			return "signUp";
 		}
 
-		if (playerPhoto.getSize() > 1 * 1024 * 1024) {
+		if (playerPhoto.getSize() > 1 * 512 * 1024) {
 			model.addAttribute("errorMessage", "Please Compress your photo less than 1 MB");
 			return "signUp";
 		}
@@ -187,4 +185,6 @@ public class LoginController {
 		return "login";
 
 	}
+	
+
 }

@@ -3,8 +3,6 @@ package com.kpl.registration.controller;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -13,7 +11,6 @@ import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,9 +18,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.kpl.registration.dto.AdminReqVO;
 import com.kpl.registration.dto.GenericVO;
 import com.kpl.registration.dto.PlayerRequetVO;
 import com.kpl.registration.dto.RegistrationResponse;
+import com.kpl.registration.entity.AdminInfo;
 import com.kpl.registration.entity.ImageInfo;
 import com.kpl.registration.repository.ImageRepo;
 import com.kpl.registration.repository.PlayerRepository;
@@ -41,6 +40,8 @@ public class RegistrationController {
 	ImageRepo imageRepo;
 	@Autowired
 	PlayerRepository playerRepository;
+	
+
 	public static final String CONTENT_DISPOSITION = "Content-Disposition";
 	public static final String PDF_MIME_TYPE = "application/pdf";
 	public static final String ATTACHMENT_FILENAME = "attachment; filename=";
@@ -66,16 +67,15 @@ public class RegistrationController {
 		return playerService.getRegistrationStatus(id, password);
 	}
 
-	@GetMapping("generate/playerPdf/{generue}")
-	public void generueSpecificPlayerPdf(HttpServletResponse response, @PathVariable("generue") String generue)
+//	category specific player PDF
+	
+	@GetMapping("generate/playerPdf")
+	public void generueSpecificPlayerPdf(HttpServletResponse response, @RequestParam("generue") String generue)
 			throws Exception {
 
 		response.setContentType(PDF_MIME_TYPE);
-		var formater = DateTimeFormatter.ofPattern(DATE_FORMAT);
-		var localDateTime = LocalDateTime.now();
-		var currentDateTime = formater.format(localDateTime);
 		String headerKey = CONTENT_DISPOSITION;
-		String headerValue = ATTACHMENT_FILENAME + currentDateTime + generue + ".pdf";
+		String headerValue ="owner"+ generue + ".pdf";
 		response.setHeader(headerKey, headerValue);
 		playerService.generatePdfByClassification(response, generue);
 
@@ -90,6 +90,8 @@ public class RegistrationController {
 		return "Image Master data has been uploaded successfully";
 	}
 
+//	Download category specific image
+	
 	@GetMapping("/downloadGenerueSpImage")
 	public String downloadAllPlayerImage(@RequestParam String generue) throws IOException {
 		List<byte[]> images = playerRepository.findAllImageByGenerue(generue);
@@ -111,36 +113,40 @@ public class RegistrationController {
 
 	}
 
+//	update player category to List A
+	
 	@PutMapping("/specialPlayer")
 	public String updateSpecialPlayerCategory(@RequestParam List<Long> registartionIDS) throws IOException {
 		playerRepository.updatePlayerCategory(registartionIDS);
 		return "players category has been change to List A";
 	}
 
+//	update payment validation
+	
+	@PutMapping("/paymentUpdate")
+	public String paymentUpdate(@RequestParam List<Long> registartionIDS) throws IOException {
+		playerRepository.paymentUpdate(registartionIDS);
+		return "payment details updated";
+	}
+	
 	@GetMapping("generate/AllplayerPdf")
 	public void generueSpecificPlayerPdfForCommitte(HttpServletResponse response) throws Exception {
 
 		response.setContentType(PDF_MIME_TYPE);
-		var formater = DateTimeFormatter.ofPattern(DATE_FORMAT);
-		var localDateTime = LocalDateTime.now();
-		var currentDateTime = formater.format(localDateTime);
 		String headerKey = CONTENT_DISPOSITION;
-		String headerValue = ATTACHMENT_FILENAME + currentDateTime + "allPlayer" + ".pdf";
+		String headerValue = "AllPlayer" + ".pdf";
 		response.setHeader(headerKey, headerValue);
 		playerService.generueSpecificPlayerPdfForCommitte(response);
 
 	}
 
-	@GetMapping("generate/finalPlayerListPdf/{generue}")
-	public void generueFinalPlayerPdf(HttpServletResponse response, @PathVariable("generue") String generue)
+	@GetMapping("generate/finalPlayerListPdf")
+	public void generueFinalPlayerPdf(HttpServletResponse response, @RequestParam("generue") String generue)
 			throws Exception {
 
 		response.setContentType(PDF_MIME_TYPE);
-		var formater = DateTimeFormatter.ofPattern(DATE_FORMAT);
-		var localDateTime = LocalDateTime.now();
-		var currentDateTime = formater.format(localDateTime);
 		String headerKey = CONTENT_DISPOSITION;
-		String headerValue = ATTACHMENT_FILENAME + currentDateTime + generue + ".pdf";
+		String headerValue = "committe" + generue + ".pdf";
 		response.setHeader(headerKey, headerValue);
 		playerService.generateFinalPlayerPdf(response, generue);
 
@@ -168,20 +174,20 @@ public class RegistrationController {
 
 	}
 
-	@GetMapping("/resetPassword")
+	@GetMapping("/passwordReset")
 	public String resetPassword(@RequestParam Long phNumber, @RequestParam Long pinCode, @RequestParam Long aadharNo,
 			@RequestParam String password) throws IOException {
-		if (phNumber.toString().length()!=10) {
+		if (phNumber.toString().length() != 10) {
 			return "Phone Number Must be 10 digit";
 		}
-		if (pinCode.toString().length()!=6) {
+		if (pinCode.toString().length() != 6) {
 			return "Pin Code Must be 6 digit";
 		}
-		if (aadharNo.toString().length()!=12) {
+		if (aadharNo.toString().length() != 12) {
 			return "Aadhaar Number Must be 12 digit";
 		}
-		var length=password.toString().length();
-		if (!(length>3 && length<9)) {
+		var length = password.toString().length();
+		if (!(length > 3 && length < 9)) {
 			return "Password Must be between 4 to 8 character";
 		}
 		var phNo = playerRepository.findByPhNumber(phNumber);
@@ -202,4 +208,10 @@ public class RegistrationController {
 			return "Incorrect Phone Number";
 		}
 	}
+
+	@PostMapping("/saveAdmin")
+	public AdminInfo saveAdmin(@RequestBody AdminReqVO adminReqVO) throws IOException {
+		return playerService.saveAdminDetails(adminReqVO);		 
+	}
+
 }
