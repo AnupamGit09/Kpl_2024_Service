@@ -329,7 +329,7 @@
 
     .sign-up-link {
       text-align: center;
-      font-size: 15px;
+      font-size: 17px;
       margin-top: 20px;
     }
 
