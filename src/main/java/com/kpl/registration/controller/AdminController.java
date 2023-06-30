@@ -1,6 +1,11 @@
 package com.kpl.registration.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,12 +21,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.kpl.registration.dto.AdminReqVO;
 import com.kpl.registration.entity.AdminInfo;
 import com.kpl.registration.repository.AdminRepo;
+import com.kpl.registration.repository.PlayerRepository;
 
 @Controller
 public class AdminController {
 
 	@Autowired
 	AdminRepo adminRepo;
+	@Autowired
+	RegistrationController registrationController;
+	@Autowired
+	PlayerRepository playerRepository;
 //	@Autowired
 //	AdminService adminService;
 //	@Autowired
@@ -42,4 +52,59 @@ public class AdminController {
 			return "adminLogin";
 		}
 	}
+
+	@RequestMapping(value = "/updateCategory", method = RequestMethod.POST)
+	public String updateCategory(@RequestParam String regid, Model model) throws IOException {
+		String[] listOfId = regid.split(",");
+
+		// Convert the array to a list
+		List<Long> idList = new ArrayList<>();
+		for (String value : listOfId) {
+			try {
+				idList.add(Long.parseLong(value));
+			} catch (Exception e) {
+				model.addAttribute("errorMessage", "Please re verify registration ids");
+				return "adminView";
+			}
+
+		}
+		registrationController.updateSpecialPlayerCategory(idList);
+		model.addAttribute("errorMessage", "Players has been transferred to List A");
+		return "adminView";
+	}
+	
+	
+	@RequestMapping(value = "/paymentUpdate", method = RequestMethod.POST)
+	public String paymentUpdate(@RequestParam String regid, Model model) throws IOException {
+		String[] listOfId = regid.split(",");
+
+		// Convert the array to a list
+		List<Long> idList = new ArrayList<>();
+		for (String value : listOfId) {
+			try {
+				idList.add(Long.parseLong(value));
+			} catch (Exception e) {
+				model.addAttribute("errorMessage", "Please re verify registration ids");
+				return "adminView";
+			}
+
+		}
+		registrationController.paymentUpdate(idList);
+		model.addAttribute("errorMessage", "Payment details has been updated");
+		return "adminView";
+	}
+	
+	
+	@RequestMapping(value = "/downloadDocImg", method = RequestMethod.GET)
+	public String downloadDocImg() throws IOException {
+		registrationController.downloadAllDocImage();
+		return "adminView";
+	}
+	
+	@RequestMapping(value = "/downloadCategorySpecificImage", method = RequestMethod.POST)
+	public String downloadCategorySpecificImage(@RequestParam String playerCategory) throws IOException {
+		registrationController.downloadAllPlayerImage(playerCategory);
+		return "adminView";
+	}
+
 }

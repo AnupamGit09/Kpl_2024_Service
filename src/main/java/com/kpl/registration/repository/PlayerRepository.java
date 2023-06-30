@@ -40,6 +40,11 @@ public interface PlayerRepository extends JpaRepository<PlayerInfo, Long> {
 	@Query(value = "update player_registration set generue='List A' where registration_id in(?1)", nativeQuery = true)
 	void updatePlayerCategory(List<Long> registartionIDS);
 
+	@Transactional
+	@Modifying
+	@Query(value = "update player_registration set payment_validation='ok' where registration_id in(?1)", nativeQuery = true)
+	void paymentUpdate(List<Long> registartionIDS);
+	
 	@Query(value = "select * from player_registration order by registration_id", nativeQuery = true)
 	List<PlayerInfo> findAllPlayer();
 
@@ -56,5 +61,12 @@ public interface PlayerRepository extends JpaRepository<PlayerInfo, Long> {
 	@Modifying
 	@Query(value = "update player_registration set password=?1 where ph_no=?2", nativeQuery = true)
 	void updatePassword(String password,Long phNo);
+
+	
+
+//	@Transactional
+//	@Modifying
+//	@Query(value = "select registration_id from player_registration where registration_id not in (?1)", nativeQuery = true)
+//	List<Long> findOutSideID(List<Long> idList);
 
 }

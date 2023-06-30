@@ -71,16 +71,15 @@ public class RegistrationController {
 		return playerService.getRegistrationStatus(id, password);
 	}
 
-	@GetMapping("generate/playerPdf/{generue}")
-	public void generueSpecificPlayerPdf(HttpServletResponse response, @PathVariable("generue") String generue)
+//	category specific player PDF
+	
+	@GetMapping("generate/playerPdf")
+	public void generueSpecificPlayerPdf(HttpServletResponse response, @RequestParam("generue") String generue)
 			throws Exception {
 
 		response.setContentType(PDF_MIME_TYPE);
-		var formater = DateTimeFormatter.ofPattern(DATE_FORMAT);
-		var localDateTime = LocalDateTime.now();
-		var currentDateTime = formater.format(localDateTime);
 		String headerKey = CONTENT_DISPOSITION;
-		String headerValue = ATTACHMENT_FILENAME + currentDateTime + generue + ".pdf";
+		String headerValue ="owner"+ generue + ".pdf";
 		response.setHeader(headerKey, headerValue);
 		playerService.generatePdfByClassification(response, generue);
 
@@ -95,6 +94,8 @@ public class RegistrationController {
 		return "Image Master data has been uploaded successfully";
 	}
 
+//	Download category specific image
+	
 	@GetMapping("/downloadGenerueSpImage")
 	public String downloadAllPlayerImage(@RequestParam String generue) throws IOException {
 		List<byte[]> images = playerRepository.findAllImageByGenerue(generue);
@@ -116,36 +117,40 @@ public class RegistrationController {
 
 	}
 
+//	update player category to List A
+	
 	@PutMapping("/specialPlayer")
 	public String updateSpecialPlayerCategory(@RequestParam List<Long> registartionIDS) throws IOException {
 		playerRepository.updatePlayerCategory(registartionIDS);
 		return "players category has been change to List A";
 	}
 
+//	update payment validation
+	
+	@PutMapping("/paymentUpdate")
+	public String paymentUpdate(@RequestParam List<Long> registartionIDS) throws IOException {
+		playerRepository.paymentUpdate(registartionIDS);
+		return "payment details updated";
+	}
+	
 	@GetMapping("generate/AllplayerPdf")
 	public void generueSpecificPlayerPdfForCommitte(HttpServletResponse response) throws Exception {
 
 		response.setContentType(PDF_MIME_TYPE);
-		var formater = DateTimeFormatter.ofPattern(DATE_FORMAT);
-		var localDateTime = LocalDateTime.now();
-		var currentDateTime = formater.format(localDateTime);
 		String headerKey = CONTENT_DISPOSITION;
-		String headerValue = ATTACHMENT_FILENAME + currentDateTime + "allPlayer" + ".pdf";
+		String headerValue = "AllPlayer" + ".pdf";
 		response.setHeader(headerKey, headerValue);
 		playerService.generueSpecificPlayerPdfForCommitte(response);
 
 	}
 
-	@GetMapping("generate/finalPlayerListPdf/{generue}")
-	public void generueFinalPlayerPdf(HttpServletResponse response, @PathVariable("generue") String generue)
+	@GetMapping("generate/finalPlayerListPdf")
+	public void generueFinalPlayerPdf(HttpServletResponse response, @RequestParam("generue") String generue)
 			throws Exception {
 
 		response.setContentType(PDF_MIME_TYPE);
-		var formater = DateTimeFormatter.ofPattern(DATE_FORMAT);
-		var localDateTime = LocalDateTime.now();
-		var currentDateTime = formater.format(localDateTime);
 		String headerKey = CONTENT_DISPOSITION;
-		String headerValue = ATTACHMENT_FILENAME + currentDateTime + generue + ".pdf";
+		String headerValue = "committe" + generue + ".pdf";
 		response.setHeader(headerKey, headerValue);
 		playerService.generateFinalPlayerPdf(response, generue);
 
