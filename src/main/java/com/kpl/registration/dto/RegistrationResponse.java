@@ -1,6 +1,6 @@
 package com.kpl.registration.dto;
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -16,6 +16,6 @@ public class RegistrationResponse {
 	private String playerFirstName;
 	private String playerLastName;
 	@JsonFormat(pattern = "dd.mm.yyyy hh:mm:ss")
-	private LocalDateTime registrationTime;
+	private ZonedDateTime registrationTime;
 	 private String paymentValidation;
 }

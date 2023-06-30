@@ -3,6 +3,8 @@ package com.kpl.registration.service;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -62,7 +64,10 @@ public class PlayerServiceImpl implements PlayerService {
 		playerInfo.setPlayerAddress(playerRequetVO.getPlayerAddress());
 		playerInfo.setPlayerFirstName(playerRequetVO.getPlayerFirstName());
 		playerInfo.setPlayerLastName(playerRequetVO.getPlayerLastName());
-		playerInfo.setRegistrationTime(LocalDateTime.now());
+		 ZoneId indianZone = ZoneId.of("Asia/Kolkata");
+	        ZonedDateTime indianDateTime = ZonedDateTime.of(LocalDateTime.now(), indianZone);
+	        
+		playerInfo.setRegistrationTime(indianDateTime);
 		playerInfo.setGenerue(playerRequetVO.getGenerue());
 		playerInfo.setDateOfBirth(playerRequetVO.getDob());
 		playerInfo.setPassword(playerRequetVO.getPassword());

@@ -98,6 +98,7 @@ public class RegistrationController {
 		final String FOLDER_PATH = "/" + generue + "_images";
 		String homeDirPath = FileUtils.getUserDirectoryPath();
 		File directory = new File(homeDirPath + FOLDER_PATH);
+		System.out.println(directory);
 		if (!directory.exists()) {
 			directory.mkdirs();
 		}
@@ -158,6 +159,7 @@ public class RegistrationController {
 		final String FOLDER_PATH = "/" + "kpl_doc" + "_images";
 		String homeDirPath = FileUtils.getUserDirectoryPath();
 		File directory = new File(homeDirPath + FOLDER_PATH);
+		System.out.println(directory);
 		if (!directory.exists()) {
 			directory.mkdirs();
 		}
