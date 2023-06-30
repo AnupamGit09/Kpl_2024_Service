@@ -414,7 +414,7 @@
   <div class="login-header">
     <h2>Check Your Registration Status</h2>
   </div>
-  <form action="https://kpl-test-v01-production.up.railway.app/login" method="post">
+  <form action="/login" method="post">
     <div class="input-box">
       <input type="text" class="input-field" id="username" name="username"
         placeholder="Enter your Phone Number or email ID" autocomplete="off" required>
@@ -426,7 +426,7 @@
     <div class="forgot">
 
       <section>
-        <a href="http://192.168.0.172:1999/forgetPassword" target="_blank">Forgot password</a>
+        <a href="http://localhost:1999/forgetPassword" target="_blank">Forgot password</a>
       </section>
     </div>
     <div class="input-submit">
@@ -435,7 +435,7 @@
     </div>
   </form>
   <div class="sign-up-link">
-    <p>Don't have account? <a href="http://192.168.0.172:1999/signUpHomePage" target="_blank">Sign Up</a></p>
+    <p>Don't have account? <a href="http://localhost:1999/signUpHomePage" target="_blank">Sign Up</a></p>
   </div>
 </div>
 <% if (request.getAttribute("errorShown")==null) { %>

@@ -21,12 +21,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.kpl.registration.dto.AdminReqVO;
 import com.kpl.registration.dto.GenericVO;
 import com.kpl.registration.dto.PlayerRequetVO;
 import com.kpl.registration.dto.RegistrationResponse;
+import com.kpl.registration.entity.AdminInfo;
 import com.kpl.registration.entity.ImageInfo;
 import com.kpl.registration.repository.ImageRepo;
 import com.kpl.registration.repository.PlayerRepository;
+
 import com.kpl.registration.service.PlayerService;
 
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
@@ -41,6 +44,8 @@ public class RegistrationController {
 	ImageRepo imageRepo;
 	@Autowired
 	PlayerRepository playerRepository;
+	
+
 	public static final String CONTENT_DISPOSITION = "Content-Disposition";
 	public static final String PDF_MIME_TYPE = "application/pdf";
 	public static final String ATTACHMENT_FILENAME = "attachment; filename=";
@@ -168,20 +173,20 @@ public class RegistrationController {
 
 	}
 
-	@GetMapping("/resetPassword")
+	@GetMapping("/passwordReset")
 	public String resetPassword(@RequestParam Long phNumber, @RequestParam Long pinCode, @RequestParam Long aadharNo,
 			@RequestParam String password) throws IOException {
-		if (phNumber.toString().length()!=10) {
+		if (phNumber.toString().length() != 10) {
 			return "Phone Number Must be 10 digit";
 		}
-		if (pinCode.toString().length()!=6) {
+		if (pinCode.toString().length() != 6) {
 			return "Pin Code Must be 6 digit";
 		}
-		if (aadharNo.toString().length()!=12) {
+		if (aadharNo.toString().length() != 12) {
 			return "Aadhaar Number Must be 12 digit";
 		}
-		var length=password.toString().length();
-		if (!(length>3 && length<9)) {
+		var length = password.toString().length();
+		if (!(length > 3 && length < 9)) {
 			return "Password Must be between 4 to 8 character";
 		}
 		var phNo = playerRepository.findByPhNumber(phNumber);
@@ -202,4 +207,10 @@ public class RegistrationController {
 			return "Incorrect Phone Number";
 		}
 	}
+
+	@PostMapping("/saveAdmin")
+	public AdminInfo saveAdmin(@RequestBody AdminReqVO adminReqVO) throws IOException {
+		return playerService.saveAdminDetails(adminReqVO);		 
+	}
+
 }

@@ -1,25 +1,24 @@
 package com.kpl.registration.controller;
 
-import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.kpl.registration.dto.AdminReqVO;
 import com.kpl.registration.dto.PlayerRequetVO;
 import com.kpl.registration.repository.PlayerRepository;
 import com.kpl.registration.service.PlayerService;
@@ -187,4 +186,6 @@ public class LoginController {
 		return "login";
 
 	}
+	
+
 }
