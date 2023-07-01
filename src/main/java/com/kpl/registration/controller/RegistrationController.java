@@ -232,7 +232,8 @@ public class RegistrationController {
 
 			// Set the appropriate response headers for file download
 			HttpHeaders headers = new HttpHeaders();
-			headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=playerPhoto.zip");
+			
+			headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename="+generue+".zip");
 
 			// Return the ZIP file as a response entity
 			return ResponseEntity.ok().headers(headers).contentType(MediaType.APPLICATION_OCTET_STREAM)
