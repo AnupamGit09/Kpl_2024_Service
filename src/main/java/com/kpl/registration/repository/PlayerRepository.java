@@ -51,7 +51,7 @@ public interface PlayerRepository extends JpaRepository<PlayerInfo, Long> {
 	@Query(value = "select doc_image from player_registration order by registration_id", nativeQuery = true)
 	List<byte[]> findAllDoc();
 
-	@Query(value = "select ph_no from player_registration where pin_code=?1", nativeQuery = true)
+	@Query(value = "select pin_code from player_registration where ph_no=?1", nativeQuery = true)
 	Long findByPinCode(Long pinCode);
 
 	@Query(value = "select ph_no from player_registration where aadhar_no=?1", nativeQuery = true)

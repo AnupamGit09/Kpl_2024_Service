@@ -196,7 +196,7 @@ public class RegistrationController {
 		var phNobyPIN = playerRepository.findByPinCode(pinCode);
 		var phNobyaadhar = playerRepository.findByAaddharNo(aadharNo);
 		if (phNo != null) {
-			if (phNo.equals(phNobyPIN)) {
+			if (pinCode.equals(phNobyPIN)) {
 				if (phNo.equals(phNobyaadhar)) {
 					playerRepository.updatePassword(password, phNumber);
 					return "Success";
