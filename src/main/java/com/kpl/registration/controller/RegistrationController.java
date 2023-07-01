@@ -67,12 +67,10 @@ public class RegistrationController {
 	ImageRepo imageRepo;
 	@Autowired
 	PlayerRepository playerRepository;
-	
 
-    @Autowired
-    private ResourceLoader resourceLoader;
-    
-    
+	@Autowired
+	private ResourceLoader resourceLoader;
+
 	public static final String CONTENT_DISPOSITION = "Content-Disposition";
 	public static final String PDF_MIME_TYPE = "application/pdf";
 	public static final String ATTACHMENT_FILENAME = "attachment; filename=";
@@ -99,14 +97,14 @@ public class RegistrationController {
 	}
 
 //	category specific player PDF
-	
+
 	@GetMapping("generate/playerPdf")
 	public void generueSpecificPlayerPdf(HttpServletResponse response, @RequestParam("generue") String generue)
 			throws Exception {
 
 		response.setContentType(PDF_MIME_TYPE);
 		String headerKey = CONTENT_DISPOSITION;
-		String headerValue ="owner"+ generue + ".pdf";
+		String headerValue = "owner" + generue + ".pdf";
 		response.setHeader(headerKey, headerValue);
 		playerService.generatePdfByClassification(response, generue);
 
@@ -121,10 +119,8 @@ public class RegistrationController {
 		return "Image Master data has been uploaded successfully";
 	}
 
-
-
 //	update player category to List A
-	
+
 	@PutMapping("/specialPlayer")
 	public String updateSpecialPlayerCategory(@RequestParam List<Long> registartionIDS) throws IOException {
 		playerRepository.updatePlayerCategory(registartionIDS);
@@ -132,13 +128,13 @@ public class RegistrationController {
 	}
 
 //	update payment validation
-	
+
 	@PutMapping("/paymentUpdate")
 	public String paymentUpdate(@RequestParam List<Long> registartionIDS) throws IOException {
 		playerRepository.paymentUpdate(registartionIDS);
 		return "payment details updated";
 	}
-	
+
 	@GetMapping("generate/AllplayerPdf")
 	public void generueSpecificPlayerPdfForCommitte(HttpServletResponse response) throws Exception {
 
@@ -159,29 +155,6 @@ public class RegistrationController {
 		String headerValue = "committe" + generue + ".pdf";
 		response.setHeader(headerKey, headerValue);
 		playerService.generateFinalPlayerPdf(response, generue);
-
-	}
-
-	@GetMapping("/downloadAllDocImage")
-	public String downloadAllDocImage() throws IOException {
-		List<byte[]> images = playerRepository.findAllDoc();
-		final String FOLDER_PATH = "/" + "kpl_doc" + "_images";
-		String homeDirPath = FileUtils.getUserDirectoryPath();
-		File directory = new File(homeDirPath + FOLDER_PATH);
-		System.out.println(directory);
-		if (!directory.exists()) {
-			directory.mkdirs();
-		}
-
-		for (int i = 0; i < images.size(); i++) {
-			byte[] imageData = images.get(i);
-			if (imageData != null) {
-				FileOutputStream fileOutputStream = new FileOutputStream(directory + "/" + (i + 1) + ".png");
-				fileOutputStream.write(imageData);
-				fileOutputStream.close();
-			}
-		}
-		return "All images realted to doc section has been downloaded!, please check your C/Users/yourName/kpl_doc_images folder";
 
 	}
 
@@ -222,137 +195,96 @@ public class RegistrationController {
 
 	@PostMapping("/saveAdmin")
 	public AdminInfo saveAdmin(@RequestBody AdminReqVO adminReqVO) throws IOException {
-		return playerService.saveAdminDetails(adminReqVO);		 
+		return playerService.saveAdminDetails(adminReqVO);
 	}
 
-//	Download category specific image
-	
-//	@GetMapping("/downloadGenerueSpImage")
-//	public String downloadAllPlayerImage(@RequestParam String generue) throws IOException {
-//		List<byte[]> images = playerRepository.findAllImageByGenerue(generue);
-//		final String FOLDER_PATH = "/" + generue + "_images";
-//		String homeDirPath = FileUtils.getUserDirectoryPath();
-//		File directory = new File(homeDirPath + FOLDER_PATH);
-//		System.out.println(directory);
-//		if (!directory.exists()) {
-//			directory.mkdirs();
-//		}
-//
-//		for (int i = 0; i < images.size(); i++) {
-//			byte[] imageData = images.get(i);
-//			FileOutputStream fileOutputStream = new FileOutputStream(directory + "/" + (i + 1) + ".png");
-//			fileOutputStream.write(imageData);
-//			fileOutputStream.close();
-//		}
-//		return "All images realted to " + generue + " section has been downloaded!, please check your C/Users/yourName/"
-//				+ generue + "_images folder";
-//
-//	}
-	
-	
-//    @GetMapping("/downloadGenerueSpImage")
-//    public ResponseEntity<ByteArrayResource> downloadAllPlayerImage(@RequestParam String generue) {
-//        // Retrieve the list of images (assuming you have it available)
-//        List<byte[]> images = playerRepository.findAllImageByGenerue(generue);
-//
-//        try {
-//            // Create a byte array output stream to write the ZIP file
-//            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-//            ZipOutputStream zipOut = new ZipOutputStream(outputStream);
-//
-//            // Add each image to the ZIP file
-//            for (int i = 0; i < images.size(); i++) {
-//                byte[] imageData = images.get(i);
-//                String fileName = (i + 1) + ".jpg";
-//
-//                // Create a new entry in the ZIP file
-//                ZipEntry zipEntry = new ZipEntry(fileName);
-//                zipOut.putNextEntry(zipEntry);
-//
-//                // Write the image data to the ZIP file
-//                zipOut.write(imageData);
-//
-//                // Close the current entry
-//                zipOut.closeEntry();
-//            }
-//
-//            // Close the ZIP output stream
-//            zipOut.close();
-//
-//            // Create a byte array resource from the ZIP file content
-//            ByteArrayResource resource = new ByteArrayResource(outputStream.toByteArray());
-//
-//            // Create the response headers for file download
-//            HttpHeaders headers = new HttpHeaders();
-//            headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=images.zip");
-//
-//            // Return the ZIP file as a response entity
-//            return ResponseEntity.ok()
-//                    .headers(headers)
-//                    .contentType(MediaType.APPLICATION_OCTET_STREAM)
-//                    .contentLength(resource.contentLength())
-//                    .body(resource);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-//        }
-//    }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    @GetMapping("/downloadGenerueSpImage")
-    public ResponseEntity<Resource> downloadAllPlayerImage(@RequestParam String generue) {
-        // Retrieve the list of images (assuming you have it available)
-        List<byte[]> images = playerRepository.findAllImageByGenerue(generue);
+	@GetMapping("/downloadGenerueSpImage")
+	public ResponseEntity<Resource> downloadImages(@RequestParam String generue) {
+		// Retrieve the list of images (assuming you have it available)
+		List<byte[]> images = playerRepository.findAllImageByGenerue(generue);
 
-        try {
-            // Create a temporary file for the ZIP
-            File tempFile = File.createTempFile("images", ".zip");
-            FileOutputStream fos = new FileOutputStream(tempFile);
-            ZipOutputStream zipOut = new ZipOutputStream(fos);
+		try {
+			// Create a temporary file for the ZIP
+			File tempFile = File.createTempFile("images", ".zip");
+			FileOutputStream fos = new FileOutputStream(tempFile);
+			ZipOutputStream zipOut = new ZipOutputStream(fos);
 
-            // Add each image to the ZIP file
-            for (int i = 0; i < images.size(); i++) {
-                byte[] imageData = images.get(i);
-                String fileName = "image" + (i + 1) + ".jpg";
+			// Add each image to the ZIP file
+			for (int i = 0; i < images.size(); i++) {
+				byte[] imageData = images.get(i);
+				String fileName = (i + 1) + ".jpg";
 
-                // Create a new entry in the ZIP file
-                zipOut.putNextEntry(new ZipEntry(fileName));
+				// Create a new entry in the ZIP file
+				zipOut.putNextEntry(new ZipEntry(fileName));
 
-                // Write the image data to the ZIP file
-                zipOut.write(imageData);
+				// Write the image data to the ZIP file
+				zipOut.write(imageData);
 
-                // Close the current entry
-                zipOut.closeEntry();
-            }
+				// Close the current entry
+				zipOut.closeEntry();
+			}
 
-            // Close the ZIP output stream
-            zipOut.close();
+			// Close the ZIP output stream
+			zipOut.close();
 
-            // Load the temporary ZIP file as a resource
-            Resource zipFileResource = resourceLoader.getResource("file:" + tempFile.getAbsolutePath());
+			// Load the temporary ZIP file as a resource
+			Resource zipFileResource = resourceLoader.getResource("file:" + tempFile.getAbsolutePath());
 
-            // Set the appropriate response headers for file download
-            HttpHeaders headers = new HttpHeaders();
-            headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=images.zip");
+			// Set the appropriate response headers for file download
+			HttpHeaders headers = new HttpHeaders();
+			headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=playerPhoto.zip");
 
-            // Return the ZIP file as a response entity
-            return ResponseEntity.ok()
-                    .headers(headers)
-                    .contentType(MediaType.APPLICATION_OCTET_STREAM)
-                    .body(zipFileResource);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
-    }
-    
-    
-    
+			// Return the ZIP file as a response entity
+			return ResponseEntity.ok().headers(headers).contentType(MediaType.APPLICATION_OCTET_STREAM)
+					.body(zipFileResource);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
+	}
+
+	@GetMapping("/downloadAllDocImage")
+	public ResponseEntity<Resource> downloadAllDocImage() throws IOException {
+		List<byte[]> images = playerRepository.findAllDoc();
+
+		try {
+			// Create a temporary file for the ZIP
+			File tempFile = File.createTempFile("images", ".zip");
+			FileOutputStream fos = new FileOutputStream(tempFile);
+			ZipOutputStream zipOut = new ZipOutputStream(fos);
+
+			// Add each image to the ZIP file
+			for (int i = 0; i < images.size(); i++) {
+				byte[] imageData = images.get(i);
+				String fileName = (i + 1) + ".jpg";
+
+				// Create a new entry in the ZIP file
+				zipOut.putNextEntry(new ZipEntry(fileName));
+
+				// Write the image data to the ZIP file
+				zipOut.write(imageData);
+
+				// Close the current entry
+				zipOut.closeEntry();
+			}
+
+			// Close the ZIP output stream
+			zipOut.close();
+
+			// Load the temporary ZIP file as a resource
+			Resource zipFileResource = resourceLoader.getResource("file:" + tempFile.getAbsolutePath());
+
+			// Set the appropriate response headers for file download
+			HttpHeaders headers = new HttpHeaders();
+			headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=documents.zip");
+
+			// Return the ZIP file as a response entity
+			return ResponseEntity.ok().headers(headers).contentType(MediaType.APPLICATION_OCTET_STREAM)
+					.body(zipFileResource);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
+	}
+
 }

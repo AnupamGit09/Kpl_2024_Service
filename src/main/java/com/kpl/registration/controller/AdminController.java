@@ -86,17 +86,5 @@ public class AdminController {
 		return "adminView";
 	}
 	
-	
-	@RequestMapping(value = "/downloadDocImg", method = RequestMethod.GET)
-	public String downloadDocImg() throws IOException {
-		registrationController.downloadAllDocImage();
-		return "adminView";
-	}
-	
-	@RequestMapping(value = "/downloadCategorySpecificImage", method = RequestMethod.POST)
-	public String downloadCategorySpecificImage(@RequestParam String playerCategory) throws IOException {
-		registrationController.downloadAllPlayerImage(playerCategory);
-		return "adminView";
-	}
 
 }
