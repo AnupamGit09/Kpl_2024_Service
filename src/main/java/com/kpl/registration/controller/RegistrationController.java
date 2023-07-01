@@ -1,5 +1,6 @@
 package com.kpl.registration.controller;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -9,6 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,7 +20,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 import com.kpl.registration.dto.AdminReqVO;
 import com.kpl.registration.dto.GenericVO;
 import com.kpl.registration.dto.PlayerRequetVO;
@@ -90,29 +104,7 @@ public class RegistrationController {
 		return "Image Master data has been uploaded successfully";
 	}
 
-//	Download category specific image
-	
-	@GetMapping("/downloadGenerueSpImage")
-	public String downloadAllPlayerImage(@RequestParam String generue) throws IOException {
-		List<byte[]> images = playerRepository.findAllImageByGenerue(generue);
-		final String FOLDER_PATH = "/" + generue + "_images";
-		String homeDirPath = FileUtils.getUserDirectoryPath();
-		File directory = new File(homeDirPath + FOLDER_PATH);
-		System.out.println(directory);
-		if (!directory.exists()) {
-			directory.mkdirs();
-		}
 
-		for (int i = 0; i < images.size(); i++) {
-			byte[] imageData = images.get(i);
-			FileOutputStream fileOutputStream = new FileOutputStream(directory + "/" + (i + 1) + ".png");
-			fileOutputStream.write(imageData);
-			fileOutputStream.close();
-		}
-		return "All images realted to " + generue + " section has been downloaded!, please check your C/Users/yourName/"
-				+ generue + "_images folder";
-
-	}
 
 //	update player category to List A
 	
@@ -216,4 +208,76 @@ public class RegistrationController {
 		return playerService.saveAdminDetails(adminReqVO);		 
 	}
 
+//	Download category specific image
+	
+//	@GetMapping("/downloadGenerueSpImage")
+//	public String downloadAllPlayerImage(@RequestParam String generue) throws IOException {
+//		List<byte[]> images = playerRepository.findAllImageByGenerue(generue);
+//		final String FOLDER_PATH = "/" + generue + "_images";
+//		String homeDirPath = FileUtils.getUserDirectoryPath();
+//		File directory = new File(homeDirPath + FOLDER_PATH);
+//		System.out.println(directory);
+//		if (!directory.exists()) {
+//			directory.mkdirs();
+//		}
+//
+//		for (int i = 0; i < images.size(); i++) {
+//			byte[] imageData = images.get(i);
+//			FileOutputStream fileOutputStream = new FileOutputStream(directory + "/" + (i + 1) + ".png");
+//			fileOutputStream.write(imageData);
+//			fileOutputStream.close();
+//		}
+//		return "All images realted to " + generue + " section has been downloaded!, please check your C/Users/yourName/"
+//				+ generue + "_images folder";
+//
+//	}
+	
+	
+    @GetMapping("/downloadGenerueSpImage")
+    public ResponseEntity<ByteArrayResource> downloadAllPlayerImage(@RequestParam String generue) {
+        // Retrieve the list of images (assuming you have it available)
+        List<byte[]> images = playerRepository.findAllImageByGenerue(generue);
+
+        try {
+            // Create a byte array output stream to write the ZIP file
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            ZipOutputStream zipOut = new ZipOutputStream(outputStream);
+
+            // Add each image to the ZIP file
+            for (int i = 0; i < images.size(); i++) {
+                byte[] imageData = images.get(i);
+                String fileName = (i + 1) + ".jpg";
+
+                // Create a new entry in the ZIP file
+                ZipEntry zipEntry = new ZipEntry(fileName);
+                zipOut.putNextEntry(zipEntry);
+
+                // Write the image data to the ZIP file
+                zipOut.write(imageData);
+
+                // Close the current entry
+                zipOut.closeEntry();
+            }
+
+            // Close the ZIP output stream
+            zipOut.close();
+
+            // Create a byte array resource from the ZIP file content
+            ByteArrayResource resource = new ByteArrayResource(outputStream.toByteArray());
+
+            // Create the response headers for file download
+            HttpHeaders headers = new HttpHeaders();
+            headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=images.zip");
+
+            // Return the ZIP file as a response entity
+            return ResponseEntity.ok()
+                    .headers(headers)
+                    .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                    .contentLength(resource.contentLength())
+                    .body(resource);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
 }
