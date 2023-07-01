@@ -73,14 +73,14 @@
 
     <div >
       <h2>All document download based <br>on registration ID</p>
-    <form action="https://kpl-test-v01-production.up.railway.app/kpl/registration/api/downloadDocImg" method="GET">
+    <form action="https://kpl-test-v01-production.up.railway.app/kpl/registration/api/downloadAllDocImage" method="c">
         <button type="submit">Download all document</button>
     </form>
     </div>
     <div class="select-box">
       <h2>Player category specific photo download</p>
-      <form action="https://kpl-test-v01-production.up.railway.app/kpl/registration/api/downloadCategorySpecificImage" method="post">
-      <select name="playerCategory">
+      <form action="https://kpl-test-v01-production.up.railway.app/kpl/registration/api/downloadGenerueSpImage" method="get">
+      <select name="generue">
         <option hidden>Player Category</option>
         <option value="Batsman">Batsman</option>
         <option value="Bowler">Bowler</option>
