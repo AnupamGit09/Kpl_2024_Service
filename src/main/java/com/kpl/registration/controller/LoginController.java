@@ -139,12 +139,12 @@ public class LoginController {
 			return "signUp";
 		}
 
-		if (!(playerCategory.toString().equals("Player Category"))) {
+		if (playerCategory.toString().equals("Player Category")) {
 			model.addAttribute("errorMessage", "Please Select Your Category");
 			return "signUp";
 		}
 		
-		if (!(location.toString().equals("Your Home location"))) {
+		if (location.toString().equals("Your Home location")) {
 			model.addAttribute("errorMessage", "Please Select Your Home Location");
 			return "signUp";
 		}
