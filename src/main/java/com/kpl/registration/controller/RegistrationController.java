@@ -93,7 +93,7 @@ public class RegistrationController {
 		return playerService.getRegistrationStatus(id, password);
 	}
 
-	// category specific player PDF
+	// category specific player PDF for owners
 
 	@GetMapping("generate/playerPdf")
 	public void generueSpecificPlayerPdf(HttpServletResponse response, @RequestParam("generue") String generue,
@@ -147,6 +147,8 @@ public class RegistrationController {
 
 	}
 
+//	for committee
+	
 	@GetMapping("generate/finalPlayerListPdf")
 	public void generueFinalPlayerPdf(HttpServletResponse response, @RequestParam("generue") String generue,
 			Model model) throws Exception {

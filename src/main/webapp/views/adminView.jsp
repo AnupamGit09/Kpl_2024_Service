@@ -171,8 +171,8 @@
         </form>
     </div>
     <div class="select-box">
-      <h2>Player category specific photo download</p>
-        <form action="https://kpl-test-v01-production.up.railway.app/kpl/registration/api/downloadGenerueSpImage"
+      <h2>Player category specific pdf for committee</p>
+        <form action="https://kpl-test-v01-production.up.railway.app/kpl/registration/api/generate/finalPlayerListPdf"
           method="get">
           <select name="generue" style="width: 124px;
           height: 40px;">
@@ -185,7 +185,7 @@
           </select>
           <button type="submit" style="    width: 148px;
       height: 52px;
-      border-radius: 24px;">Download category specific image</button>
+      border-radius: 24px;">Download specific pdf for committee</button>
         </form>
     </div>
   </div>
@@ -210,7 +210,7 @@
         </form>
     </div>
     <div class="select-box">
-         <h2>Player category specific pdf for committee</p>
+         <h2>Player category specific pdf for owners</p>
         <form action="https://kpl-test-v01-production.up.railway.app/kpl/registration/api/generate/playerPdf"
           method="get" target="_blank">
           <select name="generue" style="    width: 124px;
@@ -224,7 +224,7 @@
           </select>
           <button type="submit" style="    width: 148px;
       height: 52px;
-      border-radius: 24px;">Download category specific pdf</button>
+      border-radius: 24px;">Download category specific pdf for owners</button>
         </form>
     </div>
   </div>
