@@ -70,7 +70,7 @@ public interface PlayerRepository extends JpaRepository<PlayerInfo, Long> {
 
 	@Transactional
 	@Modifying
-	@Query(value = "update player_registration set sold_amount=?2 and sold_team=?3  where registration_id=?1", nativeQuery = true)
+	@Query(value = "update player_registration set sold_amount=?2 , sold_team=?3  where registration_id=?1", nativeQuery = true)
 	void updateSoldamountAndTeam(Long regID, Long soldAmount, String soldTeam);
 
 	@Query(value = "select * from player_registration  where sold_team=?1", nativeQuery = true)

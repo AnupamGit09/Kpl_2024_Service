@@ -129,9 +129,16 @@ button:hover {
     <label for="psw"><b>Password</b></label>
     <input type="password" name="password" placeholder="Enter Password" name="psw" required>
     <div><br></div>
-    <button type="submit"data-label="Sign In" class="rainbow-hover" value="login">
-        <span class="sp">Sign In</span>
-      </button>     
+    <div style="display: flex;
+    justify-content: space-between;">
+    <!-- <button type="submit" name="button1" value="clicked">Button 1</button> -->
+      <button type="submit" name="dashboard" data-label="dashboard View" class="rainbow-hover" value="login">
+        <span class="sp">Dashboard View</span>
+      </button> 
+      <button name="liveData" type="submit"data-label="Live Data Feed" class="rainbow-hover" value="Live Data Feed">
+        <span class="sp">Live Data Feed</span>
+      </button>   
+    </div>  
 </div>
 </form>
 <% if (request.getAttribute("errorShown")==null) { %>

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -28,10 +29,7 @@ public class AdminController {
 	RegistrationController registrationController;
 	@Autowired
 	PlayerRepository playerRepository;
-//	@Autowired
-//	AdminService adminService;
-//	@Autowired
-//	ModelMapper map;
+
 
 	@GetMapping(value = "/adminDashboardLogin")
 	public String adminDashboardLogin() {
@@ -39,10 +37,17 @@ public class AdminController {
 	}
 
 	@RequestMapping(value = "/adminDashboardView", method = RequestMethod.POST)
-	public String adminLogin(@RequestParam String id, @RequestParam String password, Model model) {
+	public String adminLogin(@RequestParam String id, @RequestParam String password, Model model,
+			@RequestParam(value = "dashboard", required = false) String dashboard,
+			@RequestParam(value = "liveData", required = false) String liveData) {
 		String res = adminRepo.adminLoginValidation(id, password);
 		if (res != null) {
-			return "adminView";
+			if (dashboard != null) {
+				return "dataFeed";
+			} else {
+
+				return "adminView";
+			}
 		} else {
 			model.addAttribute("errorMessage", "Please input valid id and pasword");
 			return "adminLogin";
@@ -50,10 +55,10 @@ public class AdminController {
 	}
 
 	@RequestMapping(value = "/adminDashboardView", method = RequestMethod.GET)
-	public String adminLoginValidationDisableForward( Model model) {
-			return "adminLogin";
+	public String adminLoginValidationDisableForward(Model model) {
+		return "adminLogin";
 	}
-	
+
 	@RequestMapping(value = "/updateCategory", method = RequestMethod.POST)
 	public String updateCategory(@RequestParam String regid, Model model) throws IOException {
 		String[] listOfId = regid.split(",");
@@ -73,10 +78,10 @@ public class AdminController {
 		model.addAttribute("errorMessage", "Players has been transferred to List A");
 		return "adminView";
 	}
-	
-	
+
 	@RequestMapping(value = "/paymentUpdate", method = RequestMethod.POST)
-	public String paymentUpdate(@RequestParam String regid, Model model) throws IOException, MessagingException, TemplateException {
+	public String paymentUpdate(@RequestParam String regid, Model model)
+			throws IOException, MessagingException, TemplateException {
 		String[] listOfId = regid.split(",");
 
 		// Convert the array to a list
@@ -94,6 +99,28 @@ public class AdminController {
 		model.addAttribute("errorMessage", "Payment details has been updated");
 		return "adminView";
 	}
-	
 
+	@GetMapping("/liveDataFeeding")
+	public String test() {
+		return "dataFeed";
+	}
+
+	@PostMapping("/soldAmountandTeam")
+	public String saveSoldTeamAndAmount(@RequestParam("id") Long id, @RequestParam("soldAmount") Long soldAmount,
+			@RequestParam("team") String team, Model model) throws Exception {
+		registrationController.saveSoldTeamAndAmount(id, soldAmount, team);
+		model.addAttribute("errorMessage", "Data Updated For Reg ID : " + id);
+		return "dataFeed";
+	}
+
+//	@PostMapping("/adminView")
+//	public String adminView(@RequestParam(value = "dashboard", required = false) String dashboard,
+//			@RequestParam(value = "liveData", required = false) String liveData) {
+//		if (button1 != null) {
+//			return "redirect:/page1";
+//		} else if (liveData != null) {
+//			return "redirect:/page2";
+//		}
+//		return "dataFeed";
+//	}
 }

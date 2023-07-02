@@ -312,8 +312,8 @@ public class RegistrationController {
 
 	@PostMapping("/soldAmountandTeam")
 	public void saveSoldTeamAndAmount(@RequestParam("id") Long regID, @RequestParam("soldAmount") Long soldAmount,
-			@RequestParam("soldTeam") String soldTeam) throws Exception {
-		playerRepository.updateSoldamountAndTeam(regID, soldAmount, soldTeam);
+			@RequestParam("team") String team) throws Exception {
+		playerRepository.updateSoldamountAndTeam(regID, soldAmount, team);
 	}
 
 	@GetMapping("/teamList")
@@ -361,4 +361,15 @@ public class RegistrationController {
 		log.info("           ::::::::::::::::             /kpl/registration/api/findAll");
 		return playerInfoVOList;
 	}
+	
+	
+//	API to search player based on Registration ID
+	 @GetMapping("/search")
+	    public PlayerInfo searchDataById(@RequestParam("id") Long id, Model model) {
+	        var searchData = playerRepository.findDataByregistrationId(id);	        
+	        if (searchData != null) {
+	            model.addAttribute("data", searchData);
+	        }
+	        return searchData;
+	    }
 }
