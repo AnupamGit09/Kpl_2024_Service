@@ -288,7 +288,7 @@
           if (errorContainer) {
             errorContainer.style.display = 'none';
           }
-        }, 5000);
+        }, 10000);
       </script>
 
       <% request.setAttribute("errorShown", true); %>

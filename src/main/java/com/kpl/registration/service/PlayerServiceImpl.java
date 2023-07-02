@@ -99,7 +99,7 @@ public class PlayerServiceImpl implements PlayerService {
 
 		try {
 			sendMail(playerInfo);
-			genericVO.setResponse("You have been successfully Registered and check your registered mail");
+			genericVO.setResponse("You have been Registered successfully, please check your registered mail");
 			return genericVO;
 		} catch (Exception e) {
 			genericVO.setResponse("You have been successfully Registered");

@@ -43,7 +43,7 @@
       </div>
       <div class="message" style=" padding-left: 3%;padding-right: 3%">
         <h4>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Your initial registration is completed. Please ensure that you have paid the initial registration fees within the time frame and provide the <font color="red">registration ID</font>  to the committee for further processing.
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Your initial registration is completed. Please ensure that you have paid the registration fees within the time frame and provide the <font color="red">registration ID</font>  to the committee for further proceedings.
         </h4>  
       
         <h4>
@@ -53,6 +53,7 @@
         <div style="padding-left: 10%;padding-right: 5%;">
           <strong>Name :  ${name}</strong><br>
           <strong>Address :  ${address}</strong><br>
+           <strong>Playing Category :  ${category}</strong><br>
           <strong>Phone Number :  ${phNo}</strong><br>
           <strong>Email ID :  ${mail}</strong><br>
           <strong>Location Category :  ${location}</strong><br>

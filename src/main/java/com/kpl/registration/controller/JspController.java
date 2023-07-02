@@ -16,10 +16,5 @@ RegistrationController registrationController;
 	public String home(Model model) {
 		return "home";
 	}
-//	@RequestMapping("/login")
-//	public String login(Model model) throws IOException {
-////		RegistrationResponse registrationResponse=registrationController.registrationStatus(searchParam);
-//		 model.addAttribute("message","test message");
-//		return "login";
-//	}
+	
 }

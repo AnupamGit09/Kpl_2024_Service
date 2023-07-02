@@ -15,7 +15,7 @@ public class RegistrationResponse {
 	private Long registrationId;
 	private String playerFirstName;
 	private String playerLastName;
-	@JsonFormat(pattern = "dd.MM.yyyy HH:mm:ss", timezone = "Asia/Kolkata")
+	@JsonFormat(pattern = "dd.MM.yyyy HH:mm:ss")
 	private LocalDateTime registrationTime;
 	private String paymentValidation;
 }
