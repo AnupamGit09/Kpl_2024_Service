@@ -45,7 +45,7 @@ public class AdminController {
 			if (dashboard.equals("dashboard")) {
 				return "adminView";
 			} else {
-				return "dataFeed";
+				return "liveDataFeeding";
 			}
 		} else {
 			model.addAttribute("errorMessage", "Please input valid id and pasword");

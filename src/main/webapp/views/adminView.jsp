@@ -123,7 +123,7 @@
     <div>
       <h2>Document Front side download based <br>on registration ID</p>
         <form action="https://kpl-test-v01-production.up.railway.app/kpl/registration/api/downloadAllDocFrontImage"
-          method="c">
+          method="get">
           <button type="submit" style="    width: 148px;
         height: 52px;
         border-radius: 24px;">Download document Front</button>
@@ -164,7 +164,7 @@
     <div>
       <h2>Document Back side download based <br>on registration ID</p>
         <form action="https://kpl-test-v01-production.up.railway.app/kpl/registration/api/downloadAllDocBackImage"
-          method="c">
+          method="get">
           <button type="submit" style="    width: 148px;
         height: 52px;
         border-radius: 24px;">Download document Back</button>
@@ -172,22 +172,22 @@
     </div>
     <div class="select-box">
       <h2>Player category specific pdf for committee</p>
-        <form action="https://kpl-test-v01-production.up.railway.app/kpl/registration/api/generate/finalPlayerListPdf"
-          method="get">
-          <select name="generue" style="width: 124px;
-          height: 40px;">
-            <option hidden>Player Category</option>
-            <option value="Batsman">Batsman</option>
-            <option value="Bowler">Bowler</option>
-            <option value="Wicket Keeper">Wicket Keeper</option>
-            <option value="All Rounder">All Rounder</option>
-            <option value="List A">List A</option>
-          </select>
-          <button type="submit" style="    width: 148px;
-      height: 52px;
-      border-radius: 24px;">Download specific pdf for committee</button>
-        </form>
-    </div>
+     <form action="https://kpl-test-v01-production.up.railway.app/kpl/registration/api/generate/finalPlayerListPdf"
+       method="get" target="_blank">
+       <select name="generue" style="    width: 124px;
+   height: 40px;">
+         <option hidden>Player Category</option>
+         <option value="Batsman">Batsman</option>
+         <option value="Bowler">Bowler</option>
+         <option value="Wicket Keeper">Wicket Keeper</option>
+         <option value="All Rounder">All Rounder</option>
+         <option value="List A">List A</option>
+       </select>
+       <button type="submit" style="    width: 148px;
+   height: 52px;
+   border-radius: 24px;">Download category specific pdf for committee</button>
+     </form>
+ </div>
   </div>
 
 
