@@ -196,8 +196,8 @@
           <input type="number" name="aadharNo" placeholder="Enter Your Aadhaar card No" required />
         </div>
         <div class="input-box">
-          <label>Aadhaar Card Image</label>
-          <input type="file" name="docImage" accept="image/**" required />
+          <label>Aadhaar Card Front Image</label>
+          <input type="file" name="docImageFront" accept="image/**" required />
         </div>
       </div>
 
@@ -207,7 +207,7 @@
           <input type="number" name="phNo" placeholder="Enter phone number" required />
         </div>
         <div class="input-box">
-          <label>Birth Date</label>
+          <label>Date of Birth</label>
           <input type="date" name="dob" placeholder="Enter birth date" required />
         </div>
       </div>

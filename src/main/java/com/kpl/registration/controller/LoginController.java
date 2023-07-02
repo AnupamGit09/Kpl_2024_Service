@@ -118,7 +118,7 @@ public class LoginController {
 
 	@RequestMapping(value = "/signUp", method = RequestMethod.POST)
 	public String signUp(@RequestParam String playerFirstName, @RequestParam String playerLastName,
-			@RequestParam Long aadharNo, @RequestParam MultipartFile docImage, @RequestParam Long phNo,
+			@RequestParam Long aadharNo, @RequestParam MultipartFile docImageBack,@RequestParam MultipartFile docImageFront, @RequestParam Long phNo,
 			@RequestParam String dob, @RequestParam Long pinCode, @RequestParam MultipartFile playerPhoto,
 			@RequestParam String address, @RequestParam String password, @RequestParam String location,
 			@RequestParam String playerCategory, @RequestParam String mail, Model model)
@@ -141,10 +141,17 @@ public class LoginController {
 			return "signUp";
 		}
 
-		if (!(docImage.getOriginalFilename().toString().toLowerCase().endsWith(".png")
-				|| docImage.getOriginalFilename().toString().toLowerCase().endsWith(".jpg"))) {
+		if (!(docImageFront.getOriginalFilename().toString().toLowerCase().endsWith(".png")
+				|| docImageFront.getOriginalFilename().toString().toLowerCase().endsWith(".jpg"))) {
 			model.addAttribute("errorMessage",
-					"Aadhaar Card photo must be an Image and it should be in jpg or png format");
+					"Aadhaar Card Front Image must be an Image and it should be in jpg or png format");
+			return "signUp";
+		}
+
+		if (!(docImageBack.getOriginalFilename().toString().toLowerCase().endsWith(".png")
+				|| docImageBack.getOriginalFilename().toString().toLowerCase().endsWith(".jpg"))) {
+			model.addAttribute("errorMessage",
+					"Aadhaar Card Back Image must be an Image and it should be in jpg or png format");
 			return "signUp";
 		}
 		if (!(playerPhoto.getOriginalFilename().toString().toLowerCase().endsWith(".png")
@@ -162,10 +169,14 @@ public class LoginController {
 			return "signUp";
 		}
 
-		System.out.println(docImage.getSize());
 		
-		if (docImage.getSize() > 1 * 512 * 1024) {
-			model.addAttribute("errorMessage", "Please Compress your Aadhar Image less than 512 KB");
+		if (docImageFront.getSize() > 1 * 512 * 1024) {
+			model.addAttribute("errorMessage", "Please Compress your Aadhar Front Image less than 512 KB");
+			return "signUp";
+		}
+
+		if (docImageBack.getSize() > 1 * 512 * 1024) {
+			model.addAttribute("errorMessage", "Please Compress your Back Aadhar Image less than 512 KB");
 			return "signUp";
 		}
 
@@ -202,8 +213,9 @@ public class LoginController {
 		playerRequetVO.setPassword(password);
 		playerRequetVO.setLocation(location);
 		byte[] imageData = playerPhoto.getBytes();
-		byte[] docData = docImage.getBytes();
-		var res=playerService.savePlayerInfo(playerRequetVO, imageData, docData);
+		byte[] docDataFront = docImageFront.getBytes();
+		byte[] docDataBack = docImageBack.getBytes();
+		var res=playerService.savePlayerInfo(playerRequetVO, imageData, docDataFront,docDataBack);
 		model.addAttribute("errorMessage", res.getResponse());
 		return "login";
 

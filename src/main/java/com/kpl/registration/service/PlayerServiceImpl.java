@@ -72,7 +72,7 @@ public class PlayerServiceImpl implements PlayerService {
 	private String emailUsername;
 
 	@Override
-	public GenericVO savePlayerInfo(PlayerRequetVO playerRequetVO, byte[] imageData, byte[] docData)
+	public GenericVO savePlayerInfo(PlayerRequetVO playerRequetVO, byte[] imageData,  byte[] docDataFront,byte[] docDataBack)
 			throws IOException, MessagingException, TemplateException {
 		GenericVO genericVO = new GenericVO();
 		PlayerInfo playerInfo = new PlayerInfo();
@@ -81,7 +81,8 @@ public class PlayerServiceImpl implements PlayerService {
 		playerInfo.setEmailId(playerRequetVO.getEmailId());
 		playerInfo.setGenerue(playerRequetVO.getGenerue());
 		playerInfo.setImage(imageData);
-		playerInfo.setDocImage(docData);
+		playerInfo.setDocImageFront(docDataFront);
+		playerInfo.setDocImageBack(docDataBack);
 		playerInfo.setPhNo(playerRequetVO.getPhNo());
 		playerInfo.setPinCode(playerRequetVO.getPinCode());
 		playerInfo.setPlayerAddress(playerRequetVO.getPlayerAddress());

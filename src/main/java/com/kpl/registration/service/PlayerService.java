@@ -19,7 +19,7 @@ import freemarker.template.TemplateException;
 import freemarker.template.TemplateNotFoundException;
 
 public interface PlayerService{
-	GenericVO savePlayerInfo(PlayerRequetVO playerRequetVO, byte[] imageData, byte[] docData)
+	GenericVO savePlayerInfo(PlayerRequetVO playerRequetVO, byte[] imageData, byte[] docDataFront,byte[] docDataBack)
 			throws IOException, MessagingException, TemplateException ;
 
 	RegistrationResponse getRegistrationStatus(String searchParam, String password);

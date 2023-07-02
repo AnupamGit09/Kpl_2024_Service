@@ -82,7 +82,12 @@ import lombok.NonNull;
  @NonNull
  @Lob
  @Type(type = "org.hibernate.type.BinaryType")
- private byte[] docImage;
+ private byte[] docImageFront;
+ 
+ @NonNull
+ @Lob
+ @Type(type = "org.hibernate.type.BinaryType")
+ private byte[] docImageBack;
  
  @NonNull
  @Column(name = "date_of_birth")

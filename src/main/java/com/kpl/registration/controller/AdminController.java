@@ -42,11 +42,10 @@ public class AdminController {
 			@RequestParam(value = "liveData", required = false) String liveData) {
 		String res = adminRepo.adminLoginValidation(id, password);
 		if (res != null) {
-			if (dashboard != null) {
-				return "dataFeed";
-			} else {
-
+			if (dashboard.equals("dashboard")) {
 				return "adminView";
+			} else {
+				return "dataFeed";
 			}
 		} else {
 			model.addAttribute("errorMessage", "Please input valid id and pasword");

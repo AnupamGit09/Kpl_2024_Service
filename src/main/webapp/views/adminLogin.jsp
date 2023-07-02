@@ -132,10 +132,10 @@ button:hover {
     <div style="display: flex;
     justify-content: space-between;">
     <!-- <button type="submit" name="button1" value="clicked">Button 1</button> -->
-      <button type="submit" name="dashboard" data-label="dashboard View" class="rainbow-hover" value="login">
+      <button type="submit" name="dashboard" data-label="dashboard" class="rainbow-hover" value="dashboard">
         <span class="sp">Dashboard View</span>
       </button> 
-      <button name="liveData" type="submit"data-label="Live Data Feed" class="rainbow-hover" value="Live Data Feed">
+      <button type="submit" name="liveData"   data-label="liveData" class="rainbow-hover" value="liveData">
         <span class="sp">Live Data Feed</span>
       </button>   
     </div>  

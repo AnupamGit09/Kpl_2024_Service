@@ -79,11 +79,12 @@ public class RegistrationController {
 
 	@PostMapping("/completeRegistration")
 	public GenericVO saveRegistration(@RequestBody PlayerRequetVO playerRequetVO,
-			@RequestParam("file") MultipartFile file, @RequestParam("file") MultipartFile docFile)
+			@RequestParam("file") MultipartFile file, @RequestParam("file") MultipartFile docFileFront,@RequestParam("file") MultipartFile docFileBack)
 			throws IOException, MessagingException, TemplateException {
 		byte[] imageData = file.getBytes();
-		byte[] docData = docFile.getBytes();
-		return playerService.savePlayerInfo(playerRequetVO, imageData, docData);
+		byte[] docDataFront = docFileFront.getBytes();
+		byte[] docDataBack=docFileBack.getBytes();
+		return playerService.savePlayerInfo(playerRequetVO, imageData, docDataFront,docDataBack);
 	}
 
 	@GetMapping("/getYourRegistrationStatus")
@@ -361,15 +362,14 @@ public class RegistrationController {
 		log.info("           ::::::::::::::::             /kpl/registration/api/findAll");
 		return playerInfoVOList;
 	}
-	
-	
+
 //	API to search player based on Registration ID
-	 @GetMapping("/search")
-	    public PlayerInfo searchDataById(@RequestParam("id") Long id, Model model) {
-	        var searchData = playerRepository.findDataByregistrationId(id);	        
-	        if (searchData != null) {
-	            model.addAttribute("data", searchData);
-	        }
-	        return searchData;
-	    }
+	@GetMapping("/search")
+	public PlayerInfo searchDataById(@RequestParam("id") Long id, Model model) {
+		var searchData = playerRepository.findDataByregistrationId(id);
+		if (searchData != null) {
+			model.addAttribute("data", searchData);
+		}
+		return searchData;
+	}
 }
