@@ -50,8 +50,7 @@ public class AdminController {
 	}
 
 	@RequestMapping(value = "/adminDashboardView", method = RequestMethod.GET)
-	public String adminLoginValidationDisableForward(@RequestParam String id, @RequestParam String password, Model model) {
-			model.addAttribute("errorMessage", "You can't go forward without entering used ID and password once again");
+	public String adminLoginValidationDisableForward( Model model) {
 			return "adminLogin";
 	}
 	
