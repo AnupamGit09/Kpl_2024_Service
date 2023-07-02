@@ -42,10 +42,10 @@ public class AdminController {
 			@RequestParam(value = "liveData", required = false) String liveData) {
 		String res = adminRepo.adminLoginValidation(id, password);
 		if (res != null) {
-			if (dashboard.equals("dashboard")) {
+			if (dashboard!=null) {
 				return "adminView";
 			} else {
-				return "liveDataFeeding";
+				return "dataFeed";
 			}
 		} else {
 			model.addAttribute("errorMessage", "Please input valid id and pasword");
@@ -101,7 +101,7 @@ public class AdminController {
 
 	@GetMapping("/liveDataFeeding")
 	public String test() {
-		return "dataFeed";
+		return "adminLogin";
 	}
 
 	@PostMapping("/soldAmountandTeam")
