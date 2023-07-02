@@ -49,6 +49,12 @@ public class AdminController {
 		}
 	}
 
+	@RequestMapping(value = "/adminDashboardView", method = RequestMethod.GET)
+	public String adminLoginValidationDisableForward(@RequestParam String id, @RequestParam String password, Model model) {
+			model.addAttribute("errorMessage", "You can't go forward without entering used ID and password once again");
+			return "adminLogin";
+	}
+	
 	@RequestMapping(value = "/updateCategory", method = RequestMethod.POST)
 	public String updateCategory(@RequestParam String regid, Model model) throws IOException {
 		String[] listOfId = regid.split(",");

@@ -11,6 +11,17 @@
 
   gtag('config', 'G-2DKXMGP7B2');
 </script>
+
+<script type="text/javascript">
+  // Function to disable forward navigation
+  function disableForwardButton() {
+    history.pushState(null, null, document.URL);
+    window.addEventListener('popstate', function () {
+      history.pushState(null, null, document.URL);
+    });
+  }
+</script>
+
   <title>Admin Dashboard</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -69,7 +80,7 @@
   </style>
 </head>
 
-<body>
+<body onload="disableForwardButton()">
   <% if (request.getAttribute("errorShown") == null) { %>
     <c:if test="${not empty errorMessage && 'POST' eq pageContext.request.method}">
    

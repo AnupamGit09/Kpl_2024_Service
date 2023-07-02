@@ -6,6 +6,18 @@
         <html lang="en">
             <link rel="icon" href="${pageContext.request.contextPath}/images/transparent_logo.ico" type="image/x-icon">
         <head>
+            <script type="text/javascript">
+                // Function to disable forward navigation
+                function disableForwardButton() {
+                  history.pushState(null, null, document.URL);
+                  window.addEventListener('popstate', function () {
+                    history.pushState(null, null, document.URL);
+                  });
+                }
+              </script>
+
+
+
             <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-2DKXMGP7B2"></script>
 <script>
@@ -218,7 +230,8 @@
             </style>
         </head>
 
-        <body>
+        <body onload="disableForwardButton()">
+              
             <header>
                 <div class="wrapper">
                     <div class="logo">

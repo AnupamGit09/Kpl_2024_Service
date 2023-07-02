@@ -73,6 +73,18 @@ public class LoginController {
 		}
 	}
 
+	
+	
+	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	public String loginValidationOnForwardAgain( Model model)
+			throws IOException, ParseException {
+			model.addAttribute("errorMessage", "You can't go forward without entering used ID and password once again");
+			return "login";
+	}
+	
+	
+	
+	
 	@GetMapping("/playerView")
 	public String playerView() {
 		return "playerView";
