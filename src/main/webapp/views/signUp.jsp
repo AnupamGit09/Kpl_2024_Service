@@ -1,17 +1,18 @@
 <!DOCTYPE html>
 <!---Coding By CodingLab | www.codinglabweb.com--->
 <html lang="en">
-  <link rel="icon" href="${pageContext.request.contextPath}/images/transparent_logo.ico" type="image/x-icon">
+<link rel="icon" href="${pageContext.request.contextPath}/images/transparent_logo.ico" type="image/x-icon">
+
 <head>
   <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-2DKXMGP7B2"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-2DKXMGP7B2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
 
-  gtag('config', 'G-2DKXMGP7B2');
-</script>
+    gtag('config', 'G-2DKXMGP7B2');
+  </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta http-equiv="X-UA-Compatible" content="ie=edge" />
@@ -34,7 +35,7 @@
       align-items: center;
       justify-content: center;
       padding: 20px;
-      background:  #d3df5b;
+      background: #d3df5b;
     }
 
     .container {
@@ -164,118 +165,135 @@
       }
 
       .error-message {
-    color: #ff0000;
-    font-weight: bold;
-    margin-top: 5px;
-}
+        color: #ff0000;
+        font-weight: bold;
+        margin-top: 5px;
+      }
     }
   </style>
 </head>
 
 <body>
-  <% if (request.getAttribute("errorShown") == null) { %>
+  <% if (request.getAttribute("errorShown")==null) { %>
     <c:if test="${not empty errorMessage && 'POST' eq pageContext.request.method}">
-   
-  <section class="container">
-    <header>Registration Form</header>
-    <form action="https://kpl-test-v01-production.up.railway.app/signUp" class="form" method="post" enctype="multipart/form-data">
-      <div class="column">
-        <div class="input-box">
-          <label>First Name</label>
-          <input type="text" name="playerFirstName" placeholder="Enter Your FirstName" required />
-        </div>
-        <div class="input-box">
-          <label>Last Name</label>
-          <input type="text" name="playerLastName" placeholder="Enter Your LastName" required />
-        </div>
-      </div>
 
-      <div class="column">
-        <div class="input-box">
-          <label>Aadhaar No</label>
-          <input type="number" name="aadharNo" placeholder="Enter Your Aadhaar card No" required />
-        </div>
-        <div class="input-box">
-          <label>Aadhaar Card Front Image</label>
-          <input type="file" name="docImageFront" accept="image/**" required />
-        </div>
-      </div>
+      <section class="container">
+        <header>Registration Form</header>
+        <form action="http://192.168.0.200:1999/signUp" class="form" method="post" enctype="multipart/form-data">
+          <div class="column">
+            <div class="input-box">
+              <label>First Name</label>
+              <input type="text" name="playerFirstName" placeholder="Enter Your FirstName" required />
+            </div>
+            <div class="input-box">
+              <label>Last Name</label>
+              <input type="text" name="playerLastName" placeholder="Enter Your LastName" required />
+            </div>
+          </div>
 
-      <div class="column">
-        <div class="input-box">
+          <div class="column">
+            <div class="input-box">
+              <label>Aadhaar No</label>
+              <input type="number" name="aadharNo" maxlength="12" placeholder="Enter Your Aadhaar card No" required />
+            </div>
+            <div class="input-box">
+              <label>Phone Number</label>
+              <input type="number" name="phNo" maxlength="10" placeholder="Enter phone number" required />
+            </div>
+            <!-- <div class="input-box">
+          <label>Aadhaar Card Image</label>
+          <input type="file" name="docImage" accept="image/**" required />
+        </div> -->
+          </div>
+
+          <div class="column">
+            <div class="input-box">
+              <label>Aadhaar Card Image Front</label>
+              <input type="file" name="docImageFront" accept="image/**" required />
+            </div>
+            <!-- <div class="input-box">
           <label>Phone Number</label>
-          <input type="number" name="phNo" placeholder="Enter phone number" required />
-        </div>
-        <div class="input-box">
-          <label>Date of Birth</label>
-          <input type="date" name="dob" placeholder="Enter birth date" required />
-        </div>
-      </div>
-    </div>
-    <div class="error-message">
-      <h2 style="color: #ff0000; padding-left: 10%; font-size:300%">${errorMessage}</h2>
-  </div>
-      <div class="input-box address">
-        <div class="input-box">
-          <label>Address</label>
-          <input type="text" name="address" placeholder="Enter Your Full address" required />
-        </div>
-        <div class="column">
-          <div class="select-box">
-            <select name="location">
-              <option hidden>Your Home location</option>
-              <option value="Local">Local(Kumra Panchayet)</option>
-              <option value="Overseas">Overseas</option>
-            </select>
+          <input type="number" name="phNo" maxlength="10"  placeholder="Enter phone number" required />
+        </div> -->
+            <div class="input-box">
+              <label>Aadhaar Card Image Back</label>
+              <input type="file" name="docImageBack" accept="image/**" required />
+            </div>
+          </div>
+          <div class="column">
+            <div class="input-box">
+              <label>Birth Date</label>
+              <input type="date" name="dob" placeholder="Enter birth date" required />
+            </div>
           </div>
 
-          <input type="email" name="mail" placeholder="Enter email ID" required/>
-        </div>
-        <div class="column">
-          <div class="select-box">
-            <select name="playerCategory">
-              <option hidden>Player Category</option>
-              <option value="Batsman">Batsman</option>
-              <option value="Bowler">Bowler</option>
-              <option value="Wicket Keeper">Wicket Keeper</option>
-              <option value="All Rounder">All Rounder</option>
-            </select>
           </div>
-          <input type="Number" name="pinCode" placeholder="Enter postal code" required />
-        </div>
-        <div class="column">
+          </div>
+          <div class="error-message">
+            <h2 style="color: #ff0000; padding-left: 10%; font-size:300%">${errorMessage}</h2>
+          </div>
+          <div class="input-box address">
+            <div class="input-box">
+              <label>Address</label>
+              <input type="text" name="address" placeholder="Enter Your Full address" required />
+            </div>
+            <div class="column">
+              <div class="select-box">
+                <select name="location">
+                  <option hidden>Your Home location</option>
+                  <option value="Local">Local(Kumra Panchayet)</option>
+                  <option value="Overseas">Overseas</option>
+                </select>
+              </div>
 
-          <div class="input-box">
-            <label>Your Photo</label>
-            <input type="file" name="playerPhoto" accept="image/**" required />
-          </div>
-          <div class="input-box">
-            <label>password</label>
-            <input type="password" name="password" placeholder="more than 3 and less than 9 digit" required />
-          </div>
-        </div>
-      
-      <div class="col-md-6 offset-md-4">
-        <button type="submit" class="btn btn-primary" value="signUp">
-          Submit
-        </button>
-      </div>
-    </form>
-  </section>
+              <input type="email" name="mail" placeholder="Enter email ID" required />
+            </div>
+            <div class="column">
+              <div class="select-box">
+                <select name="playerCategory">
+                  <option hidden>Player Category</option>
+                  <option value="Batsman">Batsman</option>
+                  <option value="Bowler">Bowler</option>
+                  <option value="Wicket Keeper">Wicket Keeper</option>
+                  <option value="All Rounder">All Rounder</option>
+                </select>
+              </div>
+              <input type="Number" name="pinCode" placeholder="Enter postal code" maxlength="6" required />
+            </div>
+            <div class="column">
 
-  <script>
-    // JavaScript code to hide the error message after 5 seconds
-    setTimeout(function () {
-        var errorContainer = document.querySelector('.error-message');
-        if (errorContainer) {
+              <div class="input-box">
+                <label>Your Photo</label>
+                <input type="file" name="playerPhoto" accept="image/**" required />
+              </div>
+              <div class="input-box">
+                <label>password</label>
+                <input type="password" name="password" maxlength="8" placeholder="more than 3 and less than 9 digit"
+                  required />
+              </div>
+            </div>
+
+            <div class="col-md-6 offset-md-4">
+              <button type="submit" class="btn btn-primary" value="signUp">
+                Submit
+              </button>
+            </div>
+        </form>
+      </section>
+
+      <script>
+        // JavaScript code to hide the error message after 5 seconds
+        setTimeout(function () {
+          var errorContainer = document.querySelector('.error-message');
+          if (errorContainer) {
             errorContainer.style.display = 'none';
-        }
-    }, 5000);
-</script>
+          }
+        }, 5000);
+      </script>
 
-<% request.setAttribute("errorShown", true); %>
-</c:if>
-<% } %>
+      <% request.setAttribute("errorShown", true); %>
+    </c:if>
+    <% } %>
 </body>
 
 </html>
