@@ -53,7 +53,6 @@
         <div style="padding-left: 10%;padding-right: 5%;">
           <strong>Name :  ${name}</strong><br>
           <strong>Address :  ${address}</strong><br>
-          <strong>Address :  ${address}</strong><br>
           <strong>Phone Number :  ${phNo}</strong><br>
           <strong>Email ID :  ${mail}</strong><br>
           <strong>Location Category :  ${location}</strong><br>
