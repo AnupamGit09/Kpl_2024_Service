@@ -119,7 +119,7 @@ button:hover {
 <body>
 
 <div class="header">
-  <h1>Admin Dashboard Log in</h1>
+  <h1>Admin Log in</h1>
 </div>
 <form action="https://kpl-test-v01-production.up.railway.app/adminDashboardView" method="post">
 <div class="container">

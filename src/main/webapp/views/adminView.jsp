@@ -42,7 +42,7 @@
 
     }
 
-    .container {
+    /* .container {
       display: flex;
       justify-content: space-around;
     }
@@ -55,19 +55,84 @@
     .container3 {
       display: flex;
       justify-content: space-around;
-    }
-
-    input[type=text] {
-      width: 242px;
-      height: 38px;
-      border-radius: 25px;
-    }
-
+    } */
     button[type=submit]{
       border-style: solid;
   border-color: black black black black;
+  width: 84px;
+        height: 38px;
+        border-radius: 25px;
   }
+  input[type=number] {
+      width: 242px;
+      height: 36px;
+      border-radius: 25px;
+      font-size: 16px;
+      border: 1px solid #6eac1e;
+      text-align: center;
+    }  
 
+    input[type=text] {
+      width: 242px;
+      height: 36px;
+      border-radius: 25px;
+      font-size: 16px;
+      border: 1px solid #6eac1e;
+      text-align: center;
+    }  
+
+    select {
+      width: 242px;
+      height: 36px;
+      border-radius: 25px;
+      font-size: 16px;
+      border: 1px solid #6eac1e;
+      text-align: center;
+    }  
+  .flex-container1 {
+  display: flex;
+  justify-content: space-evenly;
+  
+}
+.flex-container1 > div {
+ 
+ /* margin: 10px; */
+ /* padding: 20px; */
+ font-size: 20px;
+}
+.flex-container2 {
+  display: flex;
+  justify-content: space-evenly;
+  
+}
+.flex-container2 > div {
+ 
+ /* margin: 10px; */
+ /* padding: 20px; */
+ font-size: 20px;
+}
+.flex-container3 {
+  display: flex;
+  justify-content: space-evenly;
+  
+}
+.flex-container3 > div {
+ 
+ /* margin: 10px; */
+ /* padding: 20px; */
+ font-size: 20px;
+}
+.flex-container4 {
+  display: flex;
+  justify-content: space-evenly;
+  
+}
+.flex-container4 > div {
+ 
+ /* margin: 10px; */
+ /* padding: 20px; */
+ font-size: 20px;
+}
   .error-popup {
       position: fixed;
       top: 90%;
@@ -87,147 +152,131 @@
   <div class="header">
     <h1>Admin Dashboard view</h1>
   </div>
-  <br>
-  <div class="container">
+  <div class="flex-container1">
+  <!-- <div class="container"> -->
     <div>
-      <h2>Players who made the payments</h2>
+      <p>Players who made the payments</p>
       <form action="https://kpl-test-v01-production.up.railway.app/paymentUpdate" method="post">
         <input type="text" name="regid" placeholder="Enter Reg ID like 1,2,3" required>
-        <button type="submit" style=" width: 84px;
-        height: 38px;
-        border-radius: 25px;">Submit</button>
+        <button type="submit">Submit</button>
       </form>
     </div>
 
     <div>
-      <h2>Players to be updated in Category A</h2>
+      <p>Players to be updated in Category A</p>
       <form action="https://kpl-test-v01-production.up.railway.app/updateCategory" method="post">
         <input type="text" name="regid" placeholder="Enter Reg ID like 1,2,3" required>
-        <button type="submit" style=" width: 84px;
-        height: 38px;
-        border-radius: 25px;">Submit</button>
+        <button type="submit" >Submit</button>
       </form>
     </div>
+  
+
+
+
+
   </div>
-
-
-  <br><br>
-
-
-
-
-
-  <div class="container2">
-
-
-    <div>
-      <h2>Document Front side download based <br>on registration ID</p>
-        <form action="https://kpl-test-v01-production.up.railway.app/kpl/registration/api/downloadAllDocFrontImage"
-          method="get">
-          <button type="submit" style="    width: 148px;
-        height: 52px;
-        border-radius: 24px;">Download document Front</button>
-        </form>
-    </div>
-    <div class="select-box">
-      <h2>Player category specific photo download</p>
-        <form action="https://kpl-test-v01-production.up.railway.app/kpl/registration/api/downloadGenerueSpImage"
-          method="get">
-          <select name="generue" style="width: 124px;
-          height: 40px;">
-            <option hidden>Player Category</option>
-            <option value="Batsman">Batsman</option>
-            <option value="Bowler">Bowler</option>
-            <option value="Wicket Keeper">Wicket Keeper</option>
-            <option value="All Rounder">All Rounder</option>
-            <option value="List A">List A</option>
-          </select>
-          <button type="submit" style="    width: 148px;
-      height: 52px;
-      border-radius: 24px;">Download category specific image</button>
-        </form>
-    </div>
-  </div>
-
+  
 
   <div class="error-message">
-    <h2 style="color: #ff0000; padding-left: 35%; font-size:300%">${errorMessage}</h2>
+    <p style="color: #ff0000; padding-left: 35%; font-size:300%">${errorMessage}</p>
 </div>
   <br><br>
 
 
 
 
-  <div class="container2">
 
-
-    <div>
-      <h2>Document Back side download based <br>on registration ID</p>
-        <form action="https://kpl-test-v01-production.up.railway.app/kpl/registration/api/downloadAllDocBackImage"
+  <div class="flex-container3" style="padding-left: 25px;">
+   
+    <div class="select-box"">
+      <p>Player category specific photo download</p>
+        <form action="https://kpl-test-v01-production.up.railway.app/kpl/registration/api/downloadGenerueSpImage"
           method="get">
-          <button type="submit" style="    width: 148px;
-        height: 52px;
-        border-radius: 24px;">Download document Back</button>
-        </form>
-    </div>
-    <div class="select-box">
-      <h2>Player category specific pdf for committee</p>
-     <form action="https://kpl-test-v01-production.up.railway.app/kpl/registration/api/generate/finalPlayerListPdf"
-       method="get" target="_blank">
-       <select name="generue" style="    width: 124px;
-   height: 40px;">
-         <option hidden>Player Category</option>
-         <option value="Batsman">Batsman</option>
-         <option value="Bowler">Bowler</option>
-         <option value="Wicket Keeper">Wicket Keeper</option>
-         <option value="All Rounder">All Rounder</option>
-         <option value="List A">List A</option>
-       </select>
-       <button type="submit" style="    width: 148px;
-   height: 52px;
-   border-radius: 24px;">Download category specific pdf for committee</button>
-     </form>
- </div>
-  </div>
-
-
-
-
-
-
-
-
-
-
-  <div class="container3">
-    <div>
-      <h2>All Player PDF</p>
-        <form action="https://kpl-test-v01-production.up.railway.app/kpl/registration/api/generate/AllplayerPdf"
-          method="get" target="_blank">
-          <button type="submit" style="width: 148px;
-        height: 52px;
-        border-radius: 24px;">Download All Player Pdf</button>
-        </form>
-    </div>
-    <div class="select-box">
-         <h2>Player category specific pdf for owners</p>
-        <form action="https://kpl-test-v01-production.up.railway.app/kpl/registration/api/generate/playerPdf"
-          method="get" target="_blank">
-          <select name="generue" style="    width: 124px;
-      height: 40px;">
-            <option hidden>Player Category</option>
+          <select name="generue">
+            <option hidden>Category</option>
             <option value="Batsman">Batsman</option>
             <option value="Bowler">Bowler</option>
             <option value="Wicket Keeper">Wicket Keeper</option>
             <option value="All Rounder">All Rounder</option>
             <option value="List A">List A</option>
           </select>
-          <button type="submit" style="    width: 148px;
-      height: 52px;
-      border-radius: 24px;">Download category specific pdf for owners</button>
+          <button type="submit">Download</button>
         </form>
     </div>
+
+    <div class="select-box">
+      <p>Player category specific pdf for committee</p>
+     <form action="https://kpl-test-v01-production.up.railway.app/kpl/registration/api/generate/finalPlayerListPdf"
+       method="get" target="_blank">
+       <select name="generue">
+         <option hidden>Category</option>
+         <option value="Batsman">Batsman</option>
+         <option value="Bowler">Bowler</option>
+         <option value="Wicket Keeper">Wicket Keeper</option>
+         <option value="All Rounder">All Rounder</option>
+         <option value="List A">List A</option>
+       </select>
+       <button type="submit">Download</button>
+     </form>
+ <!-- </div> -->
   </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+<div class="flex-container2">
+  <div>
+    <p>Documents Front</p>
+      <form action="https://kpl-test-v01-production.up.railway.app/kpl/registration/api/downloadAllDocFrontImage"
+        method="get">
+        <button type="submit">Download</button>
+      </form>
+  </div>
+  <div>
+    <p>Document Back</p>
+      <form action="https://kpl-test-v01-production.up.railway.app/kpl/registration/api/downloadAllDocBackImage"
+        method="get">
+        <button type="submit">Download</button>
+      </form>
+  </div>
+
+</div>
+
+
+
+<div class="flex-container4"  >
+  <!-- <div class="container3"> -->
+    <div style="padding-left: 260px;">
+      <p >All Player PDF</p>
+        <form action="https://kpl-test-v01-production.up.railway.app/kpl/registration/api/generate/AllplayerPdf"
+          method="get" target="_blank">
+          <button type="submit">Download</button>
+        </form>
+    </div>
+    <div class="select-box" style="padding-left: 240px;">
+         <p>Player category specific pdf for owners</p>
+        <form action="https://kpl-test-v01-production.up.railway.app/kpl/registration/api/generate/playerPdf"
+          method="get" target="_blank">
+          <select name="generue">
+            <option hidden>Category</option>
+            <option value="Batsman">Batsman</option>
+            <option value="Bowler">Bowler</option>
+            <option value="Wicket Keeper">Wicket Keeper</option>
+            <option value="All Rounder">All Rounder</option>
+            <option value="List A">List A</option>
+          </select>
+          <button type="submit">Download</button>
+        </form>
+    </div>
+  <!-- </div> -->
 
 
   <br><br>
@@ -244,9 +293,9 @@
 <% request.setAttribute("errorShown", true); %>
 </c:if>
 <% } %>
-<div>
-<br><br><br><br>
+
 </div>
+
 </body>
 
 
