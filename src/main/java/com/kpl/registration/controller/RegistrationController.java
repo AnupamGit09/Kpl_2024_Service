@@ -398,6 +398,10 @@ public class RegistrationController {
 			liveDataVO.setLocalplayer(localPlayerCount);
 			liveDataVO.setMoneyspend(totalSpendMoney);
 			liveDataVO.setMoneyRem(remBalance);
+			long playerCountRem=15-(overSeasPlayerCount+localPlayerCount);
+			long maxBetOnSinglePlayer=remBalance-((playerCountRem-1)*50);
+
+			liveDataVO.setMaxiumBetAmountOnSinglePlayer(maxBetOnSinglePlayer);
 			liveDataVOList.add(liveDataVO);
 		}
 		log.info("           ::::::::::::::::             /kpl/registration/api/liveTeamData");
