@@ -13,4 +13,5 @@ public class LiveDataVO {
 	private Long localplayer;
 	private Long moneyspend;
 	private Long moneyRem;
+	private Long maxiumBetAmountOnSinglePlayer;
 }

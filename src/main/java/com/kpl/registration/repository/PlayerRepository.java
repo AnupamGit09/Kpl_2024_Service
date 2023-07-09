@@ -79,7 +79,7 @@ public interface PlayerRepository extends JpaRepository<PlayerInfo, Long> {
 	@Query(value = "select * from player_registration  where sold_team=?1", nativeQuery = true)
 	List<PlayerInfo> findbyTeam(String soldTeam);
 
-	@Query(value = "SELECT distinct(sold_team)\r\n" + "FROM player_registration", nativeQuery = true)
+	@Query(value = "SELECT distinct(sold_team)\r\n" + "FROM player_registration where sold_team is not null", nativeQuery = true)
 	List<String> getDistinctTeam();
 
 	@Query(value = "SELECT count(*) FROM player_registration where player_location_category='Overseas' and sold_team=?1", nativeQuery = true)
