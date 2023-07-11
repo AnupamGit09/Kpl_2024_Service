@@ -4,6 +4,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -14,17 +16,16 @@ import com.kpl.registration.config.UTCtoISTConverter;
 import com.kpl.registration.logging.LoggingInterceptor;
 
 @SpringBootApplication
-public class RegistrationApplication extends WebSecurityConfigurerAdapter implements WebMvcConfigurer {
+public class RegistrationApplication extends SpringBootServletInitializer implements WebMvcConfigurer {
 
 	public static void main(String[] args) {
 		SpringApplication.run(RegistrationApplication.class, args);
 	}
 
-	@Override
-	public void configure(WebSecurity web) {
-		web.ignoring().antMatchers("/**");
-
-	}
+	  @Override
+	   protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+	      return application.sources(RegistrationApplication.class);
+	   }
 
 	  @Bean
 	    public ModelMapper modelMapper() {

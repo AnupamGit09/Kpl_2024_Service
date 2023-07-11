@@ -361,7 +361,7 @@
 <header>
   <div class="wrapper">
     <div class="logo">
-      <a href="http://13.126.58.1:5000/home"><img src="${pageContext.request.contextPath}/images/transparent_logo.png"
+      <a href="http://kpl2023.online/registration/home"><img src="${pageContext.request.contextPath}/images/transparent_logo.png"
           alt="KPL logo"></a>
     </div>
     <div>
@@ -371,12 +371,12 @@
       <div class="close-nav"><button></button></div>
       <nav>
         <ul>
-          <li><a href="http://13.126.58.1:5000/home">Home</a></li>
+          <li><a href="http://kpl2023.online/registration/home">Home</a></li>
         </ul>
       </nav>
     </div>
     <div class="menu-bar">
-      <a href="http://13.126.58.1:5000/home"><h2> <span>Home</span></h2></a>   
+      <a href="http://kpl2023.online/registration/home"><h2> <span>Home</span></h2></a>   
     </div>
   </div>
 </header>
@@ -403,7 +403,7 @@
   <div class="login-header">
     <h2>Check Your Registration Status</h2>
   </div>
-  <form action="http://13.126.58.1:5000/login" method="post">
+  <form action="http://kpl2023.online/registration/login" method="post">
     <div class="input-box">
       <input type="text" class="input-field" id="username" name="username"
         placeholder="Enter your Phone Number or email ID" autocomplete="off" required>
@@ -415,7 +415,7 @@
     <div class="forgot">
 
       <section>
-        <a href="http://13.126.58.1:5000/forgetPassword" target="_blank">Forgot password</a>
+        <a href="http://kpl2023.online/registration/forgetPassword" target="_blank">Forgot password</a>
       </section>
     </div>
     <div class="input-submit">
@@ -424,7 +424,7 @@
     </div>
   </form>
   <div class="sign-up-link">
-    <p>Don't have account? <a href="http://13.126.58.1:5000/signUpHomePage" target="_blank">Sign Up</a></p>
+    <p>Don't have account? <a href="http://kpl2023.online/registration/signUpHomePage" target="_blank">Sign Up</a></p>
   </div>
 </div>
 <% if (request.getAttribute("errorShown")==null) { %>
