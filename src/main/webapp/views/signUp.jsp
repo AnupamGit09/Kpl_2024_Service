@@ -177,7 +177,7 @@
 
       <section class="container">
         <header>Registration Form</header>
-        <form action="http://kpl2023.online/registration/signUp" class="form" method="post" enctype="multipart/form-data">
+        <form action="https://kpl2023.online/registration/signUp" class="form" method="post" enctype="multipart/form-data">
           <div class="column">
             <div class="input-box">
               <label>First Name</label>

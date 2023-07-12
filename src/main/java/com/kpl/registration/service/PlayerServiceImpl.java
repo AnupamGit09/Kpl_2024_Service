@@ -136,6 +136,36 @@ public class PlayerServiceImpl implements PlayerService {
 		javaMailSender.send(message);
 
 	}
+	
+	@Override
+	public void sendMailOnSold(PlayerInfo playerInfo) throws MessagingException,
+			TemplateNotFoundException, MalformedTemplateNameException, ParseException, IOException, TemplateException {
+		Map<String, Object> model = new HashMap<>();
+		var message = javaMailSender.createMimeMessage();
+		var mimeMessageHelper = new MimeMessageHelper(message, MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED,
+				StandardCharsets.UTF_8.name());
+		mimeMessageHelper.setFrom(emailUsername);
+		Template mailTemplate = config.getTemplate("soldTeam.ftl");
+
+			model.put("firstname", playerInfo.getPlayerFirstName());
+			model.put("soldteam", playerInfo.getSoldTeam());
+			model.put("soldamount", playerInfo.getSoldAmount());
+			
+			model.put("ownername", " #### Daru khor VT");
+			model.put("phnum", " #### phnumber12345");
+			
+			var htmlTemp = FreeMarkerTemplateUtils.processTemplateIntoString(mailTemplate, model);
+			mimeMessageHelper.setTo(playerInfo.getEmailId());
+			mimeMessageHelper.setText(htmlTemp, true);
+			mimeMessageHelper
+					.setSubject(playerInfo.getPlayerFirstName() + ",Hurray! you have been sold");
+			log.info("name : " + playerInfo.getPlayerFirstName() + " , Mail ID : "
+					+ playerInfo.getEmailId());
+			javaMailSender.send(message);
+
+	}
+	
+	
 
 	@Override
 	public void sendMailOnPaymentValidation(List<Long> registartionIDS) throws MessagingException,
@@ -237,7 +267,10 @@ public class PlayerServiceImpl implements PlayerService {
 	@Override
 	public void generatePdfByClassification(HttpServletResponse response, String generue)
 			throws DocumentException, IOException {
-		var allplayerInfo = playerRepository.findbyGenerue(generue);
+		
+		String category=generue.split(",")[1];
+		String location=generue.split(",")[0];
+		var allplayerInfo = playerRepository.findbyCategoryLocation(category,location);
 
 		var yellowBold = "FORsmartNext-Bolds.otf";
 		var font1 = FontFactory.getFont(yellowBold, 20, Font.BOLD, BaseColor.BLACK);
@@ -572,7 +605,10 @@ public class PlayerServiceImpl implements PlayerService {
 	@Override
 	public void generateFinalPlayerPdf(HttpServletResponse response, String generue)
 			throws DocumentException, IOException {
-		var allplayerInfo = playerRepository.findbyGenerue(generue);
+		
+		String category=generue.split(",")[1];	
+		String location=generue.split(",")[0];
+		var allplayerInfo = playerRepository.findbyCategoryLocation(category,location);
 
 		var yellowBold = "FORsmartNext-Bolds.otf";
 		var font1 = FontFactory.getFont(yellowBold, 20, Font.BOLD, BaseColor.BLACK);

@@ -32,11 +32,14 @@ public interface PlayerRepository extends JpaRepository<PlayerInfo, Long> {
 	@Query(value = "select * from player_registration where generue=?1 order by registration_id", nativeQuery = true)
 	List<PlayerInfo> findbyGenerue(String generue);
 
+	@Query(value = "select * from player_registration where generue=?1 and player_location_category=?2 order by registration_id", nativeQuery = true)
+	List<PlayerInfo> findbyCategoryLocation(String category,String locaton);	
+	
 	@Query(value = "select image from player_registration where registration_id=?1", nativeQuery = true)
 	byte[] findByregistrationId(Long registrationId);
 
-	@Query(value = "select image from player_registration where generue=?1 order by registration_id", nativeQuery = true)
-	List<byte[]> findAllImageByGenerue(String generue);
+	@Query(value = "select * from player_registration order by registration_id", nativeQuery = true)
+	List<PlayerInfo> findAllImageByGenerue();
 
 	@Transactional
 	@Modifying

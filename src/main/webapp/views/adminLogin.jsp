@@ -121,7 +121,7 @@ button:hover {
 <div class="header">
   <h1>Admin Log in</h1>
 </div>
-<form action="http://kpl2023.online/registration/adminDashboardView" method="post" target="_blank">
+<form action="https://kpl2023.online/registration/adminDashboardView" method="post" target="_blank">
 <div class="container">
     <label for="uname"><b>Username</b></label>
     <input type="text" name="id" placeholder="Enter Your Username" name="uname" required>

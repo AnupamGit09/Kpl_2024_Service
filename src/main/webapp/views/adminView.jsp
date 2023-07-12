@@ -129,7 +129,7 @@
   <div class="flex-container1">
     <div>
       <p>Players who made the payments</p>
-      <form action="http://kpl2023.online/registration/paymentUpdate" method="post">
+      <form action="https://kpl2023.online/registration/paymentUpdate" method="post">
         <input type="text" name="regid" placeholder="Enter Reg ID like 1,2,3" required>
         <button type="submit">Submit</button>
       </form>
@@ -137,7 +137,7 @@
 
     <div>
       <p>Players to be updated in Category A</p>
-      <form action="http://kpl2023.online/registration/updateCategory" method="post">
+      <form action="https://kpl2023.online/registration/updateCategory" method="post">
         <input type="text" name="regid" placeholder="Enter Reg ID like 1,2,3" required>
         <button type="submit" >Submit</button>
       </form>
@@ -159,35 +159,45 @@
 
 
 
-  <div class="flex-container3" style="padding-left: 25px;">
+  <div class="flex-container1" >
    
-    <div class="select-box"">
-      <p>Player category specific photo download</p>
-        <form action="http://kpl2023.online/registration/kpl/registration/api/downloadGenerueSpImage"
-          method="get">
-          <select name="generue">
-            <option hidden>Category</option>
-            <option value="Batsman">Batsman</option>
-            <option value="Bowler">Bowler</option>
-            <option value="Wicket Keeper">Wicket Keeper</option>
-            <option value="All Rounder">All Rounder</option>
-            <option value="List A">List A</option>
-          </select>
-          <button type="submit">Download</button>
-        </form>
-    </div>
+    <div class="select-box">
+      <p>Player category specific pdf for owners</p>
+     <form action="https://kpl2023.online/registration/kpl/registration/api/generate/playerPdf"
+       method="get" target="_blank">
+       <select name="generue">
+        <option hidden>Category</option>
+        <option value="Local,Batsman">Local Batsman</option>
+        <option value="Overseas,Batsman">Overseas Batsman</option>
+        <option value="Local,Bowler">Local Bowler</option>
+        <option value="Overseas,Bowler">Overseas Bowler</option>
+        <option value="Local,Wicket Keeper">Local Wicket Keeper</option>
+        <option value="Overseas,Wicket Keeper">Overseas Wicket Keeper</option>
+        <option value="Local,All Rounder">Local All Rounder</option>
+        <option value="Overseas,All Rounder">Overseas All Rounder</option>
+        <option value="Local,List A">Local List A</option>
+        <option value="Overseas,List A">Overseas List A</option>
+       </select>
+       <button type="submit">Download</button>
+     </form>
+ </div>
 
     <div class="select-box">
       <p>Player category specific pdf for committee</p>
-     <form action="http://kpl2023.online/registration/kpl/registration/api/generate/finalPlayerListPdf"
+     <form action="https://kpl2023.online/registration/kpl/registration/api/generate/finalPlayerListPdf"
        method="get" target="_blank">
        <select name="generue">
-         <option hidden>Category</option>
-         <option value="Batsman">Batsman</option>
-         <option value="Bowler">Bowler</option>
-         <option value="Wicket Keeper">Wicket Keeper</option>
-         <option value="All Rounder">All Rounder</option>
-         <option value="List A">List A</option>
+        <option hidden>Category</option>
+        <option value="Local,Batsman">Local Batsman</option>
+        <option value="Overseas,Batsman">Overseas Batsman</option>
+        <option value="Local,Bowler">Local Bowler</option>
+        <option value="Overseas,Bowler">Overseas Bowler</option>
+        <option value="Local,Wicket Keeper">Local Wicket Keeper</option>
+        <option value="Overseas,Wicket Keeper">Overseas Wicket Keeper</option>
+        <option value="Local,All Rounder">Local All Rounder</option>
+        <option value="Overseas,All Rounder">Overseas All Rounder</option>
+        <option value="Local,List A">Local List A</option>
+        <option value="Overseas,List A">Overseas List A</option>
        </select>
        <button type="submit">Download</button>
      </form>
@@ -208,14 +218,14 @@
 <div class="flex-container2">
   <div>
     <p>Documents Front</p>
-      <form action="http://kpl2023.online/registration/kpl/registration/api/downloadAllDocFrontImage"
+      <form action="https://kpl2023.online/registration/kpl/registration/api/downloadAllDocFrontImage"
         method="get">
         <button type="submit">Download</button>
       </form>
   </div>
   <div>
     <p>Document Back</p>
-      <form action="http://kpl2023.online/registration/kpl/registration/api/downloadAllDocBackImage"
+      <form action="https://kpl2023.online/registration/kpl/registration/api/downloadAllDocBackImage"
         method="get">
         <button type="submit">Download</button>
       </form>
@@ -225,31 +235,24 @@
 
 
 
-<div class="flex-container4"  >
+<div class="flex-container2"  >
   <!-- <div class="container3"> -->
-    <div style="padding-left: 260px;">
+    <div>
       <p >All Player PDF</p>
-        <form action="http://kpl2023.online/registration/kpl/registration/api/generate/AllplayerPdf"
+        <form action="https://kpl2023.online/registration/kpl/registration/api/generate/AllplayerPdf"
           method="get" target="_blank">
           <button type="submit">Download</button>
         </form>
     </div>
-    <div class="select-box" style="padding-left: 240px;">
-         <p>Player category specific pdf for owners</p>
-        <form action="http://kpl2023.online/registration/kpl/registration/api/generate/playerPdf"
+
+    <div>
+      <p >All Player Photo</p>
+      <form action="https://kpl2023.online/registration/kpl/registration/api/downloadGenerueSpImage"
           method="get" target="_blank">
-          <select name="generue">
-            <option hidden>Category</option>
-            <option value="Batsman">Batsman</option>
-            <option value="Bowler">Bowler</option>
-            <option value="Wicket Keeper">Wicket Keeper</option>
-            <option value="All Rounder">All Rounder</option>
-            <option value="List A">List A</option>
-          </select>
           <button type="submit">Download</button>
         </form>
-    </div>
-  <!-- </div> -->
+    </div>  
+  </div>
 
 
   <br><br>

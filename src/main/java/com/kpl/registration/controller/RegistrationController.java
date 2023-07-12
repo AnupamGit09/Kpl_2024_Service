@@ -204,9 +204,9 @@ public class RegistrationController {
 	}
 
 	@GetMapping("/downloadGenerueSpImage")
-	public ResponseEntity<Resource> downloadImages(@RequestParam String generue, Model model) {
+	public ResponseEntity<Resource> downloadImages(Model model) {
 		// Retrieve the list of images (assuming you have it available)
-		List<byte[]> images = playerRepository.findAllImageByGenerue(generue);
+		List<PlayerInfo> playerDetails = playerRepository.findAllImageByGenerue();
 
 		try {
 			// Create a temporary file for the ZIP
@@ -215,9 +215,9 @@ public class RegistrationController {
 			ZipOutputStream zipOut = new ZipOutputStream(fos);
 
 			// Add each image to the ZIP file
-			for (int i = 0; i < images.size(); i++) {
-				byte[] imageData = images.get(i);
-				String fileName = (i + 1) + ".jpg";
+			for (int i = 0; i < playerDetails.size(); i++) {
+				byte[] imageData =playerDetails.get(i).getImage();
+				String fileName = playerDetails.get(i).getRegistrationId() + ".jpg";
 
 				// Create a new entry in the ZIP file
 				zipOut.putNextEntry(new ZipEntry(fileName));
@@ -238,8 +238,8 @@ public class RegistrationController {
 			// Set the appropriate response headers for file download
 			HttpHeaders headers = new HttpHeaders();
 
-			headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + generue + ".zip");
-			if (images.size() > 0) {
+			headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + "playerPhoto" + ".zip");
+			if (playerDetails.size() > 0) {
 				model.addAttribute("errorMessage", "Zip will be downloaded shortly");
 			} else {
 				model.addAttribute("errorMessage", "Please check your input correctly");
@@ -369,6 +369,8 @@ public class RegistrationController {
 	public void saveSoldTeamAndAmount(@RequestParam("id") Long regID, @RequestParam("soldAmount") Long soldAmount,
 			@RequestParam("team") String team) throws Exception {
 		playerRepository.updateSoldamountAndTeam(regID, soldAmount, team);
+		var playerInfo=playerRepository.findDataByregistrationId(regID);
+		playerService.sendMailOnSold(playerInfo);
 	}
 
 	@GetMapping("/teamList")
@@ -424,7 +426,7 @@ public class RegistrationController {
 //	API to search player based on Registration ID
 	@GetMapping("/search")
 	public PlayerInfo searchDataById(@RequestParam("id") Long id, Model model) {
-		var searchData = playerRepository.findDataByregistrationId(id);
+		var searchData = playerRepository.findDataByregistrationId(Long.valueOf(id));
 		if (searchData != null) {
 			model.addAttribute("data", searchData);
 		}

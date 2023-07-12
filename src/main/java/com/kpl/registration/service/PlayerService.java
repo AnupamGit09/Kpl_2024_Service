@@ -12,6 +12,7 @@ import com.kpl.registration.dto.GenericVO;
 import com.kpl.registration.dto.PlayerRequetVO;
 import com.kpl.registration.dto.RegistrationResponse;
 import com.kpl.registration.entity.AdminInfo;
+import com.kpl.registration.entity.PlayerInfo;
 
 import freemarker.core.ParseException;
 import freemarker.template.MalformedTemplateNameException;
@@ -37,5 +38,8 @@ public interface PlayerService{
 	void sendMailOnPaymentValidation(List<Long> registartionIDS) throws MessagingException, TemplateNotFoundException, MalformedTemplateNameException, ParseException, IOException, TemplateException;
 
 	void resetPasswordMail(Long phNumber) throws MessagingException, TemplateNotFoundException, MalformedTemplateNameException, ParseException, IOException, TemplateException;
+
+	void sendMailOnSold(PlayerInfo playerInfo) throws MessagingException, TemplateNotFoundException,
+			MalformedTemplateNameException, ParseException, IOException, TemplateException;
 
 }

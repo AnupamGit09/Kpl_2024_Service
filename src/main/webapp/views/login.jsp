@@ -1,16 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
-  <link rel="icon" href="${pageContext.request.contextPath}/images/transparent_logo.ico" type="image/x-icon">
+<link rel="icon" href="${pageContext.request.contextPath}/images/transparent_logo.ico" type="image/x-icon">
+
 <head>
   <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-2DKXMGP7B2"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-2DKXMGP7B2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
 
-  gtag('config', 'G-2DKXMGP7B2');
-</script>
+    gtag('config', 'G-2DKXMGP7B2');
+  </script>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -345,10 +346,21 @@
       color: rgb(240, 8, 8);
       border-radius: 5px;
     }
-    span{
+
+    span {
       color: black;
       font-size: 90%;
-     padding-left: 500%;
+      padding-left: 500%;
+    }
+
+    #footer {
+      position: fixed;
+      padding-left: 39%;
+      bottom: 2%;
+      width: 100%;
+      /* Height of the footer*/
+      height: 5%;
+      background: #d3df5b;
     }
   </style>
 
@@ -361,8 +373,8 @@
 <header>
   <div class="wrapper">
     <div class="logo">
-      <a href="http://kpl2023.online/registration/home"><img src="${pageContext.request.contextPath}/images/transparent_logo.png"
-          alt="KPL logo"></a>
+      <a href="https://kpl2023.online/registration/home"><img
+          src="${pageContext.request.contextPath}/images/transparent_logo.png" alt="KPL logo"></a>
     </div>
     <div>
       <h2>Kashipur Premier League (season 5)</h2>
@@ -371,12 +383,14 @@
       <div class="close-nav"><button></button></div>
       <nav>
         <ul>
-          <li><a href="http://kpl2023.online/registration/home">Home</a></li>
+          <li><a href="https://kpl2023.online/registration/home">Home</a></li>
         </ul>
       </nav>
     </div>
     <div class="menu-bar">
-      <a href="http://kpl2023.online/registration/home"><h2> <span>Home</span></h2></a>   
+      <a href="https://kpl2023.online/registration/home">
+        <h2> <span>Home</span></h2>
+      </a>
     </div>
   </div>
 </header>
@@ -403,7 +417,7 @@
   <div class="login-header">
     <h2>Check Your Registration Status</h2>
   </div>
-  <form action="http://kpl2023.online/registration/login" method="post">
+  <form action="https://kpl2023.online/registration/login" method="post">
     <div class="input-box">
       <input type="text" class="input-field" id="username" name="username"
         placeholder="Enter your Phone Number or email ID" autocomplete="off" required>
@@ -415,7 +429,7 @@
     <div class="forgot">
 
       <section>
-        <a href="http://kpl2023.online/registration/forgetPassword" target="_blank">Forgot password</a>
+        <a href="https://kpl2023.online/registration/forgetPassword" target="_blank">Forgot password</a>
       </section>
     </div>
     <div class="input-submit">
@@ -424,7 +438,7 @@
     </div>
   </form>
   <div class="sign-up-link">
-    <p>Don't have account? <a href="http://kpl2023.online/registration/signUpHomePage" target="_blank">Sign Up</a></p>
+    <p>Don't have account? <a href="https://kpl2023.online/registration/signUpHomePage" target="_blank">Sign Up</a></p>
   </div>
 </div>
 <% if (request.getAttribute("errorShown")==null) { %>
@@ -448,13 +462,12 @@
   <% } %>
 
 
-
-
-    <div><br></div>
-    <div><br></div>
-    <div><br></div>
-    <div><br></div>
-    <div><br></div>
+    <!-- <div id="footer">
+      <h3>
+        <p style="background-color: #d3df5b;">Developer: KPL Dev Team | 
+        <a href="https://www.facebook.com/kplofficial11" target="_blank">Facebook</a></p>
+      </h3>
+    </div> -->
     </body>
 
 </html>

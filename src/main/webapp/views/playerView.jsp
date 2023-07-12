@@ -44,14 +44,14 @@
 
         .footer {
           background-color:  #d3df5b;
-          padding: 20px;
+          padding: 7px;
           text-align: center;
         }
 
         .footer p {
           margin-bottom: 10px;
           font-size: 14px;
-          color: #666666;
+          color: black;
         }
 
         .footer a {
@@ -63,7 +63,7 @@
         .footer a:hover {
           color: #007bff;
         }
-
+        
         html {
           font-size: 16px;
           scroll-behavior: smooth;
@@ -86,12 +86,13 @@
         }
 
         header .wrapper {
-          max-width: 1000px;
+          max-width: 1200px;
           margin: 0 auto;
           display: flex;
           flex-wrap: wrap;
           align-items: center;
           justify-content: space-between;
+          font-size: 25px;
         }
 
         header .logo img {
@@ -250,6 +251,7 @@
         .user-details label {
           font-weight: bold;
         }
+        
       </style>
     </head>
 
@@ -268,7 +270,8 @@
             <div class="close-nav"><button></button></div>
             <nav>
               <ul>
-                <li><a href="https://www.google.com">Home</a></li>
+                <li><a href="https://www.google.com" onMouseOver="this.style.color='blue'"
+                  onMouseOut="this.style.color='black'">Home</a></li>
                 <!-- <li><a href="#">Blog</a></li> -->
               </ul>
             </nav>
@@ -322,7 +325,7 @@
       </div>
     </body>
     <div class="footer">
-     <h2> <p>All rights reserved © 2023 | Developer: Your Name</p>
+     <h2> <p>All rights reserved © 2023 | Developer: KPL Dev Team</p>
       <a href="https://www.facebook.com/kplofficial11" target="_blank">Facebook</a></h2>
     </div>
 
