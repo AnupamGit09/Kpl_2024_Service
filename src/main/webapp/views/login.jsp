@@ -373,7 +373,7 @@
 <header>
   <div class="wrapper">
     <div class="logo">
-      <a href="https://kpl2023.online/registration/home"><img
+      <a href="https://anupam101999.github.io/kpl2k23"><img
           src="${pageContext.request.contextPath}/images/transparent_logo.png" alt="KPL logo"></a>
     </div>
     <div>
@@ -383,12 +383,12 @@
       <div class="close-nav"><button></button></div>
       <nav>
         <ul>
-          <li><a href="https://kpl2023.online/registration/home">Home</a></li>
+          <li><a href="https://anupam101999.github.io/kpl2k23">Home</a></li>
         </ul>
       </nav>
     </div>
     <div class="menu-bar">
-      <a href="https://kpl2023.online/registration/home">
+      <a href="https://anupam101999.github.io/kpl2k23">
         <h2> <span>Home</span></h2>
       </a>
     </div>
