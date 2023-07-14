@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.time.Clock;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -36,13 +35,16 @@ import org.springframework.web.multipart.MultipartFile;
 import com.kpl.registration.dto.AdminReqVO;
 import com.kpl.registration.dto.GenericVO;
 import com.kpl.registration.dto.LiveDataVO;
+import com.kpl.registration.dto.LiveSearchVO;
 import com.kpl.registration.dto.PlayerInfoVO;
 import com.kpl.registration.dto.PlayerRequetVO;
 import com.kpl.registration.dto.PlayerResponseVO;
 import com.kpl.registration.dto.RegistrationResponse;
 import com.kpl.registration.entity.AdminInfo;
+import com.kpl.registration.entity.DocInfo;
 import com.kpl.registration.entity.ImageInfo;
 import com.kpl.registration.entity.PlayerInfo;
+import com.kpl.registration.repository.DocRepo;
 import com.kpl.registration.repository.ImageRepo;
 import com.kpl.registration.repository.PlayerRepository;
 import com.kpl.registration.service.PlayerService;
@@ -62,6 +64,8 @@ public class RegistrationController {
 	ImageRepo imageRepo;
 	@Autowired
 	PlayerRepository playerRepository;
+	@Autowired
+	DocRepo docRepo;
 
 	@Autowired
 	ModelMapper modelMapper;
@@ -209,7 +213,7 @@ public class RegistrationController {
 	@GetMapping("/downloadGenerueSpImage")
 	public ResponseEntity<Resource> downloadImages(Model model) {
 		// Retrieve the list of images (assuming you have it available)
-		List<PlayerInfo> playerDetails = playerRepository.findAllImageByGenerue();
+		List<DocInfo> docInfo = docRepo.findAllImageByGenerue();
 
 		try {
 			// Create a temporary file for the ZIP
@@ -218,9 +222,9 @@ public class RegistrationController {
 			ZipOutputStream zipOut = new ZipOutputStream(fos);
 
 			// Add each image to the ZIP file
-			for (int i = 0; i < playerDetails.size(); i++) {
-				byte[] imageData = playerDetails.get(i).getImage();
-				String fileName = playerDetails.get(i).getRegistrationId() + ".jpg";
+			for (int i = 0; i < docInfo.size(); i++) {
+				byte[] imageData = docInfo.get(i).getImage();
+				String fileName = docInfo.get(i).getRegistrationId() + ".jpg";
 
 				// Create a new entry in the ZIP file
 				zipOut.putNextEntry(new ZipEntry(fileName));
@@ -242,7 +246,7 @@ public class RegistrationController {
 			HttpHeaders headers = new HttpHeaders();
 
 			headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + "playerPhoto" + ".zip");
-			if (playerDetails.size() > 0) {
+			if (docInfo.size() > 0) {
 				model.addAttribute("errorMessage", "Zip will be downloaded shortly");
 			} else {
 				model.addAttribute("errorMessage", "Please check your input correctly");
@@ -259,7 +263,7 @@ public class RegistrationController {
 
 	@GetMapping("/downloadAllDocFrontImage")
 	public ResponseEntity<Resource> downloadAllDocImageFront(Model model) throws IOException {
-		List<byte[]> images = playerRepository.findAllDocFront();
+		List<byte[]> images = docRepo.findAllDocFront();
 		List<Long> regID = playerRepository.findAllDocImageFrontRegID();
 		try {
 			// Create a temporary file for the ZIP
@@ -310,7 +314,7 @@ public class RegistrationController {
 
 	@GetMapping("/downloadAllDocBackImage")
 	public ResponseEntity<Resource> downloadAllDocImageBack(Model model) throws IOException {
-		List<byte[]> images = playerRepository.findAllDocBack();
+		List<byte[]> images = docRepo.findAllDocBack();
 		List<Long> regID = playerRepository.findAllDocImageFrontRegID();
 		try {
 			// Create a temporary file for the ZIP
@@ -428,12 +432,24 @@ public class RegistrationController {
 
 //	API to search player based on Registration ID
 	@GetMapping("/search")
-	public PlayerInfo searchDataById(@RequestParam("id") Long id, Model model) {
+	public Object searchDataById(@RequestParam("id") Long id, Model model) {
 		var searchData = playerRepository.findDataByregistrationId(Long.valueOf(id));
+		var searchImage = docRepo.findByregistrationId(Long.valueOf(id));
+		var livesearch=new LiveSearchVO();
+		
+		
 		if (searchData != null) {
-			model.addAttribute("data", searchData);
+			livesearch.setRegistrationId(searchData.getRegistrationId());
+			livesearch.setDob(searchData.getDateOfBirth());
+			livesearch.setGenerue(searchData.getGenerue());
+			livesearch.setImage(searchImage);
+			livesearch.setLocation(searchData.getLocation());
+			livesearch.setPlayerAddress(searchData.getPlayerAddress());
+			livesearch.setPlayerFirstName(searchData.getPlayerFirstName());
+			livesearch.setPlayerLastName(searchData.getPlayerLastName());
+			model.addAttribute("data", livesearch);
 		}
-		return searchData;
+		return livesearch;
 	}
 
 	@GetMapping("/soldPlayerList")

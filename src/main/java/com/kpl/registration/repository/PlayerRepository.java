@@ -39,11 +39,7 @@ public interface PlayerRepository extends JpaRepository<PlayerInfo, Long> {
 	@Query(value = "select * from player_registration where generue=?1 and player_location_category=?2 order by registration_id", nativeQuery = true)
 	List<PlayerInfo> findbyCategoryLocation(String category,String locaton);	
 	
-	@Query(value = "select image from player_registration where registration_id=?1", nativeQuery = true)
-	byte[] findByregistrationId(Long registrationId);
-
-	@Query(value = "select * from player_registration order by registration_id", nativeQuery = true)
-	List<PlayerInfo> findAllImageByGenerue();
+	
 
 	@Transactional
 	@Modifying
@@ -58,14 +54,10 @@ public interface PlayerRepository extends JpaRepository<PlayerInfo, Long> {
 	@Query(value = "select * from player_registration order by registration_id", nativeQuery = true)
 	List<PlayerInfo> findAllPlayer();
 
-	@Query(value = "select doc_image_front from player_registration order by registration_id", nativeQuery = true)
-	List<byte[]> findAllDocFront();
-
+	
 	@Query(value = "select registration_id from player_registration order by registration_id", nativeQuery = true)
 	List<Long> findAllDocImageFrontRegID();
-	
-	@Query(value = "select doc_image_back from player_registration order by registration_id", nativeQuery = true)
-	List<byte[]> findAllDocBack();
+
 	
 	@Query(value = "select pin_code from player_registration where ph_no=?1", nativeQuery = true)
 	Long findByPinCode(Long pinCode);
@@ -78,9 +70,13 @@ public interface PlayerRepository extends JpaRepository<PlayerInfo, Long> {
 	@Query(value = "update player_registration set password=?1 where ph_no=?2", nativeQuery = true)
 	void updatePassword(String password, Long phNo);
 
-	@Query(value = "select * from player_registration  where registration_id=?1", nativeQuery = true)
+	@Query(value = "SELECT * FROM player_registration where player_registration.registration_id=?1", nativeQuery = true)
 	PlayerInfo findDataByregistrationId(Long regID);
 
+	@Query(value = "SELECT * from player_registration p,doc_info d where p.registration_id=d.registration_id\r\n"
+			+ "and p.registration_id=?1", nativeQuery = true)
+	PlayerInfo findDataByregistrationIdLiveFeed(Long regID);
+	
 	@Transactional
 	@Modifying
 	@Query(value = "update player_registration set sold_amount=?2 , sold_team=?3 , sold_time=?4  where registration_id=?1", nativeQuery = true)
@@ -106,10 +102,5 @@ public interface PlayerRepository extends JpaRepository<PlayerInfo, Long> {
 
 	@Query(value = "SELECT * FROM player_registration where sold_team is not null ORDER BY sold_time desc", nativeQuery = true)
 	List<PlayerInfo> findBySoldUpdateTime();
-
-//	@Transactional
-//	@Modifying
-//	@Query(value = "select registration_id from player_registration where registration_id not in (?1)", nativeQuery = true)
-//	List<Long> findOutSideID(List<Long> idList);
 
 }

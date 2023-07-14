@@ -1,0 +1,21 @@
+package com.kpl.registration.dto;
+
+import java.time.LocalDate;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class LiveSearchVO {
+	private Long registrationId;
+	private String playerFirstName;
+	private String playerLastName;
+	private String playerAddress;
+	private String generue;
+	private LocalDate dob;
+	private String location;
+	private byte[] image;
+}

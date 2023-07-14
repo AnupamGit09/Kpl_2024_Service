@@ -237,7 +237,11 @@ public class LoginController {
 	public String payment() {
 		return "payment";
 	}
+			
 	
-	
+	@GetMapping("/liveAution")
+	public String liveAution() {
+		return "liveauction";
+	}
 	
 }

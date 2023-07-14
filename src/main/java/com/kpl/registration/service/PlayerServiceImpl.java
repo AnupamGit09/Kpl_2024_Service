@@ -41,8 +41,10 @@ import com.kpl.registration.dto.GenericVO;
 import com.kpl.registration.dto.PlayerRequetVO;
 import com.kpl.registration.dto.RegistrationResponse;
 import com.kpl.registration.entity.AdminInfo;
+import com.kpl.registration.entity.DocInfo;
 import com.kpl.registration.entity.PlayerInfo;
 import com.kpl.registration.repository.AdminRepo;
+import com.kpl.registration.repository.DocRepo;
 import com.kpl.registration.repository.ImageRepo;
 import com.kpl.registration.repository.PlayerRepository;
 
@@ -64,6 +66,8 @@ public class PlayerServiceImpl implements PlayerService {
 	@Autowired
 	ImageRepo imageRepo;
 	@Autowired
+	DocRepo docRepo;
+	@Autowired
 	AdminRepo adminRepo;
 	@Autowired
 	JavaMailSender javaMailSender;
@@ -77,13 +81,11 @@ public class PlayerServiceImpl implements PlayerService {
 			throws IOException, MessagingException, TemplateException {
 		GenericVO genericVO = new GenericVO();
 		PlayerInfo playerInfo = new PlayerInfo();
+		DocInfo docInfo=new DocInfo();
 		playerInfo.setAadharNo(playerRequetVO.getAadharNo());
 
 		playerInfo.setEmailId(playerRequetVO.getEmailId());
 		playerInfo.setGenerue(playerRequetVO.getGenerue());
-		playerInfo.setImage(imageData);
-		playerInfo.setDocImageFront(docDataFront);
-		playerInfo.setDocImageBack(docDataBack);
 		playerInfo.setPhNo(playerRequetVO.getPhNo());
 		playerInfo.setPinCode(playerRequetVO.getPinCode());
 		playerInfo.setPlayerAddress(playerRequetVO.getPlayerAddress());
@@ -95,8 +97,12 @@ public class PlayerServiceImpl implements PlayerService {
 		playerInfo.setDateOfBirth(playerRequetVO.getDob());
 		playerInfo.setPassword(playerRequetVO.getPassword());
 		playerInfo.setLocation(playerRequetVO.getLocation());
-		playerRepository.save(playerInfo);
-
+		var res=playerRepository.save(playerInfo);
+		docInfo.setImage(imageData);
+		docInfo.setDocImageFront(docDataFront);
+		docInfo.setDocImageBack(docDataBack);
+		docInfo.setRegistrationId(res.getRegistrationId());
+		docRepo.save(docInfo);
 		try {
 			sendMail(playerInfo);
 			genericVO.setResponse("You have been Registered successfully, please check your registered mail");
@@ -257,7 +263,7 @@ public class PlayerServiceImpl implements PlayerService {
 
 		byte[] imageData;
 
-		imageData = playerRepository.findByregistrationId(registrationId);
+		imageData = docRepo.findByregistrationId(registrationId);
 
 		Image imageDataEn = com.itextpdf.text.Image.getInstance(imageData);
 		imageDataEn.setAlignment(Element.ALIGN_CENTER);
@@ -580,8 +586,8 @@ public class PlayerServiceImpl implements PlayerService {
 			pcell.setBorderColor(BaseColor.WHITE);
 			ptable.addCell(pcell);
 
-			pcell = new PdfPCell(new Phrase(allplayerInfo.get(i).getAadharNo().toString() + " " + "("
-					+ allplayerInfo.get(i).getLocation() + ")", tablesFont));
+			pcell = new PdfPCell(new Phrase("XXXXXXXX" + allplayerInfo.get(i).getAadharNo().toString().substring(8)
+					+ " " + "(" + allplayerInfo.get(i).getLocation() + ")", tablesFont));
 			pcell.setBackgroundColor(new BaseColor(230, 230, 230));
 			pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			pcell.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -744,8 +750,8 @@ public class PlayerServiceImpl implements PlayerService {
 			pcell.setBorderColor(BaseColor.WHITE);
 			ptable.addCell(pcell);
 
-			pcell = new PdfPCell(new Phrase(allplayerInfo.get(i).getAadharNo().toString() + " " + "("
-					+ allplayerInfo.get(i).getLocation() + ")", tablesFont));
+			pcell = new PdfPCell(new Phrase("XXXXXXXX" + allplayerInfo.get(i).getAadharNo().toString().substring(8)
+					+ " " + "(" + allplayerInfo.get(i).getLocation() + ")", tablesFont));
 			pcell.setBackgroundColor(new BaseColor(230, 230, 230));
 			pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			pcell.setVerticalAlignment(Element.ALIGN_MIDDLE);
