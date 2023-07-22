@@ -36,7 +36,7 @@ public interface PlayerRepository extends JpaRepository<PlayerInfo, Long> {
 	@Query(value = "select * from player_registration where generue=?1 order by registration_id", nativeQuery = true)
 	List<PlayerInfo> findbyGenerue(String generue);
 
-	@Query(value = "select * from player_registration where generue=?1 and player_location_category=?2 order by registration_id", nativeQuery = true)
+	@Query(value = "select * from player_registration where generue=?1 and player_location_category=?2 and payment_validation='ok' order by registration_id", nativeQuery = true)
 	List<PlayerInfo> findbyCategoryLocation(String category,String locaton);	
 	
 	
@@ -51,11 +51,11 @@ public interface PlayerRepository extends JpaRepository<PlayerInfo, Long> {
 	@Query(value = "update player_registration set payment_validation='ok' where registration_id in(?1)", nativeQuery = true)
 	void paymentUpdate(List<Long> registartionIDS);
 
-	@Query(value = "select * from player_registration order by registration_id", nativeQuery = true)
+	@Query(value = "select * from player_registration where payment_validation='ok' order by registration_id", nativeQuery = true)
 	List<PlayerInfo> findAllPlayer();
 
 	
-	@Query(value = "select registration_id from player_registration order by registration_id", nativeQuery = true)
+	@Query(value = "select registration_id from player_registration where payment_validation='ok' order by registration_id", nativeQuery = true)
 	List<Long> findAllDocImageFrontRegID();
 
 	

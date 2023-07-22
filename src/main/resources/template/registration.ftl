@@ -43,7 +43,7 @@
       </div>
       <div class="message" style=" padding-left: 3%;padding-right: 3%">
         <h4>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Your initial registration is completed. Please ensure that you have paid the registration fees to <font color="red"> 8116199489 (Phone Pe,G-Pay,Paytm) or UPI ID : 8116199489@ybl </font> within the time frame and whatsapp your <font color="red">registration ID : ${regid} to 707440191</font> for further proceedings.
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Your initial registration is completed. Please ensure that you have paid the registration fees to <font color="red"> UPI ID : 8116199489fdl@ybl for Rs.70 </font> within the time frame and whatsapp your <font color="red">registration ID : ${regid} to 707440191</font> for further proceedings.
         </h4>  
        
         <h4>

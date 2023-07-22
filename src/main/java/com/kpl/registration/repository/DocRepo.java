@@ -11,16 +11,17 @@ import com.kpl.registration.entity.DocInfo;
 @Repository
 public interface DocRepo extends JpaRepository<DocInfo, Long> {
 
-	@Query(value = "select * from doc_info order by registration_id", nativeQuery = true)
+	@Query(value = "SELECT d.* FROM doc_info d JOIN player_registration p ON d.registration_id = p.registration_id WHERE p.payment_validation = 'ok'ORDER BY d.registration_id", nativeQuery = true)
 	List<DocInfo> findAllImageByGenerue();
-	
+
+//	for live search data
+
 	@Query(value = "select image from doc_info where registration_id=?1", nativeQuery = true)
 	byte[] findByregistrationId(Long registrationId);
 
-	@Query(value = "select doc_image_front from doc_info order by registration_id", nativeQuery = true)
+	@Query(value = "SELECT d.doc_image_front FROM doc_info d JOIN player_registration p ON d.registration_id = p.registration_id WHERE p.payment_validation = 'ok' ORDER BY d.registration_id", nativeQuery = true)
 	List<byte[]> findAllDocFront();
 
-	
-	@Query(value = "select doc_image_back from doc_info order by registration_id", nativeQuery = true)
+	@Query(value = "SELECT d.doc_image_back FROM doc_info d JOIN player_registration p ON d.registration_id = p.registration_id WHERE p.payment_validation = 'ok' ORDER BY d.registration_id", nativeQuery = true)
 	List<byte[]> findAllDocBack();
 }

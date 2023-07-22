@@ -35,6 +35,7 @@ public class LoginController {
 	PlayerService playerService;
 	@Autowired
 	PlayerServiceImpl playerServiceImpl;
+
 	@GetMapping("/loginHomePage")
 	public String showLoginPage() {
 		return "login";
@@ -43,23 +44,23 @@ public class LoginController {
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String login(@RequestParam("username") String id, @RequestParam("password") String password, Model model)
 			throws IOException, ParseException {
-		if (playerRepository.findByMailOrPhNumber(id) == null) {			
-				model.addAttribute("errorMessage", "Invalid Email ID or Phone Number");
-				return "login";
+		if (playerRepository.findByMailOrPhNumber(id) == null) {
+			model.addAttribute("errorMessage", "Invalid Email ID or Phone Number");
+			return "login";
 		}
 		var response = registrationController.registrationStatus(id, password);
 		if (response.getRegistrationId() != null) {
 
 			String dateTimeString = response.getRegistrationTime().toString();
-		        
-		        // Parse the input string to LocalDateTime
-		        LocalDateTime dateTime = LocalDateTime.parse(dateTimeString);
-		        
-		        // Define the desired output format
-		        DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
-		        
-		        // Format the LocalDateTime using the output format
-		        String formattedDateTime = dateTime.format(outputFormatter);
+
+			// Parse the input string to LocalDateTime
+			LocalDateTime dateTime = LocalDateTime.parse(dateTimeString);
+
+			// Define the desired output format
+			DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+
+			// Format the LocalDateTime using the output format
+			String formattedDateTime = dateTime.format(outputFormatter);
 			model.addAttribute("id", response.getRegistrationId());
 			model.addAttribute("firstname", response.getPlayerFirstName());
 			model.addAttribute("lastname", response.getPlayerLastName());
@@ -73,17 +74,11 @@ public class LoginController {
 		}
 	}
 
-	
-	
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public String loginValidationOnForwardAgain( Model model)
-			throws IOException, ParseException {
-			return "login";
+	public String loginValidationOnForwardAgain(Model model) throws IOException, ParseException {
+		return "login";
 	}
-	
-	
-	
-	
+
 	@GetMapping("/playerView")
 	public String playerView() {
 		return "playerView";
@@ -96,7 +91,8 @@ public class LoginController {
 
 	@RequestMapping(value = "/resetPassword", method = RequestMethod.POST)
 	public String resetPassword(@RequestParam Long phNumber, @RequestParam Long pinCode, @RequestParam Long aadhaarNo,
-			@RequestParam String password, Model model) throws IOException, ParseException, MessagingException, TemplateException {
+			@RequestParam String password, Model model)
+			throws IOException, ParseException, MessagingException, TemplateException {
 
 		var response = registrationController.resetPassword(phNumber, pinCode, aadhaarNo, password);
 		if (response == "Success") {
@@ -116,10 +112,11 @@ public class LoginController {
 
 	@RequestMapping(value = "/signUp", method = RequestMethod.POST)
 	public String signUp(@RequestParam String playerFirstName, @RequestParam String playerLastName,
-			@RequestParam Long aadharNo, @RequestParam MultipartFile docImageBack,@RequestParam MultipartFile docImageFront, @RequestParam Long phNo,
-			@RequestParam String dob, @RequestParam Long pinCode, @RequestParam MultipartFile playerPhoto,
-			@RequestParam String address, @RequestParam String password, @RequestParam String location,
-			@RequestParam String playerCategory, @RequestParam String mail, Model model)
+			@RequestParam Long aadharNo, @RequestParam MultipartFile docImageBack,
+			@RequestParam MultipartFile docImageFront, @RequestParam Long phNo, @RequestParam String dob,
+			@RequestParam Long pinCode, @RequestParam MultipartFile playerPhoto, @RequestParam String address,
+			@RequestParam String password, @RequestParam String location, @RequestParam String playerCategory,
+			@RequestParam String mail, Model model)
 			throws IOException, ParseException, MessagingException, TemplateException {
 
 		if (playerFirstName.length() > 20) {
@@ -143,29 +140,32 @@ public class LoginController {
 			model.addAttribute("errorMessage", "Please Select Your Category");
 			return "signUp";
 		}
-		
+
 		if (location.toString().equals("Your Home location")) {
 			model.addAttribute("errorMessage", "Please Select Your Home Location");
 			return "signUp";
 		}
-		
-		
+
 		if (!(docImageFront.getOriginalFilename().toString().toLowerCase().endsWith(".png")
-				|| docImageFront.getOriginalFilename().toString().toLowerCase().endsWith(".jpg"))) {
+				|| docImageFront.getOriginalFilename().toString().toLowerCase().endsWith(".jpg")
+				|| docImageFront.getOriginalFilename().toString().toLowerCase().endsWith(".jpeg"))) {
 			model.addAttribute("errorMessage",
-					"Aadhaar Card Front Image must be an Image and it should be in jpg or png format");
+					"Aadhaar Card Front Image must be an Image and it should be in jpg or png or jpeg format");
 			return "signUp";
 		}
 
 		if (!(docImageBack.getOriginalFilename().toString().toLowerCase().endsWith(".png")
-				|| docImageBack.getOriginalFilename().toString().toLowerCase().endsWith(".jpg"))) {
+				|| docImageBack.getOriginalFilename().toString().toLowerCase().endsWith(".jpg")
+				|| docImageFront.getOriginalFilename().toString().toLowerCase().endsWith(".jpeg"))) {
 			model.addAttribute("errorMessage",
-					"Aadhaar Card Back Image must be an Image and it should be in jpg or png format");
+					"Aadhaar Card Back Image must be an Image and it should be in jpg or png or jpeg format");
 			return "signUp";
 		}
 		if (!(playerPhoto.getOriginalFilename().toString().toLowerCase().endsWith(".png")
-				|| playerPhoto.getOriginalFilename().toString().toLowerCase().endsWith(".jpg"))) {
-			model.addAttribute("errorMessage", "Your photo must be an Image and it should be in jpg or png format");
+				|| playerPhoto.getOriginalFilename().toString().toLowerCase().endsWith(".jpg")
+				|| docImageFront.getOriginalFilename().toString().toLowerCase().endsWith(".jpeg"))) {
+			model.addAttribute("errorMessage",
+					"Your photo must be an Image and it should be in jpg or png or jpeg format");
 			return "signUp";
 		}
 		if (!(password.length() > 3 && password.length() < 9)) {
@@ -178,7 +178,6 @@ public class LoginController {
 			return "signUp";
 		}
 
-		
 		if (docImageFront.getSize() > 1 * 512 * 1024) {
 			model.addAttribute("errorMessage", "Please Compress your Aadhar Front Image less than 512 KB");
 			return "signUp";
@@ -224,24 +223,20 @@ public class LoginController {
 		byte[] imageData = playerPhoto.getBytes();
 		byte[] docDataFront = docImageFront.getBytes();
 		byte[] docDataBack = docImageBack.getBytes();
-		var res=playerService.savePlayerInfo(playerRequetVO, imageData, docDataFront,docDataBack);
+		var res = playerService.savePlayerInfo(playerRequetVO, imageData, docDataFront, docDataBack);
 		model.addAttribute("errorMessage", res.getResponse());
 		return "payment";
 
 	}
-	
 
-	
-	
 	@GetMapping("/payment")
 	public String payment() {
 		return "payment";
 	}
-			
-	
+
 	@GetMapping("/liveAution")
 	public String liveAution() {
 		return "liveauction";
 	}
-	
+
 }

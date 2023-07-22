@@ -317,13 +317,10 @@
           <label>Payment Status:</label>
           <span>${status}</span>
         </div>
-        <div class="user-details">
-          <label>Phone Pe,G-Pay,Paytm Number:</label>
-          <span>8116199489</span>
-        </div>
+        
         <div class="user-details">
           <label>UPI ID:</label>
-          <span><a href="upi://pay?pa=8116199489@ybl">8116199489@ybl</a></span>
+          <span><a href="upi://pay?pa=8116199489fdl@ybl&pn=%20&tr=%20&am=70&cu=INR">Click here to Pay</a></span>
         </div>
       </div>
       <div style="padding: 3%;color: #0011f3;">

@@ -125,9 +125,10 @@
     <div id="tagline">Please Check whether the receiver name is <font color="red">Akash Majumder</font> or not; if not, please contact the KPL
       team immediately.</div>
       <div id="upi">
-    <div> <img src="${pageContext.request.contextPath}/images/qrcodeakash.jpeg" alt="QR CODE"></div>
-    <div><p>UPI ID : <a href="upi://pay?pa=8116199489@ybl">8116199489@ybl</a></p>
-    <p>Phone Number : 8116199489(Phone Pe,G-Pay,Paytm)</p>
+    <div> <img src="${pageContext.request.contextPath}/images/akashup.jpeg" alt="QR CODE" style="width: 80%;"></div>
+    <!-- <div><img src="akashup.jpeg" alt="QR CODE" style="width: 80%;"></div>  -->
+    <div><p>UPI ID : <a href="upi://pay?pa=8116199489fdl@ybl&pn=%20&tr=%20&am=70&cu=INR">Click here to Pay</a><p>
+    <!-- <p>Phone Number : 8116199489(Phone Pe,G-Pay,Paytm)</p> -->
     </div>
   </div>
   <div id="tagline">
