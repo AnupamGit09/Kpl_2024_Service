@@ -24,7 +24,8 @@ import com.kpl.registration.service.PlayerService;
 import com.kpl.registration.service.PlayerServiceImpl;
 
 import freemarker.template.TemplateException;
-
+import lombok.extern.slf4j.Slf4j;
+@Slf4j
 @Controller
 public class LoginController {
 	@Autowired
@@ -123,6 +124,7 @@ public class LoginController {
 			model.addAttribute("errorMessage", "Please use your first name in short format");
 			return "signUp";
 		}
+		log.info("Player who tried to sign up : "+playerFirstName+ " "+playerLastName);
 		if (playerLastName.length() > 20) {
 			model.addAttribute("errorMessage", "Please use your last name in short format");
 			return "signUp";
