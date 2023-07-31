@@ -107,4 +107,6 @@ public interface PlayerRepository extends JpaRepository<PlayerInfo, Long> {
 	@Query(value = "SELECT * FROM player_registration  where payment_validation is null order by registration_id", nativeQuery = true)
 	List<PlayerInfo> paymentRem();
 
+	@Query(value = "SELECT * FROM player_registration  where payment_validation is not null order by registration_id", nativeQuery = true)
+	List<PlayerInfo> paymentDone();
 }

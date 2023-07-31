@@ -481,29 +481,40 @@ public class RegistrationController {
 		var todayTime = LocalDateTime.now();
 		var yesterdayTime = LocalDateTime.now().minusDays(1);
 		List<String> list = new ArrayList<>();
-		var message ="List of player who registered Yesterday : ";
+		var message = "List of player who have registered Today : ";
 		List<PlayerInfo> playerInfo = playerRepository.todaySignedUpPlayerList(todayTime, yesterdayTime);
 		for (int i = 0; i < playerInfo.size(); i++) {
-			var info = (i+1)+". Name : "+playerInfo.get(i).getPlayerFirstName() + " " + playerInfo.get(i).getPlayerLastName()
-					+ " ,Reg ID : " + playerInfo.get(i).getRegistrationId();
+			var info = (i + 1) + ". Name : " + playerInfo.get(i).getPlayerFirstName() + " "
+					+ playerInfo.get(i).getPlayerLastName() + " ,Reg ID : " + playerInfo.get(i).getRegistrationId();
 			list.add(info);
 		}
-		
-		restTemplate.getForObject(telegramBotUrl + message+" "+list, String.class);
-		
-		
-		
-		
+
+		restTemplate.getForObject(telegramBotUrl + message + " " + list, String.class);
 
 		List<PlayerInfo> payment = playerRepository.paymentRem();
 		List<String> paymentlist = new ArrayList<>();
-		var paymentmessage ="Players who have not paid the registrartion fees : ";
+		var paymentmessage = "Players who have not paid the registrartion fees : ";
 		for (int i = 0; i < payment.size(); i++) {
-			var info = (i+1)+". Name : "+payment.get(i).getPlayerFirstName() + " " + payment.get(i).getPlayerLastName()
-					+ " ,Reg ID : " + payment.get(i).getRegistrationId()+ " ,Phone Num : " + payment.get(i).getPhNo();
+			var info = (i + 1) + ". Name : " + payment.get(i).getPlayerFirstName() + " "
+					+ payment.get(i).getPlayerLastName() + " ,Reg ID : " + payment.get(i).getRegistrationId()
+					+ " ,Phone Num : " + payment.get(i).getPhNo();
 			paymentlist.add(info);
 		}
+
+		restTemplate.getForObject(telegramBotUrl + paymentmessage + " " + paymentlist, String.class);
 		
-		restTemplate.getForObject(telegramBotUrl + paymentmessage+" "+paymentlist, String.class);
+		
+		
+		List<PlayerInfo> paymentDone = playerRepository.paymentDone();
+		List<String> paymentDonelist = new ArrayList<>();
+		var paymentDonemessage = "Players who have paid the registrartion fees : ";
+		for (int i = 0; i < paymentDone.size(); i++) {
+			var info = (i + 1) + ". Name : " + paymentDone.get(i).getPlayerFirstName() + " "
+					+ paymentDone.get(i).getPlayerLastName() + " ,Reg ID : " + paymentDone.get(i).getRegistrationId()
+					+ " ,Phone Num : " + paymentDone.get(i).getPhNo();
+			paymentDonelist.add(info);
+		}
+
+		restTemplate.getForObject(telegramBotUrl + paymentDonemessage + " " + paymentDonelist, String.class);
 	}
 }

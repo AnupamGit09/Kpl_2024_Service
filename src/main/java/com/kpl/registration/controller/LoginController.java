@@ -130,7 +130,7 @@ public class LoginController {
 		if (playerFirstName.length() > 20) {
 			model.addAttribute("errorMessage", "Please use your first name in short format");
 			log.info("Please use your first name less than 20 word");
-			message = "Hey Support team, " + playerFirstName
+			message = "Hey Support team, " + playerFirstName + " " + playerLastName
 					+ " is trying to Register but he is using First name more than 20 words, please help him and his Phone number is : "
 					+ phNo;
 			restTemplate.getForObject(telegramBotUrl + message, String.class);
@@ -139,14 +139,14 @@ public class LoginController {
 		log.info("Player who tried to sign up : " + playerFirstName + " " + playerLastName);
 		log.info(playerFirstName + " phone number  : " + phNo);
 
-		message = "Hey Support team, " + playerFirstName
+		message = "Hey Support team, " + playerFirstName + " " + playerLastName
 				+ " is trying to Register help him if he requires any help his phone number is : " + phNo;
 		restTemplate.getForObject(telegramBotUrl + message, String.class);
 
 		if (playerLastName.length() > 20) {
 			model.addAttribute("errorMessage", "Please use your last name in short format");
 			log.info("Please use your last name in short format");
-			message = "Hey Support team, " + playerFirstName
+			message = "Hey Support team, " + playerFirstName + " " + playerLastName
 					+ " is trying to Register but he is using Last name more than 20 words, please help him and his Phone number is : "
 					+ phNo;
 			restTemplate.getForObject(telegramBotUrl + message, String.class);
@@ -155,7 +155,7 @@ public class LoginController {
 		if (aadharNo.toString().length() != 12) {
 			model.addAttribute("errorMessage", "Please use Correct aadhaar No");
 			log.info("Please use Correct aadhaar No");
-			message = "Hey Support team, " + playerFirstName
+			message = "Hey Support team, " + playerFirstName + " " + playerLastName
 					+ " is trying to Register but he is not using 12 digits Aadhar no, please help him and his Phone number is : "
 					+ phNo;
 			restTemplate.getForObject(telegramBotUrl + message, String.class);
@@ -163,7 +163,7 @@ public class LoginController {
 		}
 		if (pinCode.toString().length() != 6) {
 			model.addAttribute("errorMessage", "Please use Correct Postal Code");
-			message = "Hey Support team, " + playerFirstName
+			message = "Hey Support team, " + playerFirstName + " " + playerLastName
 					+ " is trying to Register but he is using Postal code more than 6 digits, please help him and his Phone number is : "
 					+ phNo;
 			restTemplate.getForObject(telegramBotUrl + message, String.class);
@@ -173,7 +173,7 @@ public class LoginController {
 
 		if (playerCategory.toString().equals("Player Category")) {
 			model.addAttribute("errorMessage", "Please Select Your Category");
-			message = "Hey Support team, " + playerFirstName
+			message = "Hey Support team, " + playerFirstName + " " + playerLastName
 					+ " is trying to Register but he has not selected player category, please help him and his Phone number is : "
 					+ phNo;
 			restTemplate.getForObject(telegramBotUrl + message, String.class);
@@ -183,7 +183,7 @@ public class LoginController {
 
 		if (location.toString().equals("Your Home location")) {
 			model.addAttribute("errorMessage", "Please Select Your Home Location");
-			message = "Hey Support team, " + playerFirstName
+			message = "Hey Support team, " + playerFirstName + " " + playerLastName
 					+ " is trying to Register but he has not selected Home Location, please help him and his Phone number is : "
 					+ phNo;
 			restTemplate.getForObject(telegramBotUrl + message, String.class);
@@ -196,7 +196,7 @@ public class LoginController {
 				|| docImageFront.getOriginalFilename().toString().toLowerCase().endsWith(".jpeg"))) {
 			model.addAttribute("errorMessage",
 					"Aadhaar Card Front Image must be an Image and it should be in jpg or png or jpeg format");
-			message = "Hey Support team, " + playerFirstName
+			message = "Hey Support team, " + playerFirstName + " " + playerLastName
 					+ " is trying to Register but he has not uploaded Aadhar card front image in correct format, please help him and his Phone number is : "
 					+ phNo;
 			restTemplate.getForObject(telegramBotUrl + message, String.class);
@@ -209,7 +209,7 @@ public class LoginController {
 				|| docImageFront.getOriginalFilename().toString().toLowerCase().endsWith(".jpeg"))) {
 			model.addAttribute("errorMessage",
 					"Aadhaar Card Back Image must be an Image and it should be in jpg or png or jpeg format");
-			message = "Hey Support team, " + playerFirstName
+			message = "Hey Support team, " + playerFirstName + " " + playerLastName
 					+ " is trying to Register but he has not uploaded Aadhar card Back image in correct format, please help him and his Phone number is : "
 					+ phNo;
 			restTemplate.getForObject(telegramBotUrl + message, String.class);
@@ -221,7 +221,7 @@ public class LoginController {
 				|| docImageFront.getOriginalFilename().toString().toLowerCase().endsWith(".jpeg"))) {
 			model.addAttribute("errorMessage",
 					"Your photo must be an Image and it should be in jpg or png or jpeg format");
-			message = "Hey Support team, " + playerFirstName
+			message = "Hey Support team, " + playerFirstName + " " + playerLastName
 					+ " is trying to Register but he has not uploaded his own image in correct format, please help him and his Phone number is : "
 					+ phNo;
 			restTemplate.getForObject(telegramBotUrl + message, String.class);
@@ -231,7 +231,7 @@ public class LoginController {
 		if (!(password.length() > 3 && password.length() < 9)) {
 			model.addAttribute("errorMessage", "Password Must be between 4 to 8 character");
 			log.info("Password Must be between 4 to 8 character");
-			message = "Hey Support team, " + playerFirstName
+			message = "Hey Support team, " + playerFirstName + " " + playerLastName
 					+ " is trying to Register but he has not selected password between 4 to 8 character, please help him and his Phone number is : "
 					+ phNo;
 			restTemplate.getForObject(telegramBotUrl + message, String.class);
@@ -241,7 +241,7 @@ public class LoginController {
 		if (Period.between(LocalDate.parse(dob).plusYears(14), LocalDate.now()).getYears() < 0) {
 			model.addAttribute("errorMessage", "Please Enter Correct Date of Birth");
 			log.info("Please Enter Correct Date of Birth");
-			message = "Hey Support team, " + playerFirstName
+			message = "Hey Support team, " + playerFirstName + " " + playerLastName
 					+ " is trying to Register but he has selected invalid Date of Birth, please help him and his Phone number is : "
 					+ phNo;
 			restTemplate.getForObject(telegramBotUrl + message, String.class);
@@ -249,7 +249,7 @@ public class LoginController {
 		}
 
 		if (docImageFront.getSize() > 1 * 512 * 1024) {
-			message = "Hey Support team, " + playerFirstName
+			message = "Hey Support team, " + playerFirstName + " " + playerLastName
 					+ " is trying to Register but he has selected Aadhar Front image more than 300 KB, please help him and his Phone number is : "
 					+ phNo;
 			restTemplate.getForObject(telegramBotUrl + message, String.class);
@@ -259,7 +259,7 @@ public class LoginController {
 		}
 
 		if (docImageBack.getSize() > 1 * 512 * 1024) {
-			message = "Hey Support team, " + playerFirstName
+			message = "Hey Support team, " + playerFirstName + " " + playerLastName
 					+ " is trying to Register but he has selected Aadhar Back image more than 300 KB, please help him and his Phone number is : "
 					+ phNo;
 			restTemplate.getForObject(telegramBotUrl + message, String.class);
@@ -269,7 +269,7 @@ public class LoginController {
 		}
 
 		if (playerPhoto.getSize() > 1 * 512 * 1024) {
-			message = "Hey Support team, " + playerFirstName
+			message = "Hey Support team, " + playerFirstName + " " + playerLastName
 					+ " is trying to Register but he has selected His Own image more than 300 KB, please help him and his Phone number is : "
 					+ phNo;
 			restTemplate.getForObject(telegramBotUrl + message, String.class);
@@ -282,7 +282,7 @@ public class LoginController {
 		String emailUniqueCheck = playerRepository.findByEmailID(mail);
 		String aadhaarCheck = playerRepository.findByAadhaarID(aadharNo);
 		if (phNumberUniqueCheck != null) {
-			message = "Hey Support team, " + playerFirstName
+			message = "Hey Support team, " + playerFirstName + " " + playerLastName
 					+ " is trying to Register but he is using already registered Phone Number, please help him and his Phone number is : "
 					+ phNo;
 			restTemplate.getForObject(telegramBotUrl + message, String.class);
@@ -291,7 +291,7 @@ public class LoginController {
 			return "signUp";
 		}
 		if (emailUniqueCheck != null) {
-			message = "Hey Support team, " + playerFirstName
+			message = "Hey Support team, " + playerFirstName + " " + playerLastName
 					+ " is trying to Register but he is using already registered Email ID, please help him and his Phone number is : "
 					+ phNo;
 			restTemplate.getForObject(telegramBotUrl + message, String.class);
@@ -300,7 +300,7 @@ public class LoginController {
 			return "signUp";
 		}
 		if (aadhaarCheck != null) {
-			message = "Hey Support team, " + playerFirstName
+			message = "Hey Support team, " + playerFirstName + " " + playerLastName
 					+ " is trying to Register but he is using already registered Aadhar no, please help him and his Phone number is : "
 					+ phNo;
 			restTemplate.getForObject(telegramBotUrl + message, String.class);

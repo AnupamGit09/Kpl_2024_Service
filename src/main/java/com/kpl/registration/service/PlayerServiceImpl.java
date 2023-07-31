@@ -112,9 +112,9 @@ public class PlayerServiceImpl implements PlayerService {
 			String firstname = playerInfo.getPlayerFirstName();
 			String mailID = playerInfo.getEmailId();
 			log.info("User has been Registered successfully" + ",name : " + firstname + " , Mail ID : " + mailID);
-			String message = "Hey we have a new Registration!,His name is :" + firstname
-					+ " and his registration id, mail ID and phone number are :" + res.getRegistrationId() + " ,"
-					+ mailID + " ," + playerInfo.getPhNo();
+			String message = "Hey we have a new Registration!,His name is :" + firstname + " "
+					+ playerInfo.getPlayerLastName() + " and his registration id, mail ID and phone number are :"
+					+ res.getRegistrationId() + " ," + mailID + " ," + playerInfo.getPhNo();
 			restTemplate.getForObject(telegramBotUrl + message, String.class);
 			sendMail(playerInfo);
 			genericVO.setResponse("You have been Registered successfully, please check your registered mail");
@@ -203,8 +203,12 @@ public class PlayerServiceImpl implements PlayerService {
 			mimeMessageHelper.setText(htmlTemp, true);
 			mimeMessageHelper
 					.setSubject(playerInfo.get(i).getPlayerFirstName() + ",Your payment status has been Updated");
-			log.info("Payment status updated for name : " + playerInfo.get(i).getPlayerFirstName()
-					+ " ,and his Mail ID,Reg ID is : " + playerInfo.get(i).getEmailId() + "," + playerInfo.get(i));
+			String text = "Payment status updated for : " + playerInfo.get(i).getPlayerFirstName() + " "
+					+ playerInfo.get(i).getPlayerLastName() + " ,and his Mail ID,Reg ID is : "
+					+ playerInfo.get(i).getEmailId() + "," + playerInfo.get(i).getRegistrationId();
+			log.info(text);
+
+			restTemplate.getForObject(telegramBotUrl + text, String.class);
 			javaMailSender.send(message);
 		}
 
