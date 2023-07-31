@@ -19,6 +19,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
+import org.springframework.web.client.RestTemplate;
 
 import com.itextpdf.text.BadElementException;
 import com.itextpdf.text.BaseColor;
@@ -72,16 +73,19 @@ public class PlayerServiceImpl implements PlayerService {
 	@Autowired
 	JavaMailSender javaMailSender;
 	@Autowired
+	RestTemplate restTemplate;
+	@Autowired
 	Configuration config;
 	@Value("${spring.mail.username}")
 	private String emailUsername;
+	String telegramBotUrl = "https://api.telegram.org/bot6637753416:AAHb7DHnfrvEl6Aje0RfyrumAkZjZglxXHU/sendmessage?chat_id=@kpl2023updates&text=";
 
 	@Override
-	public GenericVO savePlayerInfo(PlayerRequetVO playerRequetVO, byte[] imageData,  byte[] docDataFront,byte[] docDataBack)
-			throws IOException, MessagingException, TemplateException {
+	public GenericVO savePlayerInfo(PlayerRequetVO playerRequetVO, byte[] imageData, byte[] docDataFront,
+			byte[] docDataBack) throws IOException, MessagingException, TemplateException {
 		GenericVO genericVO = new GenericVO();
 		PlayerInfo playerInfo = new PlayerInfo();
-		DocInfo docInfo=new DocInfo();
+		DocInfo docInfo = new DocInfo();
 		playerInfo.setAadharNo(playerRequetVO.getAadharNo());
 
 		playerInfo.setEmailId(playerRequetVO.getEmailId());
@@ -97,16 +101,21 @@ public class PlayerServiceImpl implements PlayerService {
 		playerInfo.setDateOfBirth(playerRequetVO.getDob());
 		playerInfo.setPassword(playerRequetVO.getPassword());
 		playerInfo.setLocation(playerRequetVO.getLocation());
-		var res=playerRepository.save(playerInfo);
+		var res = playerRepository.save(playerInfo);
 		docInfo.setImage(imageData);
 		docInfo.setDocImageFront(docDataFront);
 		docInfo.setDocImageBack(docDataBack);
-		log.info("Registration ID for "+playerRequetVO.getPlayerFirstName()+" is "+res.getRegistrationId());
+		log.info("Registration ID for " + playerRequetVO.getPlayerFirstName() + " is " + res.getRegistrationId());
 		docInfo.setRegistrationId(res.getRegistrationId());
 		docRepo.save(docInfo);
 		try {
-			log.info("You have been Registered successfully" +",name : " + playerInfo.getPlayerFirstName() + " , Mail ID : "
-					+ playerInfo.getEmailId());
+			String firstname = playerInfo.getPlayerFirstName();
+			String mailID = playerInfo.getEmailId();
+			log.info("User has been Registered successfully" + ",name : " + firstname + " , Mail ID : " + mailID);
+			String message = "Hey we have a new Registration!,His name is :" + firstname
+					+ " and his registration id, mail ID and phone number are :" + res.getRegistrationId() + " ,"
+					+ mailID + " ," + playerInfo.getPhNo();
+			restTemplate.getForObject(telegramBotUrl + message, String.class);
 			sendMail(playerInfo);
 			genericVO.setResponse("You have been Registered successfully, please check your registered mail");
 			return genericVO;
@@ -120,16 +129,16 @@ public class PlayerServiceImpl implements PlayerService {
 	public void sendMail(PlayerInfo playerInfo) throws MessagingException, TemplateNotFoundException,
 			MalformedTemplateNameException, ParseException, IOException, TemplateException {
 		Map<String, Object> model = new HashMap<>();
-		String phNu=playerInfo.getPhNo().toString();
-		String password=playerInfo.getPassword();
-        var regID=playerRepository.findByPhNu(phNu);
-        
+		String phNu = playerInfo.getPhNo().toString();
+		String password = playerInfo.getPassword();
+		var regID = playerRepository.findByPhNu(phNu);
+
 		model.put("regid", regID);
 		model.put("firstname", playerInfo.getPlayerFirstName());
 		model.put("name", playerInfo.getPlayerFirstName() + " " + playerInfo.getPlayerLastName());
 		model.put("location", playerInfo.getLocation());
 		model.put("mail", playerInfo.getEmailId());
-		model.put("phNo",phNu);
+		model.put("phNo", phNu);
 		model.put("category", playerInfo.getGenerue());
 		model.put("address", playerInfo.getPlayerAddress());
 		model.put("password", password);
@@ -149,10 +158,10 @@ public class PlayerServiceImpl implements PlayerService {
 		javaMailSender.send(message);
 
 	}
-	
+
 	@Override
-	public void sendMailOnSold(PlayerInfo playerInfo) throws MessagingException,
-			TemplateNotFoundException, MalformedTemplateNameException, ParseException, IOException, TemplateException {
+	public void sendMailOnSold(PlayerInfo playerInfo) throws MessagingException, TemplateNotFoundException,
+			MalformedTemplateNameException, ParseException, IOException, TemplateException {
 		Map<String, Object> model = new HashMap<>();
 		var message = javaMailSender.createMimeMessage();
 		var mimeMessageHelper = new MimeMessageHelper(message, MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED,
@@ -160,25 +169,21 @@ public class PlayerServiceImpl implements PlayerService {
 		mimeMessageHelper.setFrom(emailUsername);
 		Template mailTemplate = config.getTemplate("soldTeam.ftl");
 
-			model.put("firstname", playerInfo.getPlayerFirstName());
-			model.put("soldteam", playerInfo.getSoldTeam());
-			model.put("soldamount", playerInfo.getSoldAmount());
-			
-			model.put("ownername", " #### Daru khor VT");
-			model.put("phnum", " #### phnumber12345");
-			
-			var htmlTemp = FreeMarkerTemplateUtils.processTemplateIntoString(mailTemplate, model);
-			mimeMessageHelper.setTo(playerInfo.getEmailId());
-			mimeMessageHelper.setText(htmlTemp, true);
-			mimeMessageHelper
-					.setSubject(playerInfo.getPlayerFirstName() + ",Hurray! you have been sold");
-			log.info("name : " + playerInfo.getPlayerFirstName() + " , Mail ID : "
-					+ playerInfo.getEmailId());
-			javaMailSender.send(message);
+		model.put("firstname", playerInfo.getPlayerFirstName());
+		model.put("soldteam", playerInfo.getSoldTeam());
+		model.put("soldamount", playerInfo.getSoldAmount());
+
+		model.put("ownername", " #### Daru khor VT");
+		model.put("phnum", " #### phnumber12345");
+
+		var htmlTemp = FreeMarkerTemplateUtils.processTemplateIntoString(mailTemplate, model);
+		mimeMessageHelper.setTo(playerInfo.getEmailId());
+		mimeMessageHelper.setText(htmlTemp, true);
+		mimeMessageHelper.setSubject(playerInfo.getPlayerFirstName() + ",Hurray! you have been sold");
+		log.info("name : " + playerInfo.getPlayerFirstName() + " , Mail ID : " + playerInfo.getEmailId());
+		javaMailSender.send(message);
 
 	}
-	
-	
 
 	@Override
 	public void sendMailOnPaymentValidation(List<Long> registartionIDS) throws MessagingException,
@@ -198,8 +203,8 @@ public class PlayerServiceImpl implements PlayerService {
 			mimeMessageHelper.setText(htmlTemp, true);
 			mimeMessageHelper
 					.setSubject(playerInfo.get(i).getPlayerFirstName() + ",Your payment status has been Updated");
-			log.info("name : " + playerInfo.get(i).getPlayerFirstName() + " , Mail ID : "
-					+ playerInfo.get(i).getEmailId());
+			log.info("Payment status updated for name : " + playerInfo.get(i).getPlayerFirstName()
+					+ " ,and his Mail ID,Reg ID is : " + playerInfo.get(i).getEmailId() + "," + playerInfo.get(i));
 			javaMailSender.send(message);
 		}
 
@@ -280,10 +285,10 @@ public class PlayerServiceImpl implements PlayerService {
 	@Override
 	public void generatePdfByClassification(HttpServletResponse response, String generue)
 			throws DocumentException, IOException {
-		
-		String category=generue.split(",")[1];
-		String location=generue.split(",")[0];
-		var allplayerInfo = playerRepository.findbyCategoryLocation(category,location);
+
+		String category = generue.split(",")[1];
+		String location = generue.split(",")[0];
+		var allplayerInfo = playerRepository.findbyCategoryLocation(category, location);
 
 		var yellowBold = "FORsmartNext-Bolds.otf";
 		var font1 = FontFactory.getFont(yellowBold, 20, Font.BOLD, BaseColor.BLACK);
@@ -618,10 +623,10 @@ public class PlayerServiceImpl implements PlayerService {
 	@Override
 	public void generateFinalPlayerPdf(HttpServletResponse response, String generue)
 			throws DocumentException, IOException {
-		
-		String category=generue.split(",")[1];	
-		String location=generue.split(",")[0];
-		var allplayerInfo = playerRepository.findbyCategoryLocation(category,location);
+
+		String category = generue.split(",")[1];
+		String location = generue.split(",")[0];
+		var allplayerInfo = playerRepository.findbyCategoryLocation(category, location);
 
 		var yellowBold = "FORsmartNext-Bolds.otf";
 		var font1 = FontFactory.getFont(yellowBold, 20, Font.BOLD, BaseColor.BLACK);
@@ -727,8 +732,7 @@ public class PlayerServiceImpl implements PlayerService {
 		pcell.setPaddingLeft(10f);
 		pcell.setBorderColor(new BaseColor(220, 220, 0));
 		ptable.addCell(pcell);
-		
-		
+
 		pcell = new PdfPCell(new Phrase("Sold Amount", tableFont));
 		pcell.setBackgroundColor(new BaseColor(220, 220, 0));
 		pcell.setHorizontalAlignment(Element.ALIGN_LEFT);
@@ -755,7 +759,6 @@ public class PlayerServiceImpl implements PlayerService {
 			pcell.setBorderColor(BaseColor.WHITE);
 			ptable.addCell(pcell);
 
-
 			pcell = new PdfPCell(new Phrase(allplayerInfo.get(i).getPhNo().toString(), tablesFont));
 			pcell.setBackgroundColor(new BaseColor(230, 230, 230));
 			pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -776,7 +779,7 @@ public class PlayerServiceImpl implements PlayerService {
 			pcell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			pcell.setBorderColor(BaseColor.WHITE);
 			ptable.addCell(pcell);
-			
+
 			pcell = new PdfPCell(new Phrase("", tablesFont));
 			pcell.setBackgroundColor(new BaseColor(230, 230, 230));
 			pcell.setHorizontalAlignment(Element.ALIGN_CENTER);

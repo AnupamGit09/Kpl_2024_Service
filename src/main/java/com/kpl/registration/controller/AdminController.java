@@ -19,7 +19,8 @@ import com.kpl.registration.repository.AdminRepo;
 import com.kpl.registration.repository.PlayerRepository;
 
 import freemarker.template.TemplateException;
-
+import lombok.extern.slf4j.Slf4j;
+@Slf4j
 @Controller
 public class AdminController {
 
@@ -41,6 +42,7 @@ public class AdminController {
 			@RequestParam(value = "dashboard", required = false) String dashboard,
 			@RequestParam(value = "liveData", required = false) String liveData) {
 		String res = adminRepo.adminLoginValidation(id, password);
+		log.info("Admin Log in done using ID "+id+ "and password "+password);
 		if (res != null) {
 			if (dashboard!=null) {
 				return "adminView";
@@ -66,6 +68,7 @@ public class AdminController {
 		List<Long> idList = new ArrayList<>();
 		for (String value : listOfId) {
 			try {
+				log.info("Player category updated to List A for reg ID "+value);
 				idList.add(Long.parseLong(value));
 			} catch (Exception e) {
 				model.addAttribute("errorMessage", "Please re verify registration ids");
@@ -87,6 +90,7 @@ public class AdminController {
 		List<Long> idList = new ArrayList<>();
 		for (String value : listOfId) {
 			try {
+				log.info("Player Payment updated for reg ID "+value);
 				idList.add(Long.parseLong(value));
 			} catch (Exception e) {
 				model.addAttribute("errorMessage", "Please re verify registration ids");

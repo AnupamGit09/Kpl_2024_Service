@@ -20,7 +20,7 @@ public interface PlayerRepository extends JpaRepository<PlayerInfo, Long> {
 
 	@Query(value = "select registration_id from player_registration where CAST(ph_no AS VARCHAR)=?1", nativeQuery = true)
 	Long findByPhNu(String id);
-	
+
 	@Query(value = "select * from player_registration where email_id=?1 or CAST(ph_no AS VARCHAR)=?1 ", nativeQuery = true)
 	PlayerInfo findByMailOrPhNumber(String id);
 
@@ -32,14 +32,12 @@ public interface PlayerRepository extends JpaRepository<PlayerInfo, Long> {
 
 	@Query(value = "select aadhar_no from player_registration where aadhar_no=?1", nativeQuery = true)
 	String findByAadhaarID(Long aadharNo);
-	
+
 	@Query(value = "select * from player_registration where generue=?1 order by registration_id", nativeQuery = true)
 	List<PlayerInfo> findbyGenerue(String generue);
 
 	@Query(value = "select * from player_registration where generue=?1 and player_location_category=?2 and payment_validation='ok' order by registration_id", nativeQuery = true)
-	List<PlayerInfo> findbyCategoryLocation(String category,String locaton);	
-	
-	
+	List<PlayerInfo> findbyCategoryLocation(String category, String locaton);
 
 	@Transactional
 	@Modifying
@@ -54,11 +52,9 @@ public interface PlayerRepository extends JpaRepository<PlayerInfo, Long> {
 	@Query(value = "select * from player_registration where payment_validation='ok' order by registration_id", nativeQuery = true)
 	List<PlayerInfo> findAllPlayer();
 
-	
 	@Query(value = "select registration_id from player_registration where payment_validation='ok' order by registration_id", nativeQuery = true)
 	List<Long> findAllDocImageFrontRegID();
 
-	
 	@Query(value = "select pin_code from player_registration where ph_no=?1", nativeQuery = true)
 	Long findByPinCode(Long pinCode);
 
@@ -76,16 +72,17 @@ public interface PlayerRepository extends JpaRepository<PlayerInfo, Long> {
 	@Query(value = "SELECT * from player_registration p,doc_info d where p.registration_id=d.registration_id\r\n"
 			+ "and p.registration_id=?1", nativeQuery = true)
 	PlayerInfo findDataByregistrationIdLiveFeed(Long regID);
-	
+
 	@Transactional
 	@Modifying
 	@Query(value = "update player_registration set sold_amount=?2 , sold_team=?3 , sold_time=?4  where registration_id=?1", nativeQuery = true)
-	void updateSoldamountAndTeam(Long regID, Long soldAmount, String soldTeam,LocalDateTime updationTime);
+	void updateSoldamountAndTeam(Long regID, Long soldAmount, String soldTeam, LocalDateTime updationTime);
 
 	@Query(value = "select * from player_registration  where sold_team=?1", nativeQuery = true)
 	List<PlayerInfo> findbyTeam(String soldTeam);
 
-	@Query(value = "SELECT distinct(sold_team)\r\n" + "FROM player_registration where sold_team is not null", nativeQuery = true)
+	@Query(value = "SELECT distinct(sold_team)\r\n"
+			+ "FROM player_registration where sold_team is not null", nativeQuery = true)
 	List<String> getDistinctTeam();
 
 	@Query(value = "SELECT count(*) FROM player_registration where player_location_category='Overseas' and sold_team=?1", nativeQuery = true)
@@ -102,5 +99,12 @@ public interface PlayerRepository extends JpaRepository<PlayerInfo, Long> {
 
 	@Query(value = "SELECT * FROM player_registration where sold_team is not null ORDER BY sold_time desc", nativeQuery = true)
 	List<PlayerInfo> findBySoldUpdateTime();
+
+	@Query(value = "SELECT * FROM player_registration registration_time where registration_time < ?1 and registration_time > ?2\r\n"
+			+ "order by registration_id", nativeQuery = true)
+	List<PlayerInfo> todaySignedUpPlayerList(LocalDateTime todayTime, LocalDateTime yesterdayTime);
+
+	@Query(value = "SELECT * FROM player_registration  where payment_validation is null order by registration_id", nativeQuery = true)
+	List<PlayerInfo> paymentRem();
 
 }

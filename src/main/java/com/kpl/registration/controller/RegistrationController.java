@@ -30,6 +30,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kpl.registration.dto.AdminReqVO;
@@ -66,7 +67,8 @@ public class RegistrationController {
 	PlayerRepository playerRepository;
 	@Autowired
 	DocRepo docRepo;
-
+	@Autowired
+	RestTemplate restTemplate;
 	@Autowired
 	ModelMapper modelMapper;
 
@@ -78,6 +80,7 @@ public class RegistrationController {
 	public static final String ATTACHMENT_FILENAME = "attachment; filename=";
 	public static final String GENERATION_DATE = "yyMMdd";
 	public static final String DATE_FORMAT = "ddMMyyyy";
+	String telegramBotUrl = "https://api.telegram.org/bot6637753416:AAHb7DHnfrvEl6Aje0RfyrumAkZjZglxXHU/sendmessage?chat_id=@kpl2023updates&text=";
 
 	@GetMapping("/status")
 	public String ApplicationStatus() {
@@ -432,6 +435,9 @@ public class RegistrationController {
 			playerInfoVOList.add(playerInfoVO);
 		}
 		log.info(" /kpl/registration/api/findAll");
+//		String messageString="Test Message";
+//		  String response = restTemplate.getForObject(apiUrl+messageString, String.class);
+//		  System.out.println("Response from the API: " + response);
 		return playerInfoVOList;
 	}
 
@@ -451,6 +457,7 @@ public class RegistrationController {
 			livesearch.setPlayerAddress(searchData.getPlayerAddress());
 			livesearch.setPlayerFirstName(searchData.getPlayerFirstName());
 			livesearch.setPlayerLastName(searchData.getPlayerLastName());
+			log.info("Player name is " + searchData.getPlayerFirstName() + " and search ID is " + id);
 			model.addAttribute("data", livesearch);
 		}
 		return livesearch;
@@ -467,5 +474,36 @@ public class RegistrationController {
 			list.add(name);
 		}
 		return list;
+	}
+
+	@GetMapping("/apiTrigger")
+	public void todayRegList() {
+		var todayTime = LocalDateTime.now();
+		var yesterdayTime = LocalDateTime.now().minusDays(1);
+		List<String> list = new ArrayList<>();
+		var message ="List of player who registered Yesterday : ";
+		List<PlayerInfo> playerInfo = playerRepository.todaySignedUpPlayerList(todayTime, yesterdayTime);
+		for (int i = 0; i < playerInfo.size(); i++) {
+			var info = (i+1)+". Name : "+playerInfo.get(i).getPlayerFirstName() + " " + playerInfo.get(i).getPlayerLastName()
+					+ " ,Reg ID : " + playerInfo.get(i).getRegistrationId();
+			list.add(info);
+		}
+		
+		restTemplate.getForObject(telegramBotUrl + message+" "+list, String.class);
+		
+		
+		
+		
+
+		List<PlayerInfo> payment = playerRepository.paymentRem();
+		List<String> paymentlist = new ArrayList<>();
+		var paymentmessage ="Players who have not paid the registrartion fees : ";
+		for (int i = 0; i < payment.size(); i++) {
+			var info = (i+1)+". Name : "+payment.get(i).getPlayerFirstName() + " " + payment.get(i).getPlayerLastName()
+					+ " ,Reg ID : " + payment.get(i).getRegistrationId()+ " ,Phone Num : " + payment.get(i).getPhNo();
+			paymentlist.add(info);
+		}
+		
+		restTemplate.getForObject(telegramBotUrl + paymentmessage+" "+paymentlist, String.class);
 	}
 }
