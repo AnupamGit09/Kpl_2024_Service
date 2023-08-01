@@ -26,6 +26,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -55,6 +56,7 @@ import com.kpl.registration.service.PlayerService;
 import freemarker.template.TemplateException;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import lombok.extern.slf4j.Slf4j;
+
 @Component
 @Slf4j
 @RestController
@@ -477,7 +479,8 @@ public class RegistrationController {
 		}
 		return list;
 	}
-	@Scheduled(cron = "0 59 17 * * *", zone = "UTC")
+
+	@Scheduled(cron = "0 30 18 * * *", zone = "UTC")
 	@GetMapping("/apiTrigger")
 	public void todayRegList() {
 		log.info("Daily API trigger");
@@ -498,16 +501,13 @@ public class RegistrationController {
 		List<String> paymentlist = new ArrayList<>();
 		var paymentmessage = "Players who have not paid the registrartion fees : ";
 		for (int i = 0; i < payment.size(); i++) {
-			var info = (i + 1) + ". " + payment.get(i).getPlayerFirstName() + " "
-					+ payment.get(i).getPlayerLastName() + " ,Reg ID : " + payment.get(i).getRegistrationId()
-					+ " ,Phone Num : " + payment.get(i).getPhNo();
+			var info = (i + 1) + ". " + payment.get(i).getPlayerFirstName() + " " + payment.get(i).getPlayerLastName()
+					+ " ,Reg ID : " + payment.get(i).getRegistrationId() + " ,Phone Num : " + payment.get(i).getPhNo();
 			paymentlist.add(info);
 		}
 
 		restTemplate.getForObject(telegramBotUrl + paymentmessage + " " + paymentlist, String.class);
-		
-		
-		
+
 		List<PlayerInfo> paymentDone = playerRepository.paymentDone();
 		List<String> paymentDonelist = new ArrayList<>();
 		var paymentDonemessage = "Players who have paid the registrartion fees : ";
@@ -518,5 +518,16 @@ public class RegistrationController {
 		}
 
 		restTemplate.getForObject(telegramBotUrl + paymentDonemessage + " " + paymentDonelist, String.class);
+	}
+
+	@DeleteMapping("/deleteRegistration")
+	public String saveSoldTeamAndAmount(@RequestParam("id") Long id) throws Exception {
+		var player = playerRepository.findById(id);
+		String messageString = "Hey team, Registration deleted for User Name : " + player.get().getPlayerFirstName()
+				+ " " + player.get().getPlayerLastName();
+		playerRepository.deleteById(id);
+		docRepo.deleteById(id);
+		restTemplate.getForObject(telegramBotUrl + messageString, String.class);
+		return "Player Wiped from Database";
 	}
 }

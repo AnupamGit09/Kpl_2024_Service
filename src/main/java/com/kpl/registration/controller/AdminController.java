@@ -119,5 +119,5 @@ public class AdminController {
 		model.addAttribute("errorMessage", "Data Updated For Reg ID : " + id);
 		return "dataFeed";
 	}
-
+	
 }
