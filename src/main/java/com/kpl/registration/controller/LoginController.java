@@ -139,9 +139,9 @@ public class LoginController {
 		log.info("Player who tried to sign up : " + playerFirstName + " " + playerLastName);
 		log.info(playerFirstName + " phone number  : " + phNo);
 
-		message = "Hey Support team, " + playerFirstName + " " + playerLastName
-				+ " is trying to Register help him if he requires any help his phone number is : " + phNo;
-		restTemplate.getForObject(telegramBotUrl + message, String.class);
+//		message = "Hey Support team, " + playerFirstName + " " + playerLastName
+//				+ " is trying to Register help him if he requires any help his phone number is : " + phNo;
+//		restTemplate.getForObject(telegramBotUrl + message, String.class);
 
 		if (playerLastName.length() > 20) {
 			model.addAttribute("errorMessage", "Please use your last name in short format");
@@ -283,7 +283,7 @@ public class LoginController {
 		String aadhaarCheck = playerRepository.findByAadhaarID(aadharNo);
 		if (phNumberUniqueCheck != null) {
 			message = "Hey Support team, " + playerFirstName + " " + playerLastName
-					+ " is trying to Register but he is using already registered Phone Number, please help him and his Phone number is : "
+					+ " is trying to Register using already registered Phone Number, please help him and his Phone number is : "
 					+ phNo;
 			restTemplate.getForObject(telegramBotUrl + message, String.class);
 			model.addAttribute("errorMessage", "Please use unique phone number!");
@@ -292,7 +292,7 @@ public class LoginController {
 		}
 		if (emailUniqueCheck != null) {
 			message = "Hey Support team, " + playerFirstName + " " + playerLastName
-					+ " is trying to Register but he is using already registered Email ID, please help him and his Phone number is : "
+					+ " is trying to Register using already registered Email ID, please help him and his Phone number is : "
 					+ phNo;
 			restTemplate.getForObject(telegramBotUrl + message, String.class);
 			model.addAttribute("errorMessage", "Please use unique email ID!");

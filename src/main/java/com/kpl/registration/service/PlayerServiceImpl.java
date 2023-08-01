@@ -113,8 +113,8 @@ public class PlayerServiceImpl implements PlayerService {
 			String mailID = playerInfo.getEmailId();
 			log.info("User has been Registered successfully" + ",name : " + firstname + " , Mail ID : " + mailID);
 			String message = "Hey we have a new Registration!,His name is :" + firstname + " "
-					+ playerInfo.getPlayerLastName() + " and his registration id, mail ID and phone number are :"
-					+ res.getRegistrationId() + " ," + mailID + " ," + playerInfo.getPhNo();
+					+ playerInfo.getPlayerLastName() + " and his registration id and phone number are :"
+					+ res.getRegistrationId() + " ," + playerInfo.getPhNo();
 			restTemplate.getForObject(telegramBotUrl + message, String.class);
 			sendMail(playerInfo);
 			genericVO.setResponse("You have been Registered successfully, please check your registered mail");
