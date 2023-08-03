@@ -88,6 +88,7 @@ public class RegistrationController {
 	public static final String GENERATION_DATE = "yyMMdd";
 	public static final String DATE_FORMAT = "ddMMyyyy";
 	String telegramBotUrl = "https://api.telegram.org/bot6637753416:AAHb7DHnfrvEl6Aje0RfyrumAkZjZglxXHU/sendmessage?chat_id=@kpl2023updates&text=";
+	String telegramTestBotUrl = "https://api.telegram.org/bot6637753416:AAHb7DHnfrvEl6Aje0RfyrumAkZjZglxXHU/sendmessage?chat_id=@test2017Grp&text=";
 
 	@GetMapping("/status")
 	public String ApplicationStatus() {
@@ -526,7 +527,7 @@ public class RegistrationController {
 	@DeleteMapping("/deleteRegistration")
 	public String saveSoldTeamAndAmount(@RequestParam("id") Long id) throws Exception {
 		var player = playerRepository.findById(id);
-		String messageString = "Hey Support team @RAVVAN23 @Ajaykalu @emotionalclown Registration deleted for User Name : "
+		String messageString = "Hey Support team @RAVVAN23 @Kalajaduu13 @emotionalclown Registration deleted for User Name : "
 				+ player.get().getPlayerFirstName() + " " + player.get().getPlayerLastName();
 		playerRepository.deleteById(id);
 		docRepo.deleteById(id);
@@ -549,4 +550,33 @@ public class RegistrationController {
 			restTemplate.getForObject(telegramBotUrl + messageString, String.class);
 		}
 	}
+	
+	
+	@GetMapping("/aadharCheck")
+	public String aadharCheck(@RequestParam Long aadharNo) {
+		String aadhaarCheck = playerRepository.findByAadhaarID(aadharNo);
+		if (aadhaarCheck != null) {
+			return "ok";
+		}
+		return "";
+	}
+
+	@GetMapping("/phNoCheck")
+	public String phNoCheck(@RequestParam Long phNo) {
+		Long phNumberUniqueCheck = playerRepository.findByPhNumber(phNo);
+		if (phNumberUniqueCheck != null) {
+			return "ok";
+		}
+		return "";
+	}
+
+	@GetMapping("/emailCheck")
+	public String emailCheck(@RequestParam String mail) {
+		String emailUniqueCheck = playerRepository.findByEmailID(mail);
+		if (emailUniqueCheck != null) {
+			return "ok";
+		}
+		return "";
+	}
+
 }

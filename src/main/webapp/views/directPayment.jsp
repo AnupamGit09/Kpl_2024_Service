@@ -164,8 +164,7 @@
                         </div>
                     </div>
                     <div id="tagline" lang="bn">
-                        পেমেন্ট কমপ্লিট হবার পর অবশ্যই রেজিস্ট্রেশন আইডি : <font red="orange">${id} </font>
-                        হোয়াটসঅ্যাপ নম্বর <a href="https://wa.me/8116199489" target="_blank">8116199489 </a> এ পাঠাবেন
+                        পেমেন্ট কমপ্লিট হবার পর অবশ্যই রেজিস্ট্রেশন আইডি : <span style="color: #0edab1;">${id}</span> হোয়াটসঅ্যাপ নম্বর <a href="https://wa.me/8116199489" target="_blank">8116199489 </a> এ পাঠাবেন
                     </div>
 
                     <div id="button">
