@@ -102,10 +102,11 @@ public class PlayerServiceImpl implements PlayerService {
 		playerInfo.setPassword(playerRequetVO.getPassword());
 		playerInfo.setLocation(playerRequetVO.getLocation());
 
-		var res = playerRepository.save(playerInfo);
 		docInfo.setImage(imageData);
 		docInfo.setDocImageFront(docDataFront);
 		docInfo.setDocImageBack(docDataBack);
+		
+		var res = playerRepository.save(playerInfo);
 		log.info("Registration ID for " + playerRequetVO.getPlayerFirstName() + " is " + res.getRegistrationId());
 		docInfo.setRegistrationId(res.getRegistrationId());
 		docRepo.save(docInfo);
