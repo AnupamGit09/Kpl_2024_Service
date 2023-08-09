@@ -47,9 +47,11 @@ import com.kpl.registration.dto.PlayerResponseVO;
 import com.kpl.registration.dto.RegistrationResponse;
 import com.kpl.registration.entity.AdminInfo;
 import com.kpl.registration.entity.DocInfo;
+import com.kpl.registration.entity.EventCount;
 import com.kpl.registration.entity.ImageInfo;
 import com.kpl.registration.entity.PlayerInfo;
 import com.kpl.registration.repository.DocRepo;
+import com.kpl.registration.repository.EventRepo;
 import com.kpl.registration.repository.ImageRepo;
 import com.kpl.registration.repository.PlayerRepository;
 import com.kpl.registration.service.PlayerService;
@@ -79,7 +81,8 @@ public class RegistrationController {
 	RestTemplate restTemplate;
 	@Autowired
 	ModelMapper modelMapper;
-
+	@Autowired
+	EventRepo eventRepo;
 	@Autowired
 	private ResourceLoader resourceLoader;
 
@@ -551,8 +554,7 @@ public class RegistrationController {
 			restTemplate.getForObject(telegramBotUrl + messageString, String.class);
 		}
 	}
-	
-	
+
 	@GetMapping("/aadharCheck")
 	public String aadharCheck(@RequestParam Long aadharNo) {
 		String aadhaarCheck = playerRepository.findByAadhaarID(aadharNo);
@@ -580,11 +582,30 @@ public class RegistrationController {
 		return "";
 	}
 
-
 	@PutMapping("/updateOwnImage")
-	public String updateOwnImage(@RequestParam("id") Long id,@RequestParam("file") MultipartFile file) throws IOException, MessagingException, TemplateException {
+	public String updateOwnImage(@RequestParam("id") Long id, @RequestParam("file") MultipartFile file)
+			throws IOException, MessagingException, TemplateException {
 		byte[] imageData = file.getBytes();
-		 docRepo.updateOwnImage(id,imageData);
-		 return "Image updated";
+		docRepo.updateOwnImage(id, imageData);
+		return "Image updated";
+	}
+
+	@GetMapping("/eventCount")
+	public String eventCount(@RequestParam("id") Integer id) throws IOException, MessagingException, TemplateException {
+		switch (id) {
+		case 1:
+			eventRepo.updateRulesPdfCount();
+			break;
+
+		default:
+			eventRepo.updateOwnerPdfCount();
+			break;
+		}
+		return "count updated";
+	}
+
+	@GetMapping("/eventCountJson")
+	public List<EventCount> eventCountJson() {
+		return eventRepo.findAll();
 	}
 }
