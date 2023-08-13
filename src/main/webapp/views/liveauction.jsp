@@ -87,8 +87,9 @@ a img {
   /* background-color: #a8e024;
     margin: 10px;
     padding: 20px; */
-  font-size: 20px;
+  font-size: 25px;
   cursor: pointer;
+  font-weight: bold;
   /* border-radius: 30px; */
 }
 
@@ -230,6 +231,7 @@ th {
               const headerRow = document.createElement('tr');
               for (let key in data[0]) {
                 const th = document.createElement('th');
+                
                 th.textContent = key;
                 headerRow.appendChild(th);
               }
@@ -242,6 +244,12 @@ th {
                 for (let key in item) {
                   const cell = document.createElement('td');
                   cell.textContent = item[key];
+                  if (key === 'Money Rem') {
+                    cell.style.color = 'red';
+                }
+                if (key === 'Max Bet') {
+                    cell.style.color = 'green';
+                }
                   row.appendChild(cell);
                 }
                 tbody.appendChild(row);
