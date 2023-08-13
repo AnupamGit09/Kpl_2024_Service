@@ -132,7 +132,7 @@ $(document).ready(function() {
           resultContainer.html("No data found.");
         }
       });
-    }, 3000); // 3000 milliseconds (3 seconds) delay
+    }, 1000); // 1000 milliseconds (1 seconds) delay
   });
 });
 
@@ -143,9 +143,9 @@ $(document).ready(function() {
 <body onload="disableForwardButton()">
   <% if (request.getAttribute("errorShown") == null) { %>
     <c:if test="${not empty errorMessage && 'POST' eq pageContext.request.method}">
-  <div class="header">
+  <!-- <div class="header">
     <h1>Live Data feeding</h1>
-  </div>
+  </div> -->
   <div class="flex-container">
     <div style="padding: 0% 5% 0% 8%; "><form action="https://kpl2023.online/registration/soldAmountandTeam" method="post">
       <h3>
