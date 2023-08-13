@@ -160,16 +160,16 @@ $(document).ready(function() {
         height: 38px;
         border-radius: 25px;text-align: center;" required>
           <option hidden>Team List</option>
-          <option value="Team 1">1</option>
-          <option value="Team 2">2</option>
-          <option value="Team 3">3</option>
-          <option value="Team 4">4</option>
-          <option value="Team 5">5</option>
-          <option value="Team 6">6</option>
-          <option value="Team 7">7</option>
-          <option value="Team 8">8</option>
-          <option value="Team 9">9</option>
-          <option value="Team 10">10</option>
+          <option value="Vikings">Vikings</option>
+          <option value="Eleven Spartan">Eleven Spartan</option>
+          <option value="ABBYS">ABBYS</option>
+          <option value="BBS">BBS</option>
+          <option value="Long Live Mad Max">Long Live Mad Max</option>
+          <option value="Joy Pagol">Joy Pagol</option>
+          <option value="RSS">RSS</option>
+          <option value="United Ancholik Dol">United Ancholik Dol</option>
+          <option value="Titan Super Kings">Titan Super Kings</option>
+          <option value="Kashipur Hori Mondir">Kashipur Hori Mondir</option>
         </select>
       </label>
       

@@ -17,8 +17,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "event_count")
-public class EventCount implements Serializable {
+@Table(name = "owner_information")
+public class OwnerInfo implements Serializable {
 
 	/**
 	*
@@ -26,13 +26,16 @@ public class EventCount implements Serializable {
 	private static final long serialVersionUID = 3980366880241829960L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO, generator = "event_id")
-	@Column(name = "event_id")
-	private Long eventId;
+	@GeneratedValue(strategy = GenerationType.AUTO, generator = "owner_id")
+	@Column(name = "owner_id")
+	private Long imageId;
 
-	@Column(name = "rules_pdf")
-	private Long reulesPdf;
+	@Column(name = "owner_name")
+	private String ownerName;
 
-	@Column(name = "owner_pdf")
-	private Long ownerPdf;
+	@Column(name = "owner_phNo")
+	private Long ownerPhNo;
+	
+	@Column(name = "team_name")
+	private String teamName;
 }

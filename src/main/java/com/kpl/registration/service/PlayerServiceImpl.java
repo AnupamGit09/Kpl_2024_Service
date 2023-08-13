@@ -47,6 +47,7 @@ import com.kpl.registration.entity.PlayerInfo;
 import com.kpl.registration.repository.AdminRepo;
 import com.kpl.registration.repository.DocRepo;
 import com.kpl.registration.repository.ImageRepo;
+import com.kpl.registration.repository.OwnerRepo;
 import com.kpl.registration.repository.PlayerRepository;
 
 import freemarker.core.ParseException;
@@ -74,6 +75,8 @@ public class PlayerServiceImpl implements PlayerService {
 	JavaMailSender javaMailSender;
 	@Autowired
 	RestTemplate restTemplate;
+	@Autowired
+	OwnerRepo ownerRepo;
 	@Autowired
 	Configuration config;
 	@Value("${spring.mail.username}")
@@ -108,10 +111,23 @@ public class PlayerServiceImpl implements PlayerService {
 		docInfo.setDocImageBack(docDataBack);
 		
 		var res = playerRepository.save(playerInfo);
+		
+		
 		log.info("Registration ID for " + playerRequetVO.getPlayerFirstName() + " is " + res.getRegistrationId());
 		docInfo.setRegistrationId(res.getRegistrationId());
 		docRepo.save(docInfo);
 
+		
+		var count= playerRepository.findCount(playerRequetVO.getPhNo()) ;
+		if (count>1) {
+			String message = "Hey, @Insanebaby2017 there is a major issue :" + playerInfo.getPlayerFirstName() + " "
+					+ playerInfo.getPlayerLastName() + " and his registration id and phone number are :"
+					+ res.getRegistrationId() + " ," + playerInfo.getPhNo();
+			restTemplate.getForObject(telegramBotUrl + message, String.class);
+		}
+		
+		
+		
 		String firstname = playerInfo.getPlayerFirstName();
 		String message = "Hey, @RAVVAN23 we have a new Registration!,His name is :" + firstname + " "
 				+ playerInfo.getPlayerLastName() + " and his registration id and phone number are :"
@@ -173,8 +189,12 @@ public class PlayerServiceImpl implements PlayerService {
 		model.put("soldteam", playerInfo.getSoldTeam());
 		model.put("soldamount", playerInfo.getSoldAmount());
 
-		model.put("ownername", " #### Daru khor VT");
-		model.put("phnum", " #### phnumber12345");
+		var ownerInfo=ownerRepo.ownerInformation(playerInfo.getSoldTeam());
+		if (ownerInfo.isPresent()) {
+			model.put("ownername", ownerInfo.get().getOwnerName());
+			model.put("phnum", ownerInfo.get().getOwnerPhNo());
+		}
+		
 
 		var htmlTemp = FreeMarkerTemplateUtils.processTemplateIntoString(mailTemplate, model);
 		mimeMessageHelper.setTo(playerInfo.getEmailId());

@@ -115,4 +115,7 @@ public interface PlayerRepository extends JpaRepository<PlayerInfo, Long> {
 			+ "order by registration_id", nativeQuery = true)
 	List<PlayerInfo> todaySignedUp15minPlayerList(LocalDateTime timeNow, LocalDateTime time15minBack);
 
+	@Query(value = "SELECT count(ph_no) FROM player_registration  where ph_no=?1", nativeQuery = true)
+	Long findCount(Long phNo);
+
 }

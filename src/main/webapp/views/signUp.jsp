@@ -47,7 +47,7 @@
 
 
           if (isSubmitting) {
-            const text = "Hey Support team @RAVVAN23 @Kalajaduu13 @emotionalclown " + playerFirstName + " " + playerLastName + " is clicking on submit button multiple time with in 2 sec don't do anything just enjoy the show and his Phone number is : " + playerPhNo;
+            const text = "Hey Support team @RAVVAN23 @Kalajaduu13 @emotionalclown " + playerFirstName + " " + playerLastName + " is clicking on submit button multiple time with in 3 sec don't do anything just enjoy the show and his Phone number is : " + playerPhNo;
             try {
               const encodedText = encodeURIComponent(text);
               console.log(encodedText);
@@ -66,7 +66,7 @@
 
           setTimeout(() => {
             isSubmitting = false;
-          }, 2000)
+          }, 3000)
 
 
 
@@ -186,6 +186,7 @@
             alert("আঁধার এর সংখ্যা ১২ থেকে বেশি হওয়া সম্ভব না পুনরায় চেক করুন.");
             return;
           }
+
 
           const url = "https://kpl2023.online/registration/kpl/registration/api/phNoCheck?phNo=" + playerPhNo;
           const response = await fetch(url);

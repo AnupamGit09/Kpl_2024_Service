@@ -36,7 +36,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.itextpdf.text.pdf.PdfStructTreeController.returnType;
 import com.kpl.registration.dto.AdminReqVO;
 import com.kpl.registration.dto.GenericVO;
 import com.kpl.registration.dto.LiveDataVO;
@@ -607,5 +606,16 @@ public class RegistrationController {
 	@GetMapping("/eventCountJson")
 	public List<EventCount> eventCountJson() {
 		return eventRepo.findAll();
+	}
+	
+	@GetMapping("/phNumCount")
+	public String phNumCount(@RequestParam Long phNo) {
+		var count= playerRepository.findCount(phNo) ;
+		if(count>1) {
+			return "fail";
+		}
+		else {
+			return "ok";
+		}
 	}
 }
