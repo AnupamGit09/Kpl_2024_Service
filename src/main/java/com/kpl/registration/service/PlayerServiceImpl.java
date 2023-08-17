@@ -481,7 +481,6 @@ public class PlayerServiceImpl implements PlayerService {
 	public void generueSpecificPlayerPdfForCommitte(HttpServletResponse response)
 			throws DocumentException, IOException {
 		var allplayerInfo = playerRepository.findAllPlayer();
-
 		var yellowBold = "FORsmartNext-Bolds.otf";
 		var font1 = FontFactory.getFont(yellowBold, 20, Font.BOLD, BaseColor.BLACK);
 		var font2 = FontFactory.getFont(yellowBold, 15, Font.BOLD, BaseColor.BLACK);
@@ -594,6 +593,8 @@ public class PlayerServiceImpl implements PlayerService {
 		ptable.addCell(pcell);
 
 		for (int i = 0; i < allplayerInfo.size(); i++) {
+
+log.info(allplayerInfo.get(i).getRegistrationId().toString());
 			pcell = new PdfPCell(new Phrase(String.valueOf(i + 1) + "          " + "(Reg ID : "
 					+ allplayerInfo.get(i).getRegistrationId() + ")", tablesFont));
 			pcell.setBackgroundColor(new BaseColor(230, 230, 230));

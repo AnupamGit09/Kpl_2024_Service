@@ -143,7 +143,15 @@ public class RegistrationController {
 	@PutMapping("/specialPlayer")
 	public String updateSpecialPlayerCategory(@RequestParam List<Long> registartionIDS) throws IOException {
 		playerRepository.updatePlayerCategory(registartionIDS);
-		return "players category has been change to List A";
+		return "players category has been changed to List A";
+	}
+
+	// update player category to emerging Player 
+
+	@PutMapping("/emergingPlayer")
+	public String emergingPlayer(@RequestParam List<Long> registartionIDS) throws IOException {
+		playerRepository.updateEmergingPlayer(registartionIDS);
+		return "players category has been changed to emerging Player";
 	}
 
 	// update payment validation

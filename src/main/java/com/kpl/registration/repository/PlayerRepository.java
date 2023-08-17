@@ -122,4 +122,9 @@ public interface PlayerRepository extends JpaRepository<PlayerInfo, Long> {
 			+ "order by registration_id", nativeQuery = true)
 	List<PlayerInfo> sellOnLast5min(LocalDateTime timeNow, LocalDateTime time5minBack);
 
+	@Transactional
+	@Modifying
+	@Query(value = "update player_registration set generue='Emerging Player' where registration_id in(?1)", nativeQuery = true)
+	void updateEmergingPlayer(List<Long> registartionIDS);
+
 }

@@ -137,7 +137,13 @@
         <button type="submit">Submit</button>
       </form>
     </div>
-
+    <!-- <div>
+       <p>Players to be updated in Emerging Player</p>
+      <form action="https://kpl2023.online/registration/emergingPlayer" method="post">
+        <input type="text" name="regid" placeholder="Enter Reg ID like 1,2,3" required>
+        <button type="submit" >Submit</button>
+      </form>
+    </div> -->
     <div>
       <p>Players to be updated in Category A</p>
       <form action="https://kpl2023.online/registration/updateCategory" method="post">
@@ -180,6 +186,8 @@
         <option value="Overseas,All Rounder">Overseas All Rounder</option>
         <option value="Local,List A">Local List A</option>
         <option value="Overseas,List A">Overseas List A</option>
+        <option value="Local,Emerging Player">Local Emerging Player</option>
+        <option value="Overseas,Emerging Player">Overseas Emerging Player</option>
        </select>
        <button type="submit">Download</button>
      </form>
@@ -201,6 +209,8 @@
         <option value="Overseas,All Rounder">Overseas All Rounder</option>
         <option value="Local,List A">Local List A</option>
         <option value="Overseas,List A">Overseas List A</option>
+        <option value="Local,Emerging Player">Local Emerging Player</option>
+        <option value="Overseas,Emerging Player">Overseas Emerging Player</option>
        </select>
        <button type="submit">Download</button>
      </form>
