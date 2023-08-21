@@ -438,9 +438,9 @@
       <label for="submit">Sign In</label>
     </div>
   </form>
-  <div class="sign-up-link">
+  <!-- <div class="sign-up-link">
     <p>Don't have account? <a href="https://kpl2023.online/registration/signUpHomePage" target="_blank">Sign Up</a></p>
-  </div>
+  </div> -->
 </div>
 <% if (request.getAttribute("errorShown")==null) { %>
   <c:if test="${not empty errorMessage && 'POST' eq pageContext.request.method}">

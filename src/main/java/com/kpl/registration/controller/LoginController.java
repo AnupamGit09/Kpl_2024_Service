@@ -2,9 +2,7 @@ package com.kpl.registration.controller;
 
 import java.io.IOException;
 import java.text.ParseException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.Period;
 import java.time.format.DateTimeFormatter;
 
 import javax.mail.MessagingException;
@@ -17,9 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.multipart.MultipartFile;
 
-import com.kpl.registration.dto.PlayerRequetVO;
 import com.kpl.registration.repository.PlayerRepository;
 import com.kpl.registration.service.PlayerService;
 import com.kpl.registration.service.PlayerServiceImpl;
@@ -113,108 +109,108 @@ public class LoginController {
 		}
 	}
 
-	@GetMapping("/signUpHomePage")
-	public String signUp() {
-		return "signUp";
-	}
+//	@GetMapping("/signUpHomePage")
+//	public String signUp() {
+//		return "signUp";
+//	}
 
-	@RequestMapping(value = "/signUp", method = RequestMethod.POST)
-	public String signUp(@RequestParam String playerFirstName, @RequestParam String playerLastName,
-			@RequestParam Long aadharNo, @RequestParam MultipartFile docImageBack,
-			@RequestParam MultipartFile docImageFront, @RequestParam Long phNo, @RequestParam String dob,
-			@RequestParam Long pinCode, @RequestParam MultipartFile playerPhoto, @RequestParam String address,
-			@RequestParam String password, @RequestParam String location, @RequestParam String playerCategory,
-			@RequestParam String mail, Model model)
-			throws IOException, ParseException, MessagingException, TemplateException {
-		String message = "";
-
-		log.info("Player who tried to sign up : " + playerFirstName + " " + playerLastName);
-		log.info(playerFirstName + " phone number  : " + phNo);
-		Long phNumberUniqueCheck = playerRepository.findByPhNumber(phNo);
-		if (phNumberUniqueCheck != null) {
-			var regId = playerRepository.findByPhNu(phNo.toString());
-			message = "Hey Support team @RAVVAN23 @Kalajaduu13 @emotionalclown   " + playerFirstName + " "
-					+ playerLastName
-					+ " is refreshing page unnecessarily please ask him to avoid so and his Phone number is : " + phNo;
-			restTemplate.getForObject(telegramBotUrl + message, String.class);
-			model.addAttribute("id", regId);
-			log.info(playerLastName
-					+ " is refreshing page unnecessarily please ask him to avoid so and his Phone number is : " + phNo);
-			return directPayment(model);
-		}
-
-		if (!(docImageFront.getOriginalFilename().toString().toLowerCase().endsWith(".png")
-				|| docImageFront.getOriginalFilename().toString().toLowerCase().endsWith(".jpg")
-				|| docImageFront.getOriginalFilename().toString().toLowerCase().endsWith(".jpeg"))) {
-			model.addAttribute("errorMessage",
-					"Aadhaar Card Front Image must be an Image and it should be in jpg or png or jpeg format");
-			message = "Hey Support team @RAVVAN23 @Kalajaduu13 @emotionalclown   " + playerFirstName + " "
-					+ playerLastName
-					+ " is trying to Register but he has not uploaded Aadhar card front image in correct format, please help him and his Phone number is : "
-					+ phNo;
-			restTemplate.getForObject(telegramBotUrl + message, String.class);
-			log.info("Aadhaar Card Front Image must be an Image and it should be in jpg or png or jpeg format");
-			return "signUp";
-		}
-
-		if (!(docImageBack.getOriginalFilename().toString().toLowerCase().endsWith(".png")
-				|| docImageBack.getOriginalFilename().toString().toLowerCase().endsWith(".jpg")
-				|| docImageFront.getOriginalFilename().toString().toLowerCase().endsWith(".jpeg"))) {
-			model.addAttribute("errorMessage",
-					"Aadhaar Card Back Image must be an Image and it should be in jpg or png or jpeg format");
-			message = "Hey Support team @RAVVAN23 @Kalajaduu13 @emotionalclown   " + playerFirstName + " "
-					+ playerLastName
-					+ " is trying to Register but he has not uploaded Aadhar card Back image in correct format, please help him and his Phone number is : "
-					+ phNo;
-			restTemplate.getForObject(telegramBotUrl + message, String.class);
-			log.info("Aadhaar Card Back Image must be an Image and it should be in jpg or png or jpeg format");
-			return "signUp";
-		}
-		if (!(playerPhoto.getOriginalFilename().toString().toLowerCase().endsWith(".png")
-				|| playerPhoto.getOriginalFilename().toString().toLowerCase().endsWith(".jpg")
-				|| docImageFront.getOriginalFilename().toString().toLowerCase().endsWith(".jpeg"))) {
-			model.addAttribute("errorMessage",
-					"Your photo must be an Image and it should be in jpg or png or jpeg format");
-			message = "Hey Support team @RAVVAN23 @Kalajaduu13 @emotionalclown   " + playerFirstName + " "
-					+ playerLastName
-					+ " is trying to Register but he has not uploaded his own image in correct format, please help him and his Phone number is : "
-					+ phNo;
-			restTemplate.getForObject(telegramBotUrl + message, String.class);
-			log.info("Your photo must be an Image and it should be in jpg or png or jpeg format");
-			return "signUp";
-		}
-
-		if (Period.between(LocalDate.parse(dob).plusYears(14), LocalDate.now()).getYears() < 0) {
-			model.addAttribute("errorMessage", "Please Enter Correct Date of Birth");
-			log.info("Please Enter Correct Date of Birth");
-			message = "Hey Support team @RAVVAN23 @Kalajaduu13 @emotionalclown   " + playerFirstName + " "
-					+ playerLastName
-					+ " is trying to Register but he has selected invalid Date of Birth, please help him and his Phone number is : "
-					+ phNo;
-			restTemplate.getForObject(telegramBotUrl + message, String.class);
-			return "signUp";
-		}
-
-		var playerRequetVO = new PlayerRequetVO();
-		playerRequetVO.setAadharNo(aadharNo);
-		playerRequetVO.setEmailId(mail);
-		playerRequetVO.setPlayerAddress(address);
-		playerRequetVO.setGenerue(playerCategory);
-		playerRequetVO.setPhNo(phNo);
-		playerRequetVO.setPinCode(pinCode);
-		playerRequetVO.setPlayerFirstName(playerFirstName);
-		playerRequetVO.setPlayerLastName(playerLastName);
-		playerRequetVO.setDob(LocalDate.parse(dob));
-		playerRequetVO.setPassword(password);
-		playerRequetVO.setLocation(location);
-		byte[] imageData = playerPhoto.getBytes();
-		byte[] docDataFront = docImageFront.getBytes();
-		byte[] docDataBack = docImageBack.getBytes();
-
-		var res = playerService.savePlayerInfo(playerRequetVO, imageData, docDataFront, docDataBack);
-		model.addAttribute("errorMessage", res.getResponse());
-		model.addAttribute("id", res.getRegistrationID());
-		return directPayment(model);
+//	@RequestMapping(value = "/signUp", method = RequestMethod.POST)
+//	public String signUp(@RequestParam String playerFirstName, @RequestParam String playerLastName,
+//			@RequestParam Long aadharNo, @RequestParam MultipartFile docImageBack,
+//			@RequestParam MultipartFile docImageFront, @RequestParam Long phNo, @RequestParam String dob,
+//			@RequestParam Long pinCode, @RequestParam MultipartFile playerPhoto, @RequestParam String address,
+//			@RequestParam String password, @RequestParam String location, @RequestParam String playerCategory,
+//			@RequestParam String mail, Model model)
+//			throws IOException, ParseException, MessagingException, TemplateException {
+//		String message = "";
+//
+//		log.info("Player who tried to sign up : " + playerFirstName + " " + playerLastName);
+//		log.info(playerFirstName + " phone number  : " + phNo);
+//		Long phNumberUniqueCheck = playerRepository.findByPhNumber(phNo);
+//		if (phNumberUniqueCheck != null) {
+//			var regId = playerRepository.findByPhNu(phNo.toString());
+//			message = "Hey Support team @RAVVAN23 @Kalajaduu13 @emotionalclown   " + playerFirstName + " "
+//					+ playerLastName
+//					+ " is refreshing page unnecessarily please ask him to avoid so and his Phone number is : " + phNo;
+//			restTemplate.getForObject(telegramBotUrl + message, String.class);
+//			model.addAttribute("id", regId);
+//			log.info(playerLastName
+//					+ " is refreshing page unnecessarily please ask him to avoid so and his Phone number is : " + phNo);
+//			return directPayment(model);
+//		}
+//
+//		if (!(docImageFront.getOriginalFilename().toString().toLowerCase().endsWith(".png")
+//				|| docImageFront.getOriginalFilename().toString().toLowerCase().endsWith(".jpg")
+//				|| docImageFront.getOriginalFilename().toString().toLowerCase().endsWith(".jpeg"))) {
+//			model.addAttribute("errorMessage",
+//					"Aadhaar Card Front Image must be an Image and it should be in jpg or png or jpeg format");
+//			message = "Hey Support team @RAVVAN23 @Kalajaduu13 @emotionalclown   " + playerFirstName + " "
+//					+ playerLastName
+//					+ " is trying to Register but he has not uploaded Aadhar card front image in correct format, please help him and his Phone number is : "
+//					+ phNo;
+//			restTemplate.getForObject(telegramBotUrl + message, String.class);
+//			log.info("Aadhaar Card Front Image must be an Image and it should be in jpg or png or jpeg format");
+//			return "signUp";
+//		}
+//
+//		if (!(docImageBack.getOriginalFilename().toString().toLowerCase().endsWith(".png")
+//				|| docImageBack.getOriginalFilename().toString().toLowerCase().endsWith(".jpg")
+//				|| docImageFront.getOriginalFilename().toString().toLowerCase().endsWith(".jpeg"))) {
+//			model.addAttribute("errorMessage",
+//					"Aadhaar Card Back Image must be an Image and it should be in jpg or png or jpeg format");
+//			message = "Hey Support team @RAVVAN23 @Kalajaduu13 @emotionalclown   " + playerFirstName + " "
+//					+ playerLastName
+//					+ " is trying to Register but he has not uploaded Aadhar card Back image in correct format, please help him and his Phone number is : "
+//					+ phNo;
+//			restTemplate.getForObject(telegramBotUrl + message, String.class);
+//			log.info("Aadhaar Card Back Image must be an Image and it should be in jpg or png or jpeg format");
+//			return "signUp";
+//		}
+//		if (!(playerPhoto.getOriginalFilename().toString().toLowerCase().endsWith(".png")
+//				|| playerPhoto.getOriginalFilename().toString().toLowerCase().endsWith(".jpg")
+//				|| docImageFront.getOriginalFilename().toString().toLowerCase().endsWith(".jpeg"))) {
+//			model.addAttribute("errorMessage",
+//					"Your photo must be an Image and it should be in jpg or png or jpeg format");
+//			message = "Hey Support team @RAVVAN23 @Kalajaduu13 @emotionalclown   " + playerFirstName + " "
+//					+ playerLastName
+//					+ " is trying to Register but he has not uploaded his own image in correct format, please help him and his Phone number is : "
+//					+ phNo;
+//			restTemplate.getForObject(telegramBotUrl + message, String.class);
+//			log.info("Your photo must be an Image and it should be in jpg or png or jpeg format");
+//			return "signUp";
+//		}
+//
+//		if (Period.between(LocalDate.parse(dob).plusYears(14), LocalDate.now()).getYears() < 0) {
+//			model.addAttribute("errorMessage", "Please Enter Correct Date of Birth");
+//			log.info("Please Enter Correct Date of Birth");
+//			message = "Hey Support team @RAVVAN23 @Kalajaduu13 @emotionalclown   " + playerFirstName + " "
+//					+ playerLastName
+//					+ " is trying to Register but he has selected invalid Date of Birth, please help him and his Phone number is : "
+//					+ phNo;
+//			restTemplate.getForObject(telegramBotUrl + message, String.class);
+//			return "signUp";
+//		}
+////
+//		var playerRequetVO = new PlayerRequetVO();
+//		playerRequetVO.setAadharNo(aadharNo);
+//		playerRequetVO.setEmailId(mail);
+//		playerRequetVO.setPlayerAddress(address);
+//		playerRequetVO.setGenerue(playerCategory);
+//		playerRequetVO.setPhNo(phNo);
+//		playerRequetVO.setPinCode(pinCode);
+//		playerRequetVO.setPlayerFirstName(playerFirstName);
+//		playerRequetVO.setPlayerLastName(playerLastName);
+//		playerRequetVO.setDob(LocalDate.parse(dob));
+//		playerRequetVO.setPassword(password);
+//		playerRequetVO.setLocation(location);
+//		byte[] imageData = playerPhoto.getBytes();
+//		byte[] docDataFront = docImageFront.getBytes();
+//		byte[] docDataBack = docImageBack.getBytes();
+//
+//		var res = playerService.savePlayerInfo(playerRequetVO, imageData, docDataFront, docDataBack);
+//		model.addAttribute("errorMessage", res.getResponse());
+//		model.addAttribute("id", res.getRegistrationID());
+//		return directPayment(model);
 //		return directPayment(model);
 //		if (docImageFront.getSize() > 1 * 512 * 1024) {
 //		message = "Hey Support team @RAVVAN23 @Kalajaduu13 @emotionalclown   " + playerFirstName + " " + playerLastName
@@ -353,8 +349,8 @@ public class LoginController {
 //			log.info("Please use unique aadhaar ID!");
 //			return "signUp";
 //		}
-
-	}
+//
+//	}
 
 	@GetMapping("/payment")
 	public String payment() {

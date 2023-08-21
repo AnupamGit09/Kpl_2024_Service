@@ -3,8 +3,6 @@ package com.kpl.registration.service;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.charset.StandardCharsets;
-import java.time.Clock;
-import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,11 +36,8 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.text.pdf.draw.LineSeparator;
 import com.kpl.registration.dto.AdminReqVO;
-import com.kpl.registration.dto.GenericVO;
-import com.kpl.registration.dto.PlayerRequetVO;
 import com.kpl.registration.dto.RegistrationResponse;
 import com.kpl.registration.entity.AdminInfo;
-import com.kpl.registration.entity.DocInfo;
 import com.kpl.registration.entity.PlayerInfo;
 import com.kpl.registration.repository.AdminRepo;
 import com.kpl.registration.repository.DocRepo;
@@ -84,63 +79,63 @@ public class PlayerServiceImpl implements PlayerService {
 	String telegramBotUrl = "https://api.telegram.org/bot6637753416:AAHb7DHnfrvEl6Aje0RfyrumAkZjZglxXHU/sendmessage?chat_id=@kpl2023updates&text=";
 	String telegramTestBotUrl = "https://api.telegram.org/bot6637753416:AAHb7DHnfrvEl6Aje0RfyrumAkZjZglxXHU/sendmessage?chat_id=@test2017Grp&text=";
 
-	@Override
-	public GenericVO savePlayerInfo(PlayerRequetVO playerRequetVO, byte[] imageData, byte[] docDataFront,
-			byte[] docDataBack) throws IOException, MessagingException, TemplateException {
-		GenericVO genericVO = new GenericVO();
-		PlayerInfo playerInfo = new PlayerInfo();
-		DocInfo docInfo = new DocInfo();
-		playerInfo.setAadharNo(playerRequetVO.getAadharNo());
-
-		playerInfo.setEmailId(playerRequetVO.getEmailId());
-		playerInfo.setGenerue(playerRequetVO.getGenerue());
-		playerInfo.setPhNo(playerRequetVO.getPhNo());
-		playerInfo.setPinCode(playerRequetVO.getPinCode());
-		playerInfo.setPlayerAddress(playerRequetVO.getPlayerAddress());
-		playerInfo.setPlayerFirstName(playerRequetVO.getPlayerFirstName());
-		playerInfo.setPlayerLastName(playerRequetVO.getPlayerLastName());
-
-		playerInfo.setRegistrationTime(LocalDateTime.now(Clock.systemUTC()));
-		playerInfo.setGenerue(playerRequetVO.getGenerue());
-		playerInfo.setDateOfBirth(playerRequetVO.getDob());
-		playerInfo.setPassword(playerRequetVO.getPassword());
-		playerInfo.setLocation(playerRequetVO.getLocation());
-
-		docInfo.setImage(imageData);
-		docInfo.setDocImageFront(docDataFront);
-		docInfo.setDocImageBack(docDataBack);
-		
-		var res = playerRepository.save(playerInfo);
-		
-		
-		log.info("Registration ID for " + playerRequetVO.getPlayerFirstName() + " is " + res.getRegistrationId());
-		docInfo.setRegistrationId(res.getRegistrationId());
-		docRepo.save(docInfo);
-
-		
-		var count= playerRepository.findCount(playerRequetVO.getPhNo()) ;
-		if (count>1) {
-			String message = "Hey, @Insanebaby2017 there is a major issue :" + playerInfo.getPlayerFirstName() + " "
-					+ playerInfo.getPlayerLastName() + " and his registration id and phone number are :"
-					+ res.getRegistrationId() + " ," + playerInfo.getPhNo();
-			restTemplate.getForObject(telegramBotUrl + message, String.class);
-		}
-		
-		
-		
-		String firstname = playerInfo.getPlayerFirstName();
-		String message = "Hey, @RAVVAN23 we have a new Registration!,His name is :" + firstname + " "
-				+ playerInfo.getPlayerLastName() + " and his registration id and phone number are :"
-				+ res.getRegistrationId() + " ," + playerInfo.getPhNo();
-		restTemplate.getForObject(telegramBotUrl + message, String.class);
-
-		log.info("User has been Registered successfully" + ",name : " + firstname);
-
-		genericVO.setResponse("You have been successfully Registered");
-		genericVO.setRegistrationID(res.getRegistrationId().toString());
-		return genericVO;
-
-	}
+//	@Override
+//	public GenericVO savePlayerInfo(PlayerRequetVO playerRequetVO, byte[] imageData, byte[] docDataFront,
+//			byte[] docDataBack) throws IOException, MessagingException, TemplateException {
+//		GenericVO genericVO = new GenericVO();
+//		PlayerInfo playerInfo = new PlayerInfo();
+//		DocInfo docInfo = new DocInfo();
+//		playerInfo.setAadharNo(playerRequetVO.getAadharNo());
+//
+//		playerInfo.setEmailId(playerRequetVO.getEmailId());
+//		playerInfo.setGenerue(playerRequetVO.getGenerue());
+//		playerInfo.setPhNo(playerRequetVO.getPhNo());
+//		playerInfo.setPinCode(playerRequetVO.getPinCode());
+//		playerInfo.setPlayerAddress(playerRequetVO.getPlayerAddress());
+//		playerInfo.setPlayerFirstName(playerRequetVO.getPlayerFirstName());
+//		playerInfo.setPlayerLastName(playerRequetVO.getPlayerLastName());
+//
+//		playerInfo.setRegistrationTime(LocalDateTime.now(Clock.systemUTC()));
+//		playerInfo.setGenerue(playerRequetVO.getGenerue());
+//		playerInfo.setDateOfBirth(playerRequetVO.getDob());
+//		playerInfo.setPassword(playerRequetVO.getPassword());
+//		playerInfo.setLocation(playerRequetVO.getLocation());
+//
+//		docInfo.setImage(imageData);
+//		docInfo.setDocImageFront(docDataFront);
+//		docInfo.setDocImageBack(docDataBack);
+//		
+//		var res = playerRepository.save(playerInfo);
+//		
+//		
+//		log.info("Registration ID for " + playerRequetVO.getPlayerFirstName() + " is " + res.getRegistrationId());
+//		docInfo.setRegistrationId(res.getRegistrationId());
+//		docRepo.save(docInfo);
+//
+//		
+//		var count= playerRepository.findCount(playerRequetVO.getPhNo()) ;
+//		if (count>1) {
+//			String message = "Hey, @Insanebaby2017 there is a major issue :" + playerInfo.getPlayerFirstName() + " "
+//					+ playerInfo.getPlayerLastName() + " and his registration id and phone number are :"
+//					+ res.getRegistrationId() + " ," + playerInfo.getPhNo();
+//			restTemplate.getForObject(telegramBotUrl + message, String.class);
+//		}
+//		
+//		
+//		
+//		String firstname = playerInfo.getPlayerFirstName();
+//		String message = "Hey, @RAVVAN23 we have a new Registration!,His name is :" + firstname + " "
+//				+ playerInfo.getPlayerLastName() + " and his registration id and phone number are :"
+//				+ res.getRegistrationId() + " ," + playerInfo.getPhNo();
+//		restTemplate.getForObject(telegramBotUrl + message, String.class);
+//
+//		log.info("User has been Registered successfully" + ",name : " + firstname);
+//
+//		genericVO.setResponse("You have been successfully Registered");
+//		genericVO.setRegistrationID(res.getRegistrationId().toString());
+//		return genericVO;
+//
+//	}
 
 	public void sendMail(PlayerInfo playerInfo) throws MessagingException, TemplateNotFoundException,
 			MalformedTemplateNameException, ParseException, IOException, TemplateException {

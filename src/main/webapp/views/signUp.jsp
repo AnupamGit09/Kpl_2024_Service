@@ -448,9 +448,9 @@
 
         <section class="container">
           <header>Registration Form</header>
-          <form action="https://kpl2023.online/registration/signUp" class="form" method="post"
-            enctype="multipart/form-data">
-          <!-- <form action="http://localhost:1999/signUp" class="form" method="post" enctype="multipart/form-data"> -->
+          <!-- <form action="https://kpl2023.online/registration/signUp" class="form" method="post"
+            enctype="multipart/form-data"> -->
+          <form action="http://localhost:5000/signUp" class="form" method="post" enctype="multipart/form-data">
             <div style="color: #FFA500">
               <strong lang="bn">
                 আঁধার এর সামনের পিছনের এবং নিজের ছবি ৩০০ কেবি এর মধ্যে রাখবেন

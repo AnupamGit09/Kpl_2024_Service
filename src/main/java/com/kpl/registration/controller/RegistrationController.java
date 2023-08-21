@@ -22,7 +22,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -37,11 +36,9 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kpl.registration.dto.AdminReqVO;
-import com.kpl.registration.dto.GenericVO;
 import com.kpl.registration.dto.LiveDataVO;
 import com.kpl.registration.dto.LiveSearchVO;
 import com.kpl.registration.dto.PlayerInfoVO;
-import com.kpl.registration.dto.PlayerRequetVO;
 import com.kpl.registration.dto.PlayerResponseVO;
 import com.kpl.registration.dto.RegistrationResponse;
 import com.kpl.registration.entity.AdminInfo;
@@ -98,15 +95,15 @@ public class RegistrationController {
 		return "Application is Running";
 	}
 
-	@PostMapping("/completeRegistration")
-	public GenericVO saveRegistration(@RequestBody PlayerRequetVO playerRequetVO,
-			@RequestParam("file") MultipartFile file, @RequestParam("file") MultipartFile docFileFront,
-			@RequestParam("file") MultipartFile docFileBack) throws IOException, MessagingException, TemplateException {
-		byte[] imageData = file.getBytes();
-		byte[] docDataFront = docFileFront.getBytes();
-		byte[] docDataBack = docFileBack.getBytes();
-		return playerService.savePlayerInfo(playerRequetVO, imageData, docDataFront, docDataBack);
-	}
+//	@PostMapping("/completeRegistration")
+//	public GenericVO saveRegistration(@RequestBody PlayerRequetVO playerRequetVO,
+//			@RequestParam("file") MultipartFile file, @RequestParam("file") MultipartFile docFileFront,
+//			@RequestParam("file") MultipartFile docFileBack) throws IOException, MessagingException, TemplateException {
+//		byte[] imageData = file.getBytes();
+//		byte[] docDataFront = docFileFront.getBytes();
+//		byte[] docDataBack = docFileBack.getBytes();
+//		return playerService.savePlayerInfo(playerRequetVO, imageData, docDataFront, docDataBack);
+//	}
 
 	@GetMapping("/getYourRegistrationStatus")
 	public RegistrationResponse registrationStatus(@RequestParam String id, @RequestParam String password)
@@ -149,8 +146,9 @@ public class RegistrationController {
 	// update player category to emerging Player 
 
 	@PutMapping("/emergingPlayer")
-	public String emergingPlayer(@RequestParam List<Long> registartionIDS) throws IOException {
-		playerRepository.updateEmergingPlayer(registartionIDS);
+	public String emergingPlayer() throws IOException {
+		var playerId=playerRepository.emergingPlayerList();
+		playerRepository.updateEmergingPlayer(playerId);
 		return "players category has been changed to emerging Player";
 	}
 
@@ -428,7 +426,7 @@ public class RegistrationController {
 			liveDataVO.setMoneyspend(totalSpendMoney);
 			liveDataVO.setMoneyRem(remBalance);
 			long maxBetOnSinglePlayer = 0;
-			long playerCountRem = 15 - (overSeasPlayerCount + localPlayerCount);
+			long playerCountRem = 17 - (overSeasPlayerCount + localPlayerCount);
 			if (playerCountRem <= 0) {
 				maxBetOnSinglePlayer = remBalance;
 			} else {
@@ -493,7 +491,7 @@ public class RegistrationController {
 		return list;
 	}
 
-	@Scheduled(cron = "0 30 18 * * *", zone = "UTC")
+//	@Scheduled(cron = "0 30 18 * * *", zone = "UTC")
 	@GetMapping("/apiTrigger")
 	public void todayRegList() {
 		log.info("Daily API trigger");
@@ -520,17 +518,6 @@ public class RegistrationController {
 		}
 
 		restTemplate.getForObject(telegramBotUrl + paymentmessage + " " + paymentlist, String.class);
-
-		List<PlayerInfo> paymentDone = playerRepository.paymentDone();
-		List<String> paymentDonelist = new ArrayList<>();
-		var paymentDonemessage = "Players who have paid the registrartion fees : ";
-		for (int i = 0; i < paymentDone.size(); i++) {
-			var info = (i + 1) + ". " + paymentDone.get(i).getPlayerFirstName() + " "
-					+ paymentDone.get(i).getPlayerLastName();
-			paymentDonelist.add(info);
-		}
-
-		restTemplate.getForObject(telegramBotUrl + paymentDonemessage + " " + paymentDonelist, String.class);
 	}
 
 	@DeleteMapping("/deleteRegistration")
@@ -586,7 +573,9 @@ public class RegistrationController {
 		case 1:
 			eventRepo.updateRulesPdfCount();
 			break;
-
+		case 2:
+			eventRepo.updateTeamPdfCount();
+			break;
 		default:
 			eventRepo.updateOwnerPdfCount();
 			break;
@@ -610,7 +599,7 @@ public class RegistrationController {
 		}
 	}
 	
-	@Scheduled(fixedRate = 900000)
+//	@Scheduled(fixedRate = 900000)
 	@GetMapping("/mailTrigger")
 	public void mailTriggerOnRegistration() throws Exception {
 		log.info("Mail trigger in each 15 min API trigger");
@@ -625,14 +614,39 @@ public class RegistrationController {
 			restTemplate.getForObject(telegramBotUrl + messageString, String.class);
 		}
 	}
+	
+	@PutMapping("/paymentUpdateRevoke")
+	public String paymentUpdateRevoke(@RequestParam Long registartionIDS)
+			throws IOException, MessagingException, TemplateException {
+		var player=playerRepository.findDataByregistrationId(registartionIDS);
+		String messageString = "Registration revoked for user name : " + player.getPlayerFirstName()
+				+ " " + player.getPlayerLastName();
+		restTemplate.getForObject(telegramBotUrl + messageString, String.class);
+		playerRepository.paymentUpdateRevoke(registartionIDS);
+		return "payment details revoked";
+	}
+	
+	@GetMapping("/apiTriggerAll")
+	public void apiTriggerAll(@RequestParam Long lb,@RequestParam Long ub) {
+		List<PlayerInfo> paymentDone = playerRepository.paymentDone(lb,ub);
+		List<String> paymentDonelist = new ArrayList<>();
+		var paymentDonemessage = "Players who have paid the registrartion fees : ";
+		for (int i = 0; i < paymentDone.size(); i++) {
+			var info = (i + 1) + ". " + paymentDone.get(i).getPlayerFirstName() + " "
+					+ paymentDone.get(i).getPlayerLastName();
+			paymentDonelist.add(info);
+		}
 
-//	
+		restTemplate.getForObject(telegramBotUrl + paymentDonemessage + " " + paymentDonelist, String.class);
+	}
+	
 //	@Scheduled(fixedRate = 300000)
 //	@GetMapping("/mailTriggerOnSell")
 //	public void mailTriggerOnSell() throws Exception {
 //		log.info("Mail trigger in each 5 min API trigger");
-//		var timeNow = LocalDateTime.now();
-//		var time5minBack = LocalDateTime.now().minusMinutes(5);
+//		var timeNow = LocalDateTime.now(Clock.systemUTC());
+//		var time5minBack = LocalDateTime.now(Clock.systemUTC()).minusMinutes(5);
+//		log.info(timeNow.toString());
 //		List<PlayerInfo> playerInfo = playerRepository.sellOnLast5min(timeNow, time5minBack);		
 //		for (int i = 0; i < playerInfo.size(); i++) {
 //			playerService.sendMailOnSold(playerInfo.get(i));

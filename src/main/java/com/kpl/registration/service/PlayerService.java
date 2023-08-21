@@ -8,8 +8,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.itextpdf.text.DocumentException;
 import com.kpl.registration.dto.AdminReqVO;
-import com.kpl.registration.dto.GenericVO;
-import com.kpl.registration.dto.PlayerRequetVO;
 import com.kpl.registration.dto.RegistrationResponse;
 import com.kpl.registration.entity.AdminInfo;
 import com.kpl.registration.entity.PlayerInfo;
@@ -20,8 +18,8 @@ import freemarker.template.TemplateException;
 import freemarker.template.TemplateNotFoundException;
 
 public interface PlayerService{
-	GenericVO savePlayerInfo(PlayerRequetVO playerRequetVO, byte[] imageData, byte[] docDataFront,byte[] docDataBack)
-			throws IOException, MessagingException, TemplateException ;
+//	GenericVO savePlayerInfo(PlayerRequetVO playerRequetVO, byte[] imageData, byte[] docDataFront,byte[] docDataBack)
+//			throws IOException, MessagingException, TemplateException ;
 
 	RegistrationResponse getRegistrationStatus(String searchParam, String password);
 

@@ -35,4 +35,7 @@ public class EventCount implements Serializable {
 
 	@Column(name = "owner_pdf")
 	private Long ownerPdf;
+	
+	@Column(name = "player_pdf")
+	private Long playerPdf;
 }

@@ -107,8 +107,8 @@ public interface PlayerRepository extends JpaRepository<PlayerInfo, Long> {
 	@Query(value = "SELECT * FROM player_registration  where payment_validation is null order by registration_id", nativeQuery = true)
 	List<PlayerInfo> paymentRem();
 
-	@Query(value = "SELECT * FROM player_registration  where payment_validation is not null order by registration_id", nativeQuery = true)
-	List<PlayerInfo> paymentDone();
+	@Query(value = "SELECT * FROM player_registration  where payment_validation is not null and registration_id between ?1 and ?2 order by registration_id", nativeQuery = true)
+	List<PlayerInfo> paymentDone (Long lb,Long ub);
 	
 	
 	@Query(value = "SELECT * FROM player_registration where registration_time < ?1 and registration_time >= ?2\r\n"
@@ -127,4 +127,11 @@ public interface PlayerRepository extends JpaRepository<PlayerInfo, Long> {
 	@Query(value = "update player_registration set generue='Emerging Player' where registration_id in(?1)", nativeQuery = true)
 	void updateEmergingPlayer(List<Long> registartionIDS);
 
+	@Transactional
+	@Modifying
+	@Query(value = "update player_registration set payment_validation='' where registration_id in(?1)", nativeQuery = true)
+	void paymentUpdateRevoke(Long registartionIDS);
+	
+	@Query(value = "SELECT registration_id FROM public.player_registration WHERE date_of_birth > current_date - interval '19 years' ORDER BY registration_id asc", nativeQuery = true)
+	List<Long> emergingPlayerList();
 }
