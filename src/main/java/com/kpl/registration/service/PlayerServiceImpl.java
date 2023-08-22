@@ -566,7 +566,7 @@ public class PlayerServiceImpl implements PlayerService {
 		pcell.setBorderColor(new BaseColor(220, 220, 0));
 		ptable.addCell(pcell);
 
-		pcell = new PdfPCell(new Phrase("Aadhar No", tableFont));
+		pcell = new PdfPCell(new Phrase("Category", tableFont));
 		pcell.setBackgroundColor(new BaseColor(220, 220, 0));
 		pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 		pcell.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -614,7 +614,7 @@ log.info(allplayerInfo.get(i).getRegistrationId().toString());
 			pcell.setBorderColor(BaseColor.WHITE);
 			ptable.addCell(pcell);
 
-			pcell = new PdfPCell(new Phrase("XXXXXXXX" + allplayerInfo.get(i).getAadharNo().toString().substring(8)
+			pcell = new PdfPCell(new Phrase(allplayerInfo.get(i).getGenerue()
 					+ " " + "(" + allplayerInfo.get(i).getLocation() + ")", tablesFont));
 			pcell.setBackgroundColor(new BaseColor(230, 230, 230));
 			pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
