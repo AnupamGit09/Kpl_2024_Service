@@ -3,8 +3,6 @@ package com.kpl.registration.service;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.charset.StandardCharsets;
-import java.time.Clock;
-import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,6 +29,7 @@ import com.itextpdf.text.Font;
 import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.PageSize;
+import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
 import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.PdfPCell;
@@ -38,11 +37,8 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.text.pdf.draw.LineSeparator;
 import com.kpl.registration.dto.AdminReqVO;
-import com.kpl.registration.dto.GenericVO;
-import com.kpl.registration.dto.PlayerRequetVO;
 import com.kpl.registration.dto.RegistrationResponse;
 import com.kpl.registration.entity.AdminInfo;
-import com.kpl.registration.entity.DocInfo;
 import com.kpl.registration.entity.PlayerInfo;
 import com.kpl.registration.repository.AdminRepo;
 import com.kpl.registration.repository.DocRepo;
@@ -434,10 +430,13 @@ public class PlayerServiceImpl implements PlayerService {
 			pcell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			pcell.setBorderColor(BaseColor.WHITE);
 			ptable.addCell(pcell);
+			var basePrice = 0L;
+			if (allplayerInfo.get(i).getBasePrice() != null) {
+				basePrice = allplayerInfo.get(i).getBasePrice();
+			}
 
-			pcell = new PdfPCell(new Phrase(
-					allplayerInfo.get(i).getPlayerFirstName() + " " + allplayerInfo.get(i).getPlayerLastName(),
-					tablesFont));
+			pcell = new PdfPCell(new Phrase(allplayerInfo.get(i).getPlayerFirstName() + " "
+					+ allplayerInfo.get(i).getPlayerLastName() + " (Base Price : " + basePrice + " )", tablesFont));
 			pcell.setBackgroundColor(new BaseColor(230, 230, 230));
 			pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			pcell.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -604,9 +603,23 @@ public class PlayerServiceImpl implements PlayerService {
 			pcell.setBorderColor(BaseColor.WHITE);
 			ptable.addCell(pcell);
 
-			pcell = new PdfPCell(new Phrase(
-					allplayerInfo.get(i).getPlayerFirstName() + " " + allplayerInfo.get(i).getPlayerLastName(),
-					tablesFont));
+			var basePrice = 0L;
+			if (allplayerInfo.get(i).getBasePrice() != null) {
+				basePrice = allplayerInfo.get(i).getBasePrice();
+			}
+
+			String playerName = allplayerInfo.get(i).getPlayerFirstName() + " "
+					+ allplayerInfo.get(i).getPlayerLastName();
+			String basePriceText = "Base Price : " + basePrice;
+
+			Paragraph paragraph = new Paragraph();
+			paragraph.setAlignment(Element.ALIGN_CENTER); 
+			paragraph.add(new Chunk(playerName, tablesFont));
+			paragraph.add(Chunk.NEWLINE); // Add a new line
+			paragraph.add(new Chunk(basePriceText, tablesFont));
+
+			pcell.addElement(paragraph);
+
 			pcell.setBackgroundColor(new BaseColor(230, 230, 230));
 			pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			pcell.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -777,9 +790,23 @@ public class PlayerServiceImpl implements PlayerService {
 			pcell.setBorderColor(BaseColor.WHITE);
 			ptable.addCell(pcell);
 
-			pcell = new PdfPCell(new Phrase(
-					allplayerInfo.get(i).getPlayerFirstName() + " " + allplayerInfo.get(i).getPlayerLastName(),
-					tablesFont));
+			var basePrice = 0L;
+			if (allplayerInfo.get(i).getBasePrice() != null) {
+				basePrice = allplayerInfo.get(i).getBasePrice();
+			}
+
+			String playerName = allplayerInfo.get(i).getPlayerFirstName() + " "
+					+ allplayerInfo.get(i).getPlayerLastName();
+			String basePriceText = "Base Price : " + basePrice;
+
+			Paragraph paragraph = new Paragraph();
+			paragraph.setAlignment(Element.ALIGN_CENTER); 
+			paragraph.add(new Chunk(playerName, tablesFont));
+			paragraph.add(Chunk.NEWLINE); // Add a new line
+			paragraph.add(new Chunk(basePriceText, tablesFont));
+
+			pcell.addElement(paragraph);
+
 			pcell.setBackgroundColor(new BaseColor(230, 230, 230));
 			pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			pcell.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -964,9 +991,23 @@ public class PlayerServiceImpl implements PlayerService {
 			pcell.setBorderColor(BaseColor.WHITE);
 			ptable.addCell(pcell);
 
-			pcell = new PdfPCell(
-					new Phrase(new Phrase("XXXXXXXX" + allplayerInfo.get(i).getAadharNo().toString().substring(8) + " "
-							+ "(" + allplayerInfo.get(i).getLocation() + ")", tablesFont)));
+			var basePrice = 0L;
+			if (allplayerInfo.get(i).getBasePrice() != null) {
+				basePrice = allplayerInfo.get(i).getBasePrice();
+			}
+
+			String playerName = allplayerInfo.get(i).getPlayerFirstName() + " "
+					+ allplayerInfo.get(i).getPlayerLastName();
+			String basePriceText = "Base Price : " + basePrice;
+
+			Paragraph paragraph = new Paragraph();
+			paragraph.setAlignment(Element.ALIGN_CENTER); 
+			paragraph.add(new Chunk(playerName, tablesFont));
+			paragraph.add(Chunk.NEWLINE); // Add a new line
+			paragraph.add(new Chunk(basePriceText, tablesFont));
+
+			pcell.addElement(paragraph);
+
 			pcell.setBackgroundColor(new BaseColor(230, 230, 230));
 			pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			pcell.setVerticalAlignment(Element.ALIGN_MIDDLE);
