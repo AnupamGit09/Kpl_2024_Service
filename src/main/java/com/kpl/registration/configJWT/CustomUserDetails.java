@@ -1,4 +1,4 @@
-package com.kpl.registration.config;
+package com.kpl.registration.configJWT;
 
 import com.kpl.registration.dto.UserInfo;
 import org.springframework.security.core.GrantedAuthority;
