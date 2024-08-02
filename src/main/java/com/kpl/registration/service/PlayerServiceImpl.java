@@ -213,17 +213,17 @@ public class PlayerServiceImpl implements PlayerService {
         Template mailTemplate = config.getTemplate("paymentValidation.ftl");
 
         List<PlayerInfo> playerInfo = playerRepository.findByRegistriondList(registartionIDS);
-        for (int i = 0; i < playerInfo.size(); i++) {
-            model.put("firstname", playerInfo.get(i).getPlayerFirstName());
+        for (PlayerInfo info : playerInfo) {
+            model.put("firstname", info.getPlayerFirstName());
             var htmlTemp = FreeMarkerTemplateUtils.processTemplateIntoString(mailTemplate, model);
-            mimeMessageHelper.setTo(playerInfo.get(i).getEmailId());
+            mimeMessageHelper.setTo(info.getEmailId());
             mimeMessageHelper.setText(htmlTemp, true);
             mimeMessageHelper
-                    .setSubject(playerInfo.get(i).getPlayerFirstName() + ",Your payment status has been Updated");
+                    .setSubject(info.getPlayerFirstName() + ",Your payment status has been Updated");
             String text = "@RAVVAN23 @Kalajaduu13 @emotionalclown  Payment status updated for : "
-                    + playerInfo.get(i).getPlayerFirstName() + " " + playerInfo.get(i).getPlayerLastName()
-                    + " ,and his Mail ID,Reg ID are : " + playerInfo.get(i).getEmailId() + ","
-                    + playerInfo.get(i).getRegistrationId();
+                    + info.getPlayerFirstName() + " " + info.getPlayerLastName()
+                    + " ,and his Mail ID,Reg ID are : " + info.getEmailId() + ","
+                    + info.getRegistrationId();
             log.info(text);
 
 //			restTemplate.getForObject(telegramBotUrl + text, String.class);
@@ -434,9 +434,7 @@ public class PlayerServiceImpl implements PlayerService {
             pcell.setBorderColor(BaseColor.WHITE);
             ptable.addCell(pcell);
             var basePrice = 0L;
-            if (allplayerInfo.get(i).getBasePrice() != null) {
-                basePrice = allplayerInfo.get(i).getBasePrice();
-            }
+            basePrice = allplayerInfo.get(i).getBasePrice();
 
             pcell = new PdfPCell(new Phrase(allplayerInfo.get(i).getPlayerFirstName() + " "
                     + allplayerInfo.get(i).getPlayerLastName() + " (Base Price : " + basePrice + " )", tablesFont));
@@ -775,9 +773,7 @@ public class PlayerServiceImpl implements PlayerService {
             ptable.addCell(pcell);
 
             var basePrice = 0L;
-            if (allplayerInfo.get(i).getBasePrice() != null) {
-                basePrice = allplayerInfo.get(i).getBasePrice();
-            }
+            basePrice = allplayerInfo.get(i).getBasePrice();
 
             String playerName = allplayerInfo.get(i).getPlayerFirstName() + " "
                     + allplayerInfo.get(i).getPlayerLastName();
