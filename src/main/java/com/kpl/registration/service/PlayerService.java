@@ -27,7 +27,7 @@ public interface PlayerService {
   void generatePdfByClassification(HttpServletResponse response, String generue)
       throws DocumentException, IOException;
 
-  void generueSpecificPlayerPdfForCommitte(HttpServletResponse response)
+  void generueSpecificPlayerPdfForCommitte(HttpServletResponse response,Long start,Long end,String category)
       throws DocumentException, IOException;
 
   void generateFinalPlayerPdf(HttpServletResponse response, String generue)

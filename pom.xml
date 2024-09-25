@@ -148,13 +148,13 @@
 		</dependency>
 	</dependencies>
 	<build>
-	<finalName>registration</finalName>  
+	<finalName>registration</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
-		</plugins>		
+		</plugins>
 	</build>
 
 </project>
