@@ -8,6 +8,7 @@ import com.kpl.registration.configJWT.JwtService;
 import com.kpl.registration.dto.*;
 import com.kpl.registration.entity.*;
 import com.kpl.registration.service.KPLException;
+import com.kpl.registration.service.PlayerServicePdf;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -62,6 +63,8 @@ import lombok.extern.slf4j.Slf4j;
 public class RegistrationController {
     @Autowired
     PlayerService playerService;
+    @Autowired
+    PlayerServicePdf playerServicePdf;
     @Autowired
     PlayerServiceImpl playerServiceImpl;
     @Autowired
@@ -121,7 +124,7 @@ public class RegistrationController {
         String headerValue = "owner" + generue + ".pdf";
         response.setHeader(headerKey, headerValue);
         model.addAttribute("errorMessage", "PDF download is processing");
-        playerService.generatePdfByClassification(response, generue);
+        playerServicePdf.generatePdfByClassification(response, generue);
 
     }
 
@@ -136,7 +139,7 @@ public class RegistrationController {
         String headerValue = "committe" + generue + ".pdf";
         response.setHeader(headerKey, headerValue);
         model.addAttribute("errorMessage", "PDF download is processing");
-        playerService.generateFinalPlayerPdf(response, generue);
+        playerServicePdf.generateFinalPlayerPdf(response, generue);
 
     }
 
@@ -739,7 +742,7 @@ public class RegistrationController {
         String headerValue = soldTeam + ".pdf";
         response.setHeader(headerKey, headerValue);
         log.info(" /kpl/registration/api/teamList");
-        playerService.generateTeamListPdf(response, soldTeam);
+        playerServicePdf.generateTeamListPdf(response, soldTeam);
 
     }
 
@@ -751,7 +754,7 @@ public class RegistrationController {
         String headerValue = "AllPlayer" + ".pdf";
         response.setHeader(headerKey, headerValue);
         model.addAttribute("errorMessage", "PDF download is processing");
-        playerService.generueSpecificPlayerPdfForCommitte(response);
+        playerServicePdf.generueSpecificPlayerPdfForCommitte(response);
 
     }
 
