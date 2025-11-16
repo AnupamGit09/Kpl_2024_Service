@@ -1,40 +1,24 @@
 package com.kpl.registration.service.GenericService;
 
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.time.Clock;
-import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.mail.MessagingException;
-
-import com.kpl.registration.repository.*;
-import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.stereotype.Service;
-import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
-import org.springframework.web.client.RestTemplate;
-
-import com.kpl.registration.dto.AdminReqVO;
 import com.kpl.registration.dto.GenericVO;
 import com.kpl.registration.dto.PlayerRequetVO;
 import com.kpl.registration.dto.RegistrationResponse;
-import com.kpl.registration.entity.AdminInfo;
 import com.kpl.registration.entity.DocInfo;
 import com.kpl.registration.entity.PlayerInfo;
-
-import freemarker.core.ParseException;
-import freemarker.template.Configuration;
-import freemarker.template.MalformedTemplateNameException;
-import freemarker.template.Template;
+import com.kpl.registration.repository.DocRepo;
+import com.kpl.registration.repository.PlayerRepo2024;
+import com.kpl.registration.repository.PlayerRepository;
 import freemarker.template.TemplateException;
-import freemarker.template.TemplateNotFoundException;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+
+import javax.mail.MessagingException;
+import java.io.IOException;
+import java.time.Clock;
+import java.time.LocalDateTime;
 
 @Slf4j
 @Service
