@@ -754,7 +754,7 @@ public class RegistrationController {
         String headerValue = "AllPlayer" + ".pdf";
         response.setHeader(headerKey, headerValue);
         model.addAttribute("errorMessage", "PDF download is processing");
-        playerServicePdf.generateSpecificPlayerPdfForCommittee(response);
+        playerServicePdf.generueSpecificPlayerPdfForCommitte(response);
 
     }
 

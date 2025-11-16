@@ -201,7 +201,7 @@ public class PlayerServicePdfImpl implements PlayerServicePdf{
     }
 
     @Override
-    public void generateSpecificPlayerPdfForCommittee(HttpServletResponse response)
+    public void generueSpecificPlayerPdfForCommitte(HttpServletResponse response)
             throws DocumentException, IOException {
         var allplayerInfo = playerRepo2024.findAllPlayer();
 
