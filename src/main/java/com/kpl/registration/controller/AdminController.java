@@ -42,7 +42,7 @@ public class AdminController {
 			@RequestParam(value = "dashboard", required = false) String dashboard,
 			@RequestParam(value = "liveData", required = false) String liveData) {
 		String res = adminRepo.adminLoginValidation(id, password);
-		log.info("Admin Log in done using ID "+id+ "and password "+password);
+        log.info("Admin Log in done using ID {} and password {}", id, password);
 		if (res != null) {
 			if (dashboard!=null) {
 				return "adminView";
@@ -68,7 +68,7 @@ public class AdminController {
 		List<Long> idList = new ArrayList<>();
 		for (String value : listOfId) {
 			try {
-				log.info("Player category updated to List A for reg ID "+value);
+                log.info("Player category updated to List A for reg ID {}", value);
 				idList.add(Long.parseLong(value));
 			} catch (Exception e) {
 				model.addAttribute("errorMessage", "Please re verify registration ids");
@@ -90,7 +90,7 @@ public class AdminController {
 		List<Long> idList = new ArrayList<>();
 		for (String value : listOfId) {
 			try {
-				log.info("Player Payment updated for reg ID "+value);
+                log.info("Player Payment updated for reg ID {}", value);
 				idList.add(Long.parseLong(value));
 			} catch (Exception e) {
 				model.addAttribute("errorMessage", "Please re verify registration ids");
@@ -112,7 +112,7 @@ public class AdminController {
 	public String saveSoldTeamAndAmount(@RequestParam("id") Long id, @RequestParam("soldAmount") Long soldAmount,
 			@RequestParam("team") String team, Model model) throws Exception {
 		if (team.equals("Team List")) {
-			model.addAttribute("errorMessage", "Pleae Select Sold Team");
+			model.addAttribute("errorMessage", "Please Select Sold Team");
 			return "dataFeed";
 		}
 		registrationController.saveSoldTeamAndAmount(id, soldAmount, team);

@@ -8,6 +8,7 @@ import com.kpl.registration.configJWT.JwtService;
 import com.kpl.registration.dto.*;
 import com.kpl.registration.entity.*;
 import com.kpl.registration.service.KPLException;
+import com.kpl.registration.service.PlayerServicePdf;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -30,7 +31,6 @@ import java.time.Clock;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -64,6 +64,8 @@ public class RegistrationController {
     @Autowired
     PlayerService playerService;
     @Autowired
+    PlayerServicePdf playerServicePdf;
+    @Autowired
     PlayerServiceImpl playerServiceImpl;
     @Autowired
     ImageRepo imageRepo;
@@ -82,6 +84,8 @@ public class RegistrationController {
     @Autowired
     private ResourceLoader resourceLoader;
 
+    @Autowired
+    PlayerRepo2024 playerRepo2024;
     public static final String CONTENT_DISPOSITION = "Content-Disposition";
     public static final String PDF_MIME_TYPE = "application/pdf";
     public static final String ATTACHMENT_FILENAME = "attachment; filename=";
@@ -122,7 +126,7 @@ public class RegistrationController {
         String headerValue = "owner" + generue + ".pdf";
         response.setHeader(headerKey, headerValue);
         model.addAttribute("errorMessage", "PDF download is processing");
-        playerService.generatePdfByClassification(response, generue);
+        playerServicePdf.generatePdfByClassification(response, generue);
 
     }
 
@@ -137,7 +141,7 @@ public class RegistrationController {
         String headerValue = "committe" + generue + ".pdf";
         response.setHeader(headerKey, headerValue);
         model.addAttribute("errorMessage", "PDF download is processing");
-        playerService.generateFinalPlayerPdf(response, generue);
+        playerServicePdf.generateFinalPlayerPdf(response, generue);
 
     }
 
@@ -598,29 +602,14 @@ public class RegistrationController {
     // 	}
     // }
 
-    @Autowired
-    PlayerRepo2024 playerRepo2024;
-
-    @PostMapping("/particularUpload/{id}")
-    public String particularUpload(@RequestParam("file") List<MultipartFile> file, @PathVariable Long id)
-            throws IOException {
-        if (id != null) {
-            byte[] imageData = file.get(0).getBytes();
-            playerRepo2024.updateImage(Math.toIntExact(id), imageData);
-            log.info("image update : " + id);
-            return "Specific Image updated";
-        } else {
-            return "No id";
-        }
-    }
 
     @PostMapping("/upload")
     public String updateOwnImage(@RequestParam("file") List<MultipartFile> file)
             throws IOException {
         for (int i = 1; i <= file.size(); i++) {
-            byte[] imageData = file.get(i - 1).getBytes();
+            byte[] imageData = file.get(i-1).getBytes();
             playerRepo2024.updateImage(i, imageData);
-            log.info("image update : " + (i));
+            log.info("image update : "+(i));
         }
 
         return "Image updated";
@@ -669,20 +658,20 @@ public class RegistrationController {
             var phNum = row.getCell(10).getNumericCellValue();
             var paid = row.getCell(13).getStringCellValue();
 
-            var p = new PlayerRegistration();
-            p.setRegistrationTime(String.valueOf(timeStamp));
-            p.setEmailId(email);
-            p.setPlayerFirstName(firstName);
-            p.setPlayerLastName(lastName);
-            p.setDateOfBirth(String.valueOf(dateOfBirth));
-            p.setPlayerLocationCategory(location);
-            p.setCategory(category);
-            p.setPlayerAddress(address);
-            p.setAadhaar((long) aadhaar);
-            p.setPinCode(Long.valueOf((long) pin));
-            p.setPhNo(Long.valueOf((long) phNum));
-            p.setPaid(paid);
-            playerRepo2024.save(p);
+                var p = new PlayerRegistration();
+                p.setRegistrationTime(String.valueOf(timeStamp));
+                p.setEmailId(email);
+                p.setPlayerFirstName(firstName);
+                p.setPlayerLastName(lastName);
+                p.setDateOfBirth(String.valueOf(dateOfBirth));
+                p.setPlayerLocationCategory(location);
+                p.setCategory(category);
+                p.setPlayerAddress(address);
+                p.setAadhaar((long) aadhaar);
+                p.setPinCode(Long.valueOf((long) pin));
+                p.setPhNo(Long.valueOf((long) phNum));
+                p.setPaid(paid);
+                playerRepo2024.save(p);
 
         }
         workbook.close();
@@ -723,7 +712,7 @@ public class RegistrationController {
             if (playerCountRem <= 0) {
                 maxBetOnSinglePlayer = remBalance;
             } else {
-                maxBetOnSinglePlayer = remBalance - ((playerCountRem - 1) * 100);
+                maxBetOnSinglePlayer = remBalance - ((playerCountRem - 1) * 50);
             }
 
             liveDataVO.setMaxiumBetAmountOnSinglePlayer(maxBetOnSinglePlayer);
@@ -753,27 +742,24 @@ public class RegistrationController {
         String headerValue = soldTeam + ".pdf";
         response.setHeader(headerKey, headerValue);
         log.info(" /kpl/registration/api/teamList");
-        playerService.generateTeamListPdf(response, soldTeam);
+        playerServicePdf.generateTeamListPdf(response, soldTeam);
 
     }
 
-    @GetMapping("generate/AllplayerPdf/{start}/{end}/{category}")
-    public void generueSpecificPlayerPdfForCommitte(HttpServletResponse response,@PathVariable Long start,@PathVariable Long end,@PathVariable String category) throws Exception {
+    @GetMapping("generate/AllplayerPdf")
+    public void generueSpecificPlayerPdfForCommitte(HttpServletResponse response, Model model) throws Exception {
 
         response.setContentType(PDF_MIME_TYPE);
         String headerKey = CONTENT_DISPOSITION;
         String headerValue = "AllPlayer" + ".pdf";
         response.setHeader(headerKey, headerValue);
-        playerService.generueSpecificPlayerPdfForCommitte(response,start,end,category);
+        model.addAttribute("errorMessage", "PDF download is processing");
+        playerServicePdf.generueSpecificPlayerPdfForCommitte(response);
 
     }
 
-
-
     @Autowired
     AdminRepo adminRepo;
-
-
     @Autowired
     AuthenticationManager authenticationManager;
     @Autowired
@@ -784,18 +770,11 @@ public class RegistrationController {
         var res = adminRepo.findByIdAndPassword(id, password);
         if (res.isPresent()) {
             Authentication auth = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(res.get().getId(), "abc"));
-            System.out.println(  auth.getPrincipal());
+
             return ImageRequetVO.builder().imageName(jwtService.generateToken(id, password, res.get().getRoleCode())).build();
 
         } else {
             throw new KPLException("Unauthorized", HttpStatus.UNAUTHORIZED);
         }
-    }
-
-    @GetMapping("/countAndCategory")
-    public Map<String, Long> countAndCategory() throws Exception {
-        List<PlayerRegistration> players= playerRepo2024.findAll();
-       return players.stream().collect(Collectors.groupingBy(PlayerRegistration::getCategory,Collectors.counting()));
-
     }
 }

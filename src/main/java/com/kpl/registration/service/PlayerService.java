@@ -24,19 +24,9 @@ public interface PlayerService {
 
   RegistrationResponse getRegistrationStatus(String searchParam, String password);
 
-  void generatePdfByClassification(HttpServletResponse response, String generue)
-      throws DocumentException, IOException;
-
-  void generueSpecificPlayerPdfForCommitte(HttpServletResponse response,Long start,Long end,String category)
-      throws DocumentException, IOException;
-
-  void generateFinalPlayerPdf(HttpServletResponse response, String generue)
-      throws DocumentException, IOException;
-
   AdminInfo saveAdminDetails(AdminReqVO adminReqVO);
 
-  void generateTeamListPdf(HttpServletResponse response, String soldTeam)
-      throws DocumentException, IOException;
+
 
   void sendMailOnPaymentValidation(List<Long> registartionIDS)
       throws MessagingException,
