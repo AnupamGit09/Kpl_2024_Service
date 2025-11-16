@@ -84,6 +84,8 @@ public class RegistrationController {
     @Autowired
     private ResourceLoader resourceLoader;
 
+    @Autowired
+    PlayerRepo2024 playerRepo2024;
     public static final String CONTENT_DISPOSITION = "Content-Disposition";
     public static final String PDF_MIME_TYPE = "application/pdf";
     public static final String ATTACHMENT_FILENAME = "attachment; filename=";
@@ -600,8 +602,6 @@ public class RegistrationController {
     // 	}
     // }
 
-    @Autowired
-    PlayerRepo2024 playerRepo2024;
 
     @PostMapping("/upload")
     public String updateOwnImage(@RequestParam("file") List<MultipartFile> file)
