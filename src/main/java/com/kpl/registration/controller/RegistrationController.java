@@ -174,8 +174,6 @@ public class RegistrationController {
     }
 
 
-
-
     @GetMapping("/passwordReset")
     public String resetPassword(@RequestParam Long phNumber, @RequestParam Long pinCode, @RequestParam Long aadharNo,
                                 @RequestParam String password) throws IOException, MessagingException, TemplateException {
@@ -595,9 +593,9 @@ public class RegistrationController {
     public String updateOwnImage(@RequestParam("file") List<MultipartFile> file)
             throws IOException {
         for (int i = 1; i <= file.size(); i++) {
-            byte[] imageData = file.get(i-1).getBytes();
+            byte[] imageData = file.get(i - 1).getBytes();
             playerRepo2024.updateImage(i, imageData);
-            log.info("image update : "+(i));
+            log.info("image update : " + (i));
         }
 
         return "Image updated";
@@ -646,20 +644,20 @@ public class RegistrationController {
             var phNum = row.getCell(10).getNumericCellValue();
             var paid = row.getCell(13).getStringCellValue();
 
-                var p = new PlayerRegistration();
-                p.setRegistrationTime(String.valueOf(timeStamp));
-                p.setEmailId(email);
-                p.setPlayerFirstName(firstName);
-                p.setPlayerLastName(lastName);
-                p.setDateOfBirth(String.valueOf(dateOfBirth));
-                p.setPlayerLocationCategory(location);
-                p.setCategory(category);
-                p.setPlayerAddress(address);
-                p.setAadhaar((long) aadhaar);
-                p.setPinCode(Long.valueOf((long) pin));
-                p.setPhNo(Long.valueOf((long) phNum));
-                p.setPaid(paid);
-                playerRepo2024.save(p);
+            var p = new PlayerRegistration();
+            p.setRegistrationTime(String.valueOf(timeStamp));
+            p.setEmailId(email);
+            p.setPlayerFirstName(firstName);
+            p.setPlayerLastName(lastName);
+            p.setDateOfBirth(String.valueOf(dateOfBirth));
+            p.setPlayerLocationCategory(location);
+            p.setCategory(category);
+            p.setPlayerAddress(address);
+            p.setAadhaar((long) aadhaar);
+            p.setPinCode(Long.valueOf((long) pin));
+            p.setPhNo(Long.valueOf((long) phNum));
+            p.setPaid(paid);
+            playerRepo2024.save(p);
 
         }
         workbook.close();
@@ -710,18 +708,6 @@ public class RegistrationController {
         return liveDataVOList;
     }
 
-    @GetMapping("/soldPlayerList")
-    public List<String> soldPlayerList() {
-        List<String> list = new ArrayList<>();
-        var playerInfo = playerRepo2024.findBySoldUpdateTime();
-        for (int i = 0; i < playerInfo.size(); i++) {
-            var name = playerInfo.get(i).getPlayerFirstName() + " " + playerInfo.get(i).getPlayerLastName()
-                    + " sold to team " + playerInfo.get(i).getSoldTeam() + " for Rs."
-                    + playerInfo.get(i).getSoldAmount();
-            list.add(name);
-        }
-        return list;
-    }
 
     @GetMapping("/teamList")
     public void teamListPdf(@RequestParam("soldTeam") String soldTeam, HttpServletResponse response) throws Exception {
@@ -744,5 +730,11 @@ public class RegistrationController {
         model.addAttribute("errorMessage", "PDF download is processing");
         playerServicePdf.generueSpecificPlayerPdfForCommitte(response);
 
+    }
+
+    @GetMapping("/soldPlayerList")
+    public ResponseEntity<List<String>> soldPlayerList() {
+        List<String> list = playerService.soldPlayerList();
+        return ResponseEntity.status(HttpStatus.CREATED).body(list);
     }
 }

@@ -5,6 +5,7 @@ import com.kpl.registration.dto.PlayerRequetVO;
 import com.kpl.registration.dto.RegistrationResponse;
 import com.kpl.registration.entity.DocInfo;
 import com.kpl.registration.entity.PlayerInfo;
+import com.kpl.registration.entity.PlayerRegistration;
 import com.kpl.registration.repository.DocRepo;
 import com.kpl.registration.repository.PlayerRepo2024;
 import com.kpl.registration.repository.PlayerRepository;
@@ -19,6 +20,8 @@ import javax.mail.MessagingException;
 import java.io.IOException;
 import java.time.Clock;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -108,4 +111,19 @@ public class PlayerServiceImpl implements PlayerService {
         registrationResponse.setPlayerLastName("No Record Found");
         return registrationResponse;
     }
+
+    @Override
+    public List<String> soldPlayerList() {
+        var playerInfo = playerRepo2024.findBySoldUpdateTime();
+        List<String> list =new ArrayList<>();
+        for (PlayerRegistration playerRegistration : playerInfo) {
+            var name = playerRegistration.getPlayerFirstName() + " " + playerRegistration.getPlayerLastName()
+                    + " sold to team " + playerRegistration.getSoldTeam() + " for Rs."
+                    + playerRegistration.getSoldAmount();
+            list.add(name);
+        }
+        return list;
+    }
+
+
 }

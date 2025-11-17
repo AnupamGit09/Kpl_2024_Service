@@ -34,8 +34,8 @@ public class MailSendServiceImpl implements MailSendService {
     @Autowired
     PlayerRepository playerRepository;
 
-    public void sendMail(PlayerInfo playerInfo) throws MessagingException, TemplateNotFoundException,
-            MalformedTemplateNameException, ParseException, IOException, TemplateException {
+    public void sendMail(PlayerInfo playerInfo) throws MessagingException,
+            IOException, TemplateException {
         Map<String, Object> model = new HashMap<>();
         String phNu = playerInfo.getPhNo().toString();
         String password = playerInfo.getPassword();

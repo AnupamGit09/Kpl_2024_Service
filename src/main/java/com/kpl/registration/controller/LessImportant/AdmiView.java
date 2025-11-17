@@ -1,5 +1,6 @@
-package com.kpl.registration.controller;
+package com.kpl.registration.controller.LessImportant;
 
+import com.kpl.registration.controller.RegistrationController;
 import com.kpl.registration.repository.AdminRepo;
 import com.kpl.registration.repository.PlayerRepository;
 import freemarker.template.TemplateException;
@@ -15,12 +16,12 @@ import java.util.ArrayList;
 import java.util.List;
 @Slf4j
 @Controller
-public class AdminController {
+public class AdmiView {
 
 	@Autowired
 	AdminRepo adminRepo;
 	@Autowired
-	RegistrationController registrationController;
+    RegistrationController registrationController;
 	@Autowired
 	PlayerRepository playerRepository;
 

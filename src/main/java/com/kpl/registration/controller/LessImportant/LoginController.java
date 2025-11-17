@@ -1,5 +1,6 @@
-package com.kpl.registration.controller;
+package com.kpl.registration.controller.LessImportant;
 
+import com.kpl.registration.controller.RegistrationController;
 import com.kpl.registration.repository.PlayerRepository;
 import com.kpl.registration.service.GenericService.PlayerService;
 import com.kpl.registration.service.GenericService.PlayerServiceImpl;
@@ -24,7 +25,7 @@ import java.time.format.DateTimeFormatter;
 @Controller
 public class LoginController {
 	@Autowired
-	RegistrationController registrationController;
+    RegistrationController registrationController;
 	@Autowired
 	PlayerRepository playerRepository;
 	@Autowired

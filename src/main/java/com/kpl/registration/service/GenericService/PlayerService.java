@@ -2,6 +2,8 @@ package com.kpl.registration.service.GenericService;
 
 import com.kpl.registration.dto.RegistrationResponse;
 
+import java.util.List;
+
 public interface PlayerService {
     //	GenericVO savePlayerInfo(PlayerRequetVO playerRequetVO, byte[] imageData, byte[]
     // docDataFront,byte[] docDataBack)
@@ -9,4 +11,5 @@ public interface PlayerService {
 
     RegistrationResponse getRegistrationStatus(String searchParam, String password);
 
+    List<String> soldPlayerList();
 }
