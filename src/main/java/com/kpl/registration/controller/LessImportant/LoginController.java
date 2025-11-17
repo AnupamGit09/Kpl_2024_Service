@@ -1,6 +1,6 @@
 package com.kpl.registration.controller.LessImportant;
 
-import com.kpl.registration.controller.RegistrationController;
+import com.kpl.registration.controller.Important.RegistrationController;
 import com.kpl.registration.repository.PlayerRepository;
 import com.kpl.registration.service.GenericService.PlayerService;
 import com.kpl.registration.service.GenericService.PlayerServiceImpl;

@@ -1,4 +1,4 @@
-package com.kpl.registration.controller;
+package com.kpl.registration.controller.Important;
 
 import com.kpl.registration.dto.AdminView.AdminViewCount;
 import com.kpl.registration.service.AdminService.AdminViewService;
@@ -26,4 +26,17 @@ public class AdminDataController {
         var response = adminViewService.getAllAdminData();
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
+
+    @GetMapping("/restCall")
+    public ResponseEntity<AdminViewCount> restCall() {
+        var res = adminViewService.restCall();
+        return ResponseEntity.status(HttpStatus.OK).body(res);
+    }
+
+    @GetMapping("/feignCall")
+    public ResponseEntity<AdminViewCount> feignCall() {
+        var res = adminViewService.feignCall();
+        return ResponseEntity.status(HttpStatus.OK).body(res);
+    }
+
 }

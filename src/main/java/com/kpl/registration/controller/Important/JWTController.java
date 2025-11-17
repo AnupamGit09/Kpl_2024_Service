@@ -1,4 +1,4 @@
-package com.kpl.registration.controller;
+package com.kpl.registration.controller.Important;
 
 import com.kpl.registration.configJWT.JwtService;
 import com.kpl.registration.dto.AdminReqVO;

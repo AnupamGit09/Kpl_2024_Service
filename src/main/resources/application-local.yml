@@ -1,7 +1,8 @@
 server:
   port : 1999
        
-         
+base:
+  url: http://localhost:${server.port}
 spring:
   application:
     name: KPL-SERVICE
