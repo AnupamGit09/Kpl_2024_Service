@@ -1,8 +1,8 @@
 package com.kpl.registration.service.GenericService;
 
-import com.kpl.registration.entity.PlayerInfo;
-import com.kpl.registration.repository.OwnerRepo;
-import com.kpl.registration.repository.PlayerRepository;
+import com.kpl.registration.entity.AllEntity.PlayerInfo;
+import com.kpl.registration.repository.AllRepo.OwnerRepo;
+import com.kpl.registration.repository.AllRepo.PlayerRepository;
 import freemarker.core.ParseException;
 import freemarker.template.*;
 import lombok.extern.slf4j.Slf4j;

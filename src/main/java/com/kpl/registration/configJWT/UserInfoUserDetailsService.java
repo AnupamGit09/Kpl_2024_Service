@@ -1,8 +1,8 @@
 package com.kpl.registration.configJWT;
 
-import com.kpl.registration.dto.UserInfo;
-import com.kpl.registration.entity.AdminInfo;
-import com.kpl.registration.repository.AdminRepo;
+import com.kpl.registration.dto.AllOther.UserInfo;
+import com.kpl.registration.entity.AllEntity.AdminInfo;
+import com.kpl.registration.repository.AllRepo.AdminRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

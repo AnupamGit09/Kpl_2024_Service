@@ -1,14 +1,14 @@
 package com.kpl.registration.service.GenericService;
 
-import com.kpl.registration.dto.GenericVO;
-import com.kpl.registration.dto.PlayerRequetVO;
-import com.kpl.registration.dto.RegistrationResponse;
-import com.kpl.registration.entity.DocInfo;
-import com.kpl.registration.entity.PlayerInfo;
-import com.kpl.registration.entity.PlayerRegistration;
-import com.kpl.registration.repository.DocRepo;
-import com.kpl.registration.repository.PlayerRepo2024;
-import com.kpl.registration.repository.PlayerRepository;
+import com.kpl.registration.dto.AllOther.GenericVO;
+import com.kpl.registration.dto.AllOther.PlayerRequetVO;
+import com.kpl.registration.dto.AllOther.RegistrationResponse;
+import com.kpl.registration.entity.AllEntity.DocInfo;
+import com.kpl.registration.entity.AllEntity.PlayerInfo;
+import com.kpl.registration.entity.AllEntity.PlayerRegistration;
+import com.kpl.registration.repository.AllRepo.DocRepo;
+import com.kpl.registration.repository.AllRepo.PlayerRepo2024;
+import com.kpl.registration.repository.AllRepo.PlayerRepository;
 import freemarker.template.TemplateException;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;

@@ -1,11 +1,11 @@
 package com.kpl.registration.controller.Important;
 
 import com.kpl.registration.configJWT.JwtService;
-import com.kpl.registration.dto.AdminReqVO;
-import com.kpl.registration.dto.JWTResponse;
-import com.kpl.registration.entity.AdminInfo;
+import com.kpl.registration.dto.AllOther.AdminReqVO;
+import com.kpl.registration.dto.AllOther.JWTResponse;
+import com.kpl.registration.entity.AllEntity.AdminInfo;
 import com.kpl.registration.exception.KPLException;
-import com.kpl.registration.repository.AdminRepo;
+import com.kpl.registration.repository.AllRepo.AdminRepo;
 import com.kpl.registration.service.JwtService.SaveUser;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

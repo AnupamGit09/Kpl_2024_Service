@@ -1,0 +1,16 @@
+package com.kpl.registration.dto.AllOther;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class PlayerVO {
+	@JsonProperty("Name")
+	private String Name;
+	@JsonProperty("UID")
+	private String UID;
+}

@@ -1,9 +1,9 @@
 package com.kpl.registration.controller.Important;
 
 
-import com.kpl.registration.dto.*;
-import com.kpl.registration.entity.*;
-import com.kpl.registration.repository.*;
+import com.kpl.registration.dto.AllOther.*;
+import com.kpl.registration.entity.AllEntity.*;
+import com.kpl.registration.repository.AllRepo.*;
 import com.kpl.registration.service.GenericService.MailSendService;
 import com.kpl.registration.service.GenericService.PlayerService;
 import com.kpl.registration.service.GenericService.PlayerServiceImpl;

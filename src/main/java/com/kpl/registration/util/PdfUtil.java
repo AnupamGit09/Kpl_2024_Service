@@ -4,8 +4,8 @@ import com.itextpdf.text.BadElementException;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.Rectangle;
-import com.kpl.registration.repository.DocRepo;
-import com.kpl.registration.repository.ImageRepo;
+import com.kpl.registration.repository.AllRepo.DocRepo;
+import com.kpl.registration.repository.AllRepo.ImageRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;

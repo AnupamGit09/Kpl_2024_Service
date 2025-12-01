@@ -1,8 +1,8 @@
 package com.kpl.registration.controller.LessImportant;
 
 import com.kpl.registration.controller.Important.RegistrationController;
-import com.kpl.registration.repository.AdminRepo;
-import com.kpl.registration.repository.PlayerRepository;
+import com.kpl.registration.repository.AllRepo.AdminRepo;
+import com.kpl.registration.repository.AllRepo.PlayerRepository;
 import freemarker.template.TemplateException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

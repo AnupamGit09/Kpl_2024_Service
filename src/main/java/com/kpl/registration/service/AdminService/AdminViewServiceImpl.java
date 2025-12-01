@@ -4,7 +4,7 @@ import com.kpl.registration.dto.AdminView.AdminViewCount;
 import com.kpl.registration.dto.AdminView.AdminViewVO;
 import com.kpl.registration.exception.KPLException;
 import com.kpl.registration.feign.InternalFeignCall;
-import com.kpl.registration.repository.AdminDataRepo;
+import com.kpl.registration.repository.AllRepo.AdminDataRepo;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;

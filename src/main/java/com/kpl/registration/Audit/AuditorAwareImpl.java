@@ -1,6 +1,6 @@
 package com.kpl.registration.Audit;
 
-import com.kpl.registration.dto.UserInfo;
+import com.kpl.registration.dto.AllOther.UserInfo;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;

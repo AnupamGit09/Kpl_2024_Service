@@ -1,6 +1,6 @@
 package com.kpl.registration.service.GenericService;
 
-import com.kpl.registration.dto.RegistrationResponse;
+import com.kpl.registration.dto.AllOther.RegistrationResponse;
 
 import java.util.List;
 

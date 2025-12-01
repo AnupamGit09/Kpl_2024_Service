@@ -1,6 +1,6 @@
 package com.kpl.registration.service.GenericService;
 
-import com.kpl.registration.entity.PlayerInfo;
+import com.kpl.registration.entity.AllEntity.PlayerInfo;
 import freemarker.template.TemplateException;
 
 import javax.mail.MessagingException;

@@ -1,6 +1,6 @@
 package com.kpl.registration.configJWT;
 
-import com.kpl.registration.dto.UserInfo;
+import com.kpl.registration.dto.AllOther.UserInfo;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
