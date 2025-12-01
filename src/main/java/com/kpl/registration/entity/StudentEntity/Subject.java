@@ -27,8 +27,11 @@ public class Subject implements Serializable {
 
     @Column(name = "marks")
     private long marks;
-
+    //Fetch Type Meaning When data loads
+    //EAGER	Load related entity immediately	At query time
+    //LAZY Load only when accessed	On getter call (proxy)
     @ManyToOne(fetch = FetchType.LAZY)
+    //When you fetch Subject, JPA also loads Student, even if you never use it.
     @JoinColumn(name = "student_id")
     private Student student;
 }
