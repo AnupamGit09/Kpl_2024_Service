@@ -10,5 +10,5 @@ import lombok.NoArgsConstructor;
 public class SubjectRequestVO {
     private Long studentId;
     private String subject;
-    private long marks;
+    private Long marks;
 }

@@ -93,7 +93,10 @@ public class StudentServiceImpl implements StudentService {
                 subList.add(response);
             }
 
-            responseListVO.setAverage(subList.stream().mapToLong(SubjectResponseVO::getMarks).average().getAsDouble());
+            responseListVO.setAverage(subList.stream()
+                    .mapToLong(SubjectResponseVO::getMarks)
+                    .average()
+                    .getAsDouble());
             responseListVO.setSubjectRes(subList);
         }
         return responseListVO;
