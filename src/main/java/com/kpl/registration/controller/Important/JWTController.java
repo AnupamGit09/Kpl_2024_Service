@@ -7,6 +7,7 @@ import com.kpl.registration.entity.AllEntity.AdminInfo;
 import com.kpl.registration.exception.KPLException;
 import com.kpl.registration.repository.AllRepo.AdminRepo;
 import com.kpl.registration.service.JwtService.SaveUser;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/kpl/jwt/api")
 @RestController
 @CrossOrigin(origins = "*")
+@Tag(name = "JWT Api",description = "All the API's to generate JWT tokens")
 public class JWTController {
     @Autowired
     SaveUser saveUser;

@@ -52,8 +52,7 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public List<StudentListVO> getAllStudent() {
         var studentList = new ArrayList<StudentListVO>();
-        var allStudent = studentRepo.findAll();
-        allStudent.forEach(stu -> {
+        studentRepo.findAll().forEach(stu -> {
             var student = modelMapper.map(stu, StudentListVO.class);
             studentList.add(student);
         });

@@ -9,6 +9,7 @@ import com.kpl.registration.service.GenericService.PlayerService;
 import com.kpl.registration.service.GenericService.PlayerServiceImpl;
 import com.kpl.registration.service.Pdf.PlayerServicePdf;
 import freemarker.template.TemplateException;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -50,6 +51,7 @@ import java.util.zip.ZipOutputStream;
 @RestController
 @RequestMapping("/kpl/registration/api")
 @CrossOrigin(origins = "*")
+@Tag(name = "Registration Api",description = "All the API's to related to Registration")
 public class RegistrationController {
     @Autowired
     PlayerService playerService;

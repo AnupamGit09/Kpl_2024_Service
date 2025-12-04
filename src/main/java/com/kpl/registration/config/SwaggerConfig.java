@@ -1,38 +1,29 @@
 package com.kpl.registration.config;
 
+import io.swagger.v3.oas.models.Components;
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.models.security.SecurityRequirement;
+import io.swagger.v3.oas.models.security.SecurityScheme;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import springfox.documentation.builders.ApiInfoBuilder;
-import springfox.documentation.builders.PathSelectors;
-import springfox.documentation.builders.RequestHandlerSelectors;
-import springfox.documentation.service.ApiInfo;
-import springfox.documentation.spi.DocumentationType;
-import springfox.documentation.spring.web.plugins.Docket;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @Configuration
-@EnableSwagger2
 public class SwaggerConfig {
+    final String securitySchemeName = "bearerAuth";
 
-	/**
-	 * primary interface into the swagger-spring mvc framework
-	 * 
-	 * @return Docket
-	 */
-	@Bean
-	public Docket swagger2Configuration() {
-		return new Docket(DocumentationType.SWAGGER_2).select().paths(PathSelectors.ant("/kpl/registration/api/**"))
-				.apis(RequestHandlerSelectors.basePackage("com.kpl.registration")).build().apiInfo(apiDetails());
-	}
+    @Bean
+    public OpenAPI myCustomConfig() {
+        return new OpenAPI().
+                addSecurityItem(new SecurityRequirement().addList(securitySchemeName))
+                .components(new Components()
+                        .addSecuritySchemes(securitySchemeName,
+                                new SecurityScheme()
+                                        .name(securitySchemeName)
+                                        .type(SecurityScheme.Type.HTTP)
+                                        .scheme("bearer")
+                                        .bearerFormat("JWT"))).info(
+                        new Info().title("KPL Service API").description("By Anupam"));
 
-	/**
-	 * Generating API info
-	 * 
-	 * @return ApiInfo
-	 */
-	private ApiInfo apiDetails() {
-		return new ApiInfoBuilder().title("Kpl-Service Api").version("1.0.0")
-				.description("List of API's implemented for KPL Service").license("KPL Proprietary 1.0").build();
-	}
-
+    }
 }

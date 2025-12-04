@@ -2,6 +2,7 @@ package com.kpl.registration.controller.NewLogic;
 
 import com.kpl.registration.dto.NewLogic.*;
 import com.kpl.registration.service.Student.StudentService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,6 +15,7 @@ import java.util.List;
 @RequestMapping("/api/student")
 @Slf4j
 @CrossOrigin(origins = "*")
+@Tag(name = "Student Api",description = "All the API's related to Student")
 public class StudentController {
     @Autowired
     private StudentService studentService;

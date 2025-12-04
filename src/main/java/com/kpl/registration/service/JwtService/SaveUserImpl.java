@@ -6,6 +6,7 @@ import com.kpl.registration.repository.AllRepo.AdminRepo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 @Slf4j
 @Service
 public class SaveUserImpl implements SaveUser {
@@ -16,9 +17,14 @@ public class SaveUserImpl implements SaveUser {
     @Override
     public AdminInfo saveAdminDetails(AdminReqVO adminReqVO) {
         AdminInfo adminInfo = new AdminInfo();
-        adminInfo.setId(adminReqVO.getId());
-        adminInfo.setPassword(adminReqVO.getPassword());
-        adminInfo.setRoleCode("R"+adminReqVO.getId());
-        return adminRepo.save(adminInfo);
+        var response = adminRepo.findByIdAndPassword(adminReqVO.getId(), adminReqVO.getPassword());
+        if (response.isEmpty()) {
+
+            adminInfo.setId(adminReqVO.getId());
+            adminInfo.setPassword(adminReqVO.getPassword());
+            adminInfo.setRoleCode("R" + adminReqVO.getId());
+            return adminRepo.save(adminInfo);
+        }
+        return response.get();
     }
 }
