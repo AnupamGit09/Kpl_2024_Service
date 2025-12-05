@@ -6,6 +6,7 @@ import com.kpl.registration.entity.StudentEntity.Subject;
 import com.kpl.registration.repository.Student.StudentRepo;
 import com.kpl.registration.repository.Student.SubjectRepo;
 import com.kpl.registration.service.Student.StudentServiceImpl;
+import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -97,6 +98,13 @@ public class StudentServiceTests {
         when(modelMapper.map(math, SubjectResponseVO.class)).thenReturn(subjectResponseVO);
         studentServiceImpl.getStudentInfo(anyLong());
 
+    }
+
+    @Test
+    public void testJunit() {
+        var sen = "Find second highest num";
+        var res = studentServiceImpl.junitTest(sen);
+        assertEquals("second", res);
     }
 
 }

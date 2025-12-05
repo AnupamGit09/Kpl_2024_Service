@@ -10,9 +10,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static com.kpl.registration.util.CommonConstants.STUDENT_CREATED;
@@ -100,5 +98,11 @@ public class StudentServiceImpl implements StudentService {
             responseListVO.setSubjectRes(subList);
         }
         return responseListVO;
+    }
+
+    public String junitTest(String sen){
+      //  var sen = "I am learning Streams API in Java";
+        return Arrays.stream(sen.split(" ")).sorted(Comparator.comparing(String::length).reversed())
+                .skip(1).findFirst().get();
     }
 }
