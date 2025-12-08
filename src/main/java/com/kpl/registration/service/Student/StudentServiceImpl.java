@@ -5,6 +5,7 @@ import com.kpl.registration.entity.StudentEntity.Student;
 import com.kpl.registration.entity.StudentEntity.Subject;
 import com.kpl.registration.repository.Student.StudentRepo;
 import com.kpl.registration.repository.Student.SubjectRepo;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,22 @@ public class StudentServiceImpl implements StudentService {
 
     @Autowired
     private StudentRepo studentRepo;
+
+
+    //   Constructor Injector
+// private final StudentRepo studentRepo;
+//    public StudentServiceImpl(StudentRepo studentRepo) {
+//        this.studentRepo = studentRepo;
+//    }
+
+    // Setter Injector
+//    @Setter
+//    private StudentRepo studentRepo;
+
+    //    private StudentRepo studentRepo;
+//    public void setStudentRepo(StudentRepo studentRepo) {
+//        this.studentRepo = studentRepo;
+//    }
     @Autowired
     private SubjectRepo subjectRepo;
 
@@ -31,7 +48,7 @@ public class StudentServiceImpl implements StudentService {
     private ModelMapper modelMapper;
 
     @Autowired
-    private  AsyncCallService asyncCallService;
+    private AsyncCallService asyncCallService;
 
 
     @Override
@@ -112,7 +129,6 @@ public class StudentServiceImpl implements StudentService {
         asyncCallService.asyncCall();
         return new GenericCreateResponseVO("id", "Generic Response");
     }
-
 
 
     public String junitTest(String sen) {
