@@ -19,6 +19,7 @@ import org.springframework.web.client.RestTemplate;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -56,7 +57,7 @@ public class AdminViewServiceImpl implements AdminViewService {
         var token = request.getHeader("Authorization").substring(7);
         headers.setBearerAuth(token);
         HttpEntity<?> httpEntity = new HttpEntity<>(headers);
-        return restTemplate.exchange(baseUrl + "/adminview/AllAdmins", HttpMethod.GET, httpEntity, AdminViewCount.class).getBody();
+        return restTemplate.exchange(baseUrl + "/adminView/AllAdmins", HttpMethod.GET, httpEntity, AdminViewCount.class).getBody();
     }
 
     public AdminViewCount feignCall() {

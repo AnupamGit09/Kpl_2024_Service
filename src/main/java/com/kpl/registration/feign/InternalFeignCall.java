@@ -6,6 +6,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @FeignClient(value = "internal-service", url = "${base.url}", configuration = CustomFeignConfig.class)
 public interface InternalFeignCall {
-    @GetMapping("/adminview/AllAdmins")
+    @GetMapping("/adminView/AllAdmins")
     AdminViewCount getAdminData();
 }

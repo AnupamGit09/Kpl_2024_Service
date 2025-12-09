@@ -9,6 +9,6 @@ import java.util.List;
 
 @Repository
 public interface AdminDataRepo extends JpaRepository<AdminInfo, Long> {
-    @Query(value = "select * from admin_mst_table", nativeQuery = true)
+    @Query("select a from AdminInfo a")
     List<AdminInfo> allAdminData();
 }
