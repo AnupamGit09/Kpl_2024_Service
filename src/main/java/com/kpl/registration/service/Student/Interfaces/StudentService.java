@@ -1,4 +1,4 @@
-package com.kpl.registration.service.Student;
+package com.kpl.registration.service.Student.Interfaces;
 
 import com.kpl.registration.dto.NewLogic.*;
 

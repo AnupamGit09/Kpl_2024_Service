@@ -1,7 +1,7 @@
 package com.kpl.registration.controller.NewLogic;
 
 import com.kpl.registration.dto.NewLogic.*;
-import com.kpl.registration.service.Student.StudentService;
+import com.kpl.registration.service.Student.Interfaces.StudentService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,5 +44,10 @@ public class StudentController {
     @GetMapping("/asyncCall")
     public ResponseEntity<GenericCreateResponseVO> asyncMethodTest() throws InterruptedException {
         return ResponseEntity.status(HttpStatus.OK).body(studentService.CreateAsyncCall());
+    }
+
+    @GetMapping("/caching")
+    public ResponseEntity<List<StudentListVO>> getAllSubjectInfo(){
+        return ResponseEntity.status(HttpStatus.OK).body(studentService.getAllStudent());
     }
 }

@@ -1,10 +1,11 @@
-package com.kpl.registration.service.Student;
+package com.kpl.registration.service.Student.Services.Functionality;
 
 import com.kpl.registration.dto.NewLogic.*;
 import com.kpl.registration.entity.StudentEntity.Student;
 import com.kpl.registration.entity.StudentEntity.Subject;
 import com.kpl.registration.repository.Student.StudentRepo;
 import com.kpl.registration.repository.Student.SubjectRepo;
+import com.kpl.registration.service.Student.Interfaces.StudentService;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;

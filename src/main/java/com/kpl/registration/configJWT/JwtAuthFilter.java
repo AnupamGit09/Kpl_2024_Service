@@ -23,8 +23,6 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     @Autowired
     UserDetailsService userDetailsService;
 
-    public static String ALLOWED_URI = "";
-
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
