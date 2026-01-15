@@ -8,22 +8,23 @@ spring:
   main:
     allow-bean-definition-overriding: true
   datasource:
-    driver-class-name: org.postgresql.Driver
-    username: postgres
-    url: jdbc:postgresql://${instance}:5432/kpl_2023_main_db
-    password: su
-    tomcat.max-active: 2
-    hikari:
-      maximum-pool-size: 2
-      auto-commit: true
+    postgres:
+      driver-class-name: org.postgresql.Driver
+      username: postgres
+      jdbcUrl: jdbc:postgresql://${instance}:5432/kpl_2023_main_db
+      password: su
+      tomcat.max-active: 2
+      hikari:
+        maximum-pool-size: 2
+        auto-commit: true
 
-  jpa:
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.PostgreSQLDialect
-    show-sql: true
-    hibernate:
-      ddl-auto: update
+#  jpa:
+#    properties:
+#      hibernate:
+#        dialect: org.hibernate.dialect.PostgreSQLDialect
+#    show-sql: true
+#    hibernate:
+#      ddl-auto: update
 
   mail:
     properties:

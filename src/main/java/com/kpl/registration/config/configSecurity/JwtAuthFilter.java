@@ -1,4 +1,4 @@
-package com.kpl.registration.configJWT;
+package com.kpl.registration.config.configSecurity;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

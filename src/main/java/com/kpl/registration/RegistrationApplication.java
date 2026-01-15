@@ -1,6 +1,6 @@
 package com.kpl.registration;
 
-import com.kpl.registration.config.UTCtoISTConverter;
+import com.kpl.registration.config.GenericConfig.UTCtoISTConverter;
 import com.kpl.registration.logging.LoggingInterceptor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;

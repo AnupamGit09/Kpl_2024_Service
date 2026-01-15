@@ -1,6 +1,6 @@
 package com.kpl.registration.controller.Important;
 
-import com.kpl.registration.configJWT.JwtService;
+import com.kpl.registration.config.configSecurity.JwtService;
 import com.kpl.registration.dto.AllOther.AdminReqVO;
 import com.kpl.registration.dto.AllOther.JWTResponse;
 import com.kpl.registration.entity.AllEntity.AdminInfo;

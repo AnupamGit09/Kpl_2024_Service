@@ -21,11 +21,11 @@ import java.time.LocalDateTime;
 @EntityListeners(AuditingEntityListener.class)
 public abstract class AuditTable {
 
-    @Column(nullable = false, updatable = false)
+    @Column(updatable = false)
     @CreatedBy
     protected String createdBy;
 
-    @Column(nullable = false, updatable = false)
+    @Column(updatable = false)
     @CreatedDate
     protected LocalDateTime createdDate;
 

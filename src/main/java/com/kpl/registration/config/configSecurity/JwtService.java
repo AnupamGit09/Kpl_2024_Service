@@ -1,4 +1,4 @@
-package com.kpl.registration.configJWT;
+package com.kpl.registration.config.configSecurity;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
