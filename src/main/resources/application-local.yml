@@ -1,17 +1,16 @@
 server:
   port : 1999
-protocol: http://localhost
-base:
-  url: ${protocol}:${server.port}
+protocol: http
+instance: localhost
+base: ${protocol}://${instance}
+url: ${base}:${server.port}
 spring:
-  application:
-    name: KPL-SERVICE
   main:
     allow-bean-definition-overriding: true
   datasource:
     driver-class-name: org.postgresql.Driver
     username: postgres
-    url: jdbc:postgresql://localhost:5432/kpl_2023_main_db
+    url: jdbc:postgresql://${instance}:5432/kpl_2023_main_db
     password: su
     tomcat.max-active: 2
     hikari:
@@ -26,18 +25,6 @@ spring:
     hibernate:
       ddl-auto: update
 
-
-#  mail:
-#    host: smtp.gmail.com
-#    port: 587
-#    username: kpl2023prod@gmail.com
-#    password: vhijfojqbbzygyvi
-#    properties:
-#      mail:
-#        smtp:
-#          auth: true
-#          starttls:
-#            enable: true
   mail:
     properties:
       mail:
@@ -57,7 +44,7 @@ spring:
 eureka:
   client:
     service-url:
-      defaultZone: ${protocol}:8761/eureka/
+      defaultZone: ${base}:8761/eureka/
     register-with-eureka: true
     fetch-registry: true
 #JWT Expires in 5 days

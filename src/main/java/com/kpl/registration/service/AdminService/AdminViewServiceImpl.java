@@ -38,7 +38,7 @@ public class AdminViewServiceImpl implements AdminViewService {
     private RestTemplate restTemplate;
     @Autowired
     private HttpServletRequest request;
-    @Value("${base.url}")
+    @Value("${url}")
     private String baseUrl;
     @Autowired
     private InternalFeignCall internalFeignCall;
