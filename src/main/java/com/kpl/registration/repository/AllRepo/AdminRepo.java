@@ -14,7 +14,7 @@ import java.util.Optional;
 //@EnableJpaAuditing
 public interface AdminRepo extends JpaRepository<AdminInfo, Long> {
 
-	@Query(value = "select id from admin_mst_table where id=?1 and password=?2", nativeQuery = true)
+	@Query(value = "select id from admin_mst_table where user_id=?1 and password=?2", nativeQuery = true)
 	String adminLoginValidation(String id, String password);
 
 	@Transactional
@@ -24,7 +24,7 @@ public interface AdminRepo extends JpaRepository<AdminInfo, Long> {
 
 	Optional<AdminInfo> findByIdAndPassword(String id, String password);
 
-	@Query(value = "select * from admin_mst_table where id=?1", nativeQuery = true)
+	@Query(value = "select * from admin_mst_table where user_id=?1", nativeQuery = true)
 	Optional<AdminInfo> findByUserId(String username);
 
 	@Modifying

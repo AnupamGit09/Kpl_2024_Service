@@ -26,10 +26,12 @@ public class AdminInfo extends AuditTable implements Serializable {
 	@Column(name = "admin_id")
 	private Long adminId;
 
-	@Column(name = "id")
+	@Column(name = "user_id")
 	private String id;
 
 	@Column(name = "password")
 	private String password;
+
+    @Column(name = "role_code")
 	private String roleCode;
 }

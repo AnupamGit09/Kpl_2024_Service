@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 //@Component
 @RestController
 @Slf4j
-@RequestMapping("/adminview")
+@RequestMapping("/adminView")
 @CrossOrigin("*")
 @Tag(name = "Admin Api",description = "All the API's related to Admins")
 public class AdminDataController {

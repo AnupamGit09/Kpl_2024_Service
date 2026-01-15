@@ -1,4 +1,4 @@
-package com.kpl.registration.config;
+package com.kpl.registration.config.GenericConfig;
 
 import org.modelmapper.Converter;
 import org.modelmapper.spi.MappingContext;

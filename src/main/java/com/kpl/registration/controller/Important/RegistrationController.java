@@ -168,11 +168,10 @@ public class RegistrationController {
     // update payment validation
 
     @PutMapping("/paymentUpdate")
-    public String paymentUpdate(@RequestParam List<Long> registartionIDS)
+    public void paymentUpdate(@RequestParam List<Long> registartionIDS)
             throws IOException, MessagingException, TemplateException {
         playerRepository.paymentUpdate(registartionIDS);
         mailSendService.sendMailOnPaymentValidation(registartionIDS);
-        return "payment details updated";
     }
 
 

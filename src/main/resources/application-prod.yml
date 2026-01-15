@@ -4,7 +4,7 @@ server:
          
 spring:
   application:
-    name: KPL-SERVICE
+    name: KPL-APP
   main:
     allow-bean-definition-overriding: true
   datasource:

@@ -1,4 +1,4 @@
-package com.kpl.registration.config;
+package com.kpl.registration.config.GenericConfig;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

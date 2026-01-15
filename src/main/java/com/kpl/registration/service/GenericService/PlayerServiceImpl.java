@@ -96,7 +96,7 @@ public class PlayerServiceImpl implements PlayerService {
 
     @Override
     public RegistrationResponse getRegistrationStatus(String id, String password) {
-        var playerExistence = playerRepository.findByMailOrPhNumberandpassword(id, password);
+        var playerExistence = playerRepository.findByMailOrPhNumberAndPassword(id, password);
         if (playerExistence != null) {
             if (playerExistence.getPaymentValidation() != null) {
                 playerExistence.setPaymentValidation("Completed");

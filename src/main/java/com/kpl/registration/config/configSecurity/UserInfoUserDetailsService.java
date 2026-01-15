@@ -1,4 +1,4 @@
-package com.kpl.registration.configJWT;
+package com.kpl.registration.config.configSecurity;
 
 import com.kpl.registration.dto.AllOther.UserInfo;
 import com.kpl.registration.entity.AllEntity.AdminInfo;

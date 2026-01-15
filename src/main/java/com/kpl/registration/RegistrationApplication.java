@@ -1,6 +1,6 @@
 package com.kpl.registration;
 
-import com.kpl.registration.config.UTCtoISTConverter;
+import com.kpl.registration.config.GenericConfig.UTCtoISTConverter;
 import com.kpl.registration.logging.LoggingInterceptor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +8,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
@@ -19,6 +20,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @SpringBootApplication
 @EnableFeignClients(basePackages = "com.kpl.registration")
 @EnableAsync
+@EnableCaching
 public class RegistrationApplication extends SpringBootServletInitializer implements WebMvcConfigurer {
 
 	public static void main(String[] args) {

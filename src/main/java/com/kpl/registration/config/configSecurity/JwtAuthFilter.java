@@ -1,4 +1,4 @@
-package com.kpl.registration.configJWT;
+package com.kpl.registration.config.configSecurity;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -22,8 +22,6 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     JwtService jwtService;
     @Autowired
     UserDetailsService userDetailsService;
-
-    public static String ALLOWED_URI = "";
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {

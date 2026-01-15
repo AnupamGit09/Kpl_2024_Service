@@ -1,3 +1,13 @@
 spring:
   profiles:
     active: local
+  application:
+    name: KPL-APP
+  mvc:
+    view:
+      prefix: /views/
+      suffix: .jsp
+  servlet:
+    multipart:
+      max-file-size: 1500MB
+      max-request-size: 1500MB

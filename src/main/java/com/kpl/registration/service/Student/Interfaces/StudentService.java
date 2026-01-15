@@ -1,4 +1,4 @@
-package com.kpl.registration.service.Student;
+package com.kpl.registration.service.Student.Interfaces;
 
 import com.kpl.registration.dto.NewLogic.*;
 
@@ -14,4 +14,8 @@ public interface StudentService {
     SubjectResponseListVO getStudentInfo(Long studentId);
 
     GenericCreateResponseVO CreateAsyncCall() throws InterruptedException;
+
+    List<StudentListVO> getAllStudentsCaching(String dummy);
+
+    String printCacheManger(String cacheManager);
 }

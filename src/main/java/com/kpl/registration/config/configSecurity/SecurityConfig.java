@@ -1,4 +1,4 @@
-package com.kpl.registration.configJWT;
+package com.kpl.registration.config.configSecurity;
 
 import com.kpl.registration.Audit.AuditorAwareImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +23,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    @Autowired JwtAuthFilter jwtAuthFilter;
+    @Autowired
+    private JwtAuthFilter jwtAuthFilter;
 
     @Bean
     public UserDetailsService userDetailsService() {
